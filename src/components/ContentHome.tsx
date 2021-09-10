@@ -1,6 +1,9 @@
 import { Box, Heading, VStack } from '@chakra-ui/react'
 import { Typewriter } from 'react-simple-typewriter'
-import SearchBox from './SearchBox'
+import dynamic from 'next/dynamic'
+const SearchboxWithNoSSR = dynamic(() => import('../components/Searchbox'), {
+  ssr: false
+})
 
 const convincingSentences = [
   'Hungry?',
@@ -32,7 +35,7 @@ export function ContentHome() {
         </Heading>
       </VStack>
 
-      <SearchBox />
+      <SearchboxWithNoSSR />
 
       <Box as="h3">Most commonly used delivery addresses</Box>
     </Box>
