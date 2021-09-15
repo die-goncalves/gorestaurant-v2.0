@@ -1,5 +1,6 @@
 import { Flex, Button, ButtonGroup } from '@chakra-ui/react'
 import { Logo } from './Logo'
+import SignUp from '../SignUp'
 
 export function Header() {
   return (
@@ -10,15 +11,15 @@ export function Header() {
       width="inherit"
       alignItems="center"
       justifyContent="space-between"
-      boxShadow="0px 0.005rem 0.25rem gray"
+      background="brand.body_background"
     >
       <Logo />
 
       <ButtonGroup isAttached variant="solid" colorScheme="orange">
-        <Button variant="ghost" borderRadius="none">
+        <Button variant="ghost" borderRadius="0">
           Sign in
         </Button>
-        <Button borderRadius="none">Sign up</Button>
+        <SignUp />
       </ButtonGroup>
     </Flex>
   )

@@ -21,7 +21,7 @@ export default function Searchbox() {
       <Flex
         h="3rem"
         flex="1"
-        background="#FFF4EF"
+        background="brand.input_background"
         position="relative"
         alignItems="center"
         marginTop="2rem"
@@ -33,7 +33,7 @@ export default function Searchbox() {
           setIsDataComingFromDrawer={setIsDataComingFromDrawer}
         />
         <Button
-          borderRadius="none"
+          borderRadius="0"
           colorScheme="orange"
           variant="solid"
           paddingY="1.5rem"

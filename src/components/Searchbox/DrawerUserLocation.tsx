@@ -10,7 +10,8 @@ import {
   Box,
   CloseButton,
   Flex,
-  Text
+  Text,
+  ButtonGroup
 } from '@chakra-ui/react'
 import React, { useRef, useState } from 'react'
 import { MapDrawer } from './MapDrawer'
@@ -36,7 +37,12 @@ export const DrawerUserLocation = ({
 
   return (
     <>
-      <Box display="flex" h="48px" background="#FFFDFC" alignItems="center">
+      <Box
+        display="flex"
+        h="48px"
+        background="brand.body_background"
+        alignItems="center"
+      >
         <Button
           onClick={onOpen}
           borderRadius="full"
@@ -59,11 +65,11 @@ export const DrawerUserLocation = ({
         onClose={onClose}
       >
         <DrawerOverlay />
-        <DrawerContent minW="40vw">
+        <DrawerContent minW="40vw" background="brand.body_background">
           <DrawerHeader borderBottomWidth="1px" paddingRight="0.6rem">
             <Flex alignItems="center" justifyContent="space-between">
               <Text fontWeight="bold">Where you are?</Text>
-              <CloseButton onClick={onClose} />
+              <CloseButton onClick={onClose} borderRadius="0" />
             </Flex>
           </DrawerHeader>
 
@@ -72,19 +78,27 @@ export const DrawerUserLocation = ({
           </DrawerBody>
 
           <DrawerFooter borderTopWidth="1px" paddingRight="0.6rem">
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button
-              colorScheme="orange"
-              onClick={() => {
-                setGeoposition(myCoordinates)
-                setIsDataComingFromDrawer(true)
-                onClose()
-              }}
-            >
-              Confirm location
-            </Button>
+            <ButtonGroup isAttached>
+              <Button
+                variant="ghost"
+                onClick={onClose}
+                borderRadius="0"
+                colorScheme="red"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  setGeoposition(myCoordinates)
+                  setIsDataComingFromDrawer(true)
+                  onClose()
+                }}
+                borderRadius="0"
+                colorScheme="green"
+              >
+                Confirm location
+              </Button>
+            </ButtonGroup>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
