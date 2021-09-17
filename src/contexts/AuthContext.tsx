@@ -1,7 +1,9 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
+import { Box, Text } from '@chakra-ui/react'
 import Router from 'next/router'
 import { User } from '@supabase/supabase-js'
 import { supabase } from '../utils/supabaseClient'
+import { toast } from 'react-hot-toast'
 
 type Credentials = {
   email: string
@@ -52,11 +54,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password
       })
       if (error) throw error
-      console.log("You've been registered successfully")
+      toast.success(
+        <Box as="span" fontWeight="600">
+          <Text>You&apos;ve been registered successfully</Text>
+        </Box>
+      )
       setUserData(user)
       Router.push('/dashboard')
     } catch (error) {
-      console.log(error.error_description || error.message)
+      toast.error(
+        <Box as="span" fontWeight="600">
+          {error.error_description || error.message}
+        </Box>
+      )
     }
   }
 
@@ -67,11 +77,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password
       })
       if (error) throw error
-      console.log("You've been logged successfully")
+      toast.success(
+        <Box as="span" fontWeight="600">
+          <Text>You&apos;ve been logged successfully</Text>
+        </Box>
+      )
       setUserData(user)
       Router.push('/dashboard')
     } catch (error) {
-      console.log(error.error_description || error.message)
+      toast.error(
+        <Box as="span" fontWeight="600">
+          {error.error_description || error.message}
+        </Box>
+      )
     }
   }
 
@@ -79,10 +97,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const { error } = await supabase.auth.signOut()
       if (error) throw error
-      console.log('You have successfully logged out')
+      toast.success(
+        <Box as="span" fontWeight="600">
+          <Text>You have successfully logged out</Text>
+        </Box>
+      )
       Router.push('/')
     } catch (error) {
-      console.log(error.error_description || error.message)
+      toast.error(
+        <Box as="span" fontWeight="600">
+          {error.error_description || error.message}
+        </Box>
+      )
     }
   }
 
