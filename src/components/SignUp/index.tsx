@@ -1,3 +1,4 @@
+import { useContext, useState } from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -21,8 +22,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import zxcvbn from 'zxcvbn'
-import { useState } from 'react'
-import { supabase } from '../../services/supabaseClient'
+import { AuthContext } from '../../contexts/AuthContext'
 
 type IFormInput = {
   email: string
@@ -31,6 +31,7 @@ type IFormInput = {
 }
 
 export default function SignUp() {
+  const { signUp } = useContext(AuthContext)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [loading, setLoading] = useState(false)
   const [scorePassword, setScorePassword] = useState(0)
@@ -93,20 +94,14 @@ export default function SignUp() {
   }
 
   async function onSubmit(values: IFormInput): Promise<void> {
-    try {
-      setLoading(true)
-      const { error } = await supabase.auth.signUp({
-        email: values.email,
-        password: values.password
-      })
-      if (error) throw error
-      console.log("You've been registered successfully")
-    } catch (error) {
-      console.log(error.error_description || error.message)
-    } finally {
-      setLoading(false)
-      onClose()
-    }
+    setLoading(true)
+    await signUp({ email: values.email, password: values.password }).finally(
+      () => {
+        setLoading(false)
+        reset()
+        onClose()
+      }
+    )
   }
 
   return (
