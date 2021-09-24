@@ -8,7 +8,8 @@ export const theme = extendTheme({
       input_placeholder: '#989898',
       list_background: '#f5f5f5',
       list_hover: '#E6E6E6',
-      text_color: '#0C0600'
+      text_color: '#0C0600',
+      card_restaurant_background: '#FCFBF9'
     }
   },
   fonts: {
