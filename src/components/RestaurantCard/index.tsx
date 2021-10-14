@@ -5,41 +5,29 @@ import { Tags } from './Tags'
 import { Rating } from './Rating'
 import { Delivery } from './Delivery'
 
-type Coordinates = {
-  lng: number
-  lat: number
-}
-type TagInfo = {
-  id: number
-  value: string
-}
-type FoodRating = {
-  rating: number
-}
-type FoodInfo = {
-  id: number
-  foodRating: Array<FoodRating>
-}
 type Restaurant = {
   id: number
   name: string
-  coordinates: Coordinates
+  coordinates: {
+    lat: number
+    lng: number
+  }
   image: string
-  tags: Array<TagInfo>
-  foods: Array<FoodInfo>
-}
-type RestaurantCardProps = {
-  restaurant: Restaurant
-  consumerLocation: Coordinates
+  tags: Array<{ id: number; value: string }>
+  foods: Array<{ id: number; food_rating: Array<{ rating: number }> }>
+  rating: number | undefined
+  reviews: number
+  delivery_time?: number
+  delivery_price?: number
 }
 
-export function RestaurantCard({
-  restaurant,
-  consumerLocation
-}: RestaurantCardProps) {
+type RestaurantCardProps = {
+  restaurant: Restaurant
+}
+
+export function RestaurantCard({ restaurant }: RestaurantCardProps) {
   return (
     <Box
-      w="15.625rem"
       position="relative"
       overflow="hidden"
       background="brand.card_restaurant_background"
@@ -53,7 +41,7 @@ export function RestaurantCard({
         />
       </Box>
 
-      <Container paddingX="1rem" paddingBottom="1rem">
+      <Container padding="0.5rem">
         <VStack display="flex" alignItems="flex-start" spacing="0.5rem">
           <Heading
             as="h1"
@@ -66,11 +54,11 @@ export function RestaurantCard({
 
           <Tags tags={restaurant.tags} />
 
-          <Rating foods={restaurant.foods} />
+          <Rating rating={restaurant.rating} reviews={restaurant.reviews} />
 
           <Delivery
-            restaurantLocation={restaurant.coordinates}
-            consumerLocation={consumerLocation}
+            deliveryPrice={restaurant.delivery_price}
+            deliveryTime={restaurant.delivery_time}
           />
         </VStack>
       </Container>

@@ -1,9 +1,9 @@
-import { Flex, Button, ButtonGroup } from '@chakra-ui/react'
-import { Logo } from './Logo'
-import SignUp from '../SignUp'
-import SignIn from '../SignIn'
+import { Flex, ButtonGroup } from '@chakra-ui/react'
+import { Logo } from '../../Logo'
+import SignUp from '../../SignUp'
+import SignIn from '../../SignIn'
 
-export function Header() {
+export function HomeHeader() {
   return (
     <Flex
       as="header"
@@ -14,7 +14,7 @@ export function Header() {
       justifyContent="space-between"
       background="brand.body_background"
     >
-      <Logo />
+      <Logo font_size="1.25rem" size_logo="2rem" />
 
       <ButtonGroup isAttached variant="solid" colorScheme="orange">
         <SignIn />

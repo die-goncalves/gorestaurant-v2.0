@@ -9,6 +9,7 @@ type SidebarRadioProps = {
 export function SidebarRadio({ value, children }: SidebarRadioProps) {
   return (
     <Radio
+      id={value}
       value={value}
       _checked={{
         bg: 'transparent',
@@ -20,7 +21,15 @@ export function SidebarRadio({ value, children }: SidebarRadioProps) {
           width: '50%',
           height: '50%',
           borderRadius: '50%',
-          background: '#f08a16'
+          background: '#f08a16',
+          transition: 'background 0.2s ease-in-out'
+        },
+        _hover: {
+          borderColor: 'orange.500',
+          _before: {
+            transition: 'background 0.2s ease-in-out',
+            background: 'orange.500'
+          }
         }
       }}
       _focus={{

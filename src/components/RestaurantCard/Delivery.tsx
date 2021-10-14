@@ -1,24 +1,21 @@
-import { Box, Flex, HStack, Text } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
-import { getRouteTimeAndDistance } from '../../utils/directionsMapBox'
 
 type TimeDelivery = {
   minutes: string | null
   hour: string | null
 }
-type Coordinates = {
-  lng: number
-  lat: number
-}
+
 type DeliveryProps = {
-  restaurantLocation: Coordinates
-  consumerLocation: Coordinates
+  deliveryPrice: number | undefined
+  deliveryTime: number | undefined
 }
 
-const durationDelivery = (duration: number) => {
-  if (!duration) return { minutes: null, hour: null }
-  const second_minutes = Math.round(duration / 60)
+const durationDelivery = (seconds: number | undefined) => {
+  if (!seconds) return { minutes: null, hour: null }
+  const second_minutes = Math.round(seconds / 60)
   const hour_minutes = second_minutes / 60
+
   if (hour_minutes < 1) {
     if (second_minutes < 1) return { minutes: '1', hour: null }
     return { minutes: second_minutes.toString(), hour: null }
@@ -33,64 +30,70 @@ const durationDelivery = (duration: number) => {
   }
 }
 
-const deliveryFee = (distance: number) => {
-  const fee = 0.12
-  return Math.round(distance / 1000) * fee
-}
-
-export function Delivery({
-  restaurantLocation,
-  consumerLocation
-}: DeliveryProps) {
-  const [timeDelivery, setTimeDelivery] = useState<TimeDelivery>({
+export function Delivery({ deliveryPrice, deliveryTime }: DeliveryProps) {
+  const [timeDelivery, setTimeDelivery] = useState<TimeDelivery | undefined>({
     minutes: null,
     hour: null
   })
-  const [priceDelivery, setPriceDelivery] = useState(0)
+  const [priceDelivery, setPriceDelivery] = useState<string | undefined>()
 
   useEffect(() => {
-    ;(async () => {
-      const infoDelivery = await getRouteTimeAndDistance(
-        consumerLocation,
-        restaurantLocation
-      )
-      setTimeDelivery(durationDelivery(infoDelivery.duration))
-      setPriceDelivery(deliveryFee(infoDelivery.distance))
-    })()
-  }, [consumerLocation, restaurantLocation])
+    setTimeDelivery(durationDelivery(deliveryTime))
+    if (deliveryPrice) setPriceDelivery(deliveryPrice.toFixed(2))
+    else setPriceDelivery(undefined)
+  }, [deliveryPrice, deliveryTime])
 
   return (
     <Flex
       justifyContent="flex-start"
-      alignItems="center"
       fontFamily="Spectral"
       fontSize="1rem"
       lineHeight="1rem"
     >
-      <HStack spacing="0.25rem">
-        <Box as="span" className="material-icons-sharp" fontSize="1rem">
+      {deliveryPrice ? (
+        <Box
+          as="span"
+          className="material-icons-sharp"
+          fontSize="1rem"
+          marginRight="0.25rem"
+        >
           delivery_dining
         </Box>
+      ) : (
+        <Box
+          as="span"
+          className="material-icons-outlined"
+          fontSize="1rem"
+          lineHeight="0.8rem"
+          marginRight="0.25rem"
+        >
+          local_mall
+        </Box>
+      )}
 
-        {timeDelivery.hour === null ? (
+      {timeDelivery &&
+        (timeDelivery.hour === null ? (
           timeDelivery.minutes === null ? (
-            <Text> -- h -- min</Text>
+            <Text as="span"> -- h -- min</Text>
           ) : (
-            <Text>{timeDelivery.minutes} min</Text>
+            <Text as="span">{timeDelivery.minutes} min</Text>
           )
         ) : timeDelivery.minutes === null ? (
-          <Text>{timeDelivery.hour} h</Text>
+          <Text as="span">{timeDelivery.hour} h</Text>
         ) : (
-          <Text>
+          <Text as="span">
             {timeDelivery.hour} h {timeDelivery.minutes} min
           </Text>
-        )}
-      </HStack>
-      <Flex marginY="auto" marginX="0.25rem">
-        <Box boxSize="2.5px" borderRadius="full" background="gray.300" />
-      </Flex>
+        ))}
 
-      <Text>R$ {priceDelivery}</Text>
+      {priceDelivery && (
+        <>
+          <Flex marginY="auto" marginX="0.25rem">
+            <Box boxSize="2.5px" borderRadius="full" background="gray.300" />
+          </Flex>
+          <Text>R$ {priceDelivery}</Text>
+        </>
+      )}
     </Flex>
   )
 }

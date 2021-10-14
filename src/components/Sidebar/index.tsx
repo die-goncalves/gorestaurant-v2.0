@@ -5,15 +5,18 @@ import {
   VStack,
   CheckboxGroup,
   Button,
-  Flex
+  Flex,
+  Tag
 } from '@chakra-ui/react'
-import { useState } from 'react'
 import Image from 'next/image'
 import DeliveryLogo from '../../assets/delivery.svg'
 import { SidebarRadio } from './SidebarRadio'
 import { SidebarCollapse } from './SidebarCollapse'
 import { SidebarSlider } from './SidebarSlider'
 import { SidebarCheckbox } from './SidebarCheckbox'
+import { useContext } from 'react'
+import { FilterContext } from '../../contexts/FilterContext'
+import { useEffect } from 'react'
 
 type Tag = {
   id: number
@@ -21,15 +24,26 @@ type Tag = {
   count: number
 }
 type SidebarProps = {
-  position: string
+  userPlace: string
   tags: Array<Tag>
+  isDelivery: boolean
 }
 
-export function Sidebar({ position, tags }: SidebarProps) {
-  const [sortOption, setSortOption] = useState('')
-  const [deliveryOption, setDeliveryOption] = useState('')
-  const [tagOption, setTagOption] = useState<Array<string | number>>([])
-  const [priceOption, setPriceOption] = useState<number | undefined>(0)
+export function Sidebar({ userPlace, tags, isDelivery }: SidebarProps) {
+  const {
+    locality,
+    setLocality,
+    deliveryOption,
+    setDeliveryOption,
+    sortOption,
+    setSortOption,
+    tagOption,
+    setTagOption
+  } = useContext(FilterContext)
+
+  useEffect(() => {
+    setLocality(userPlace)
+  }, [userPlace])
 
   return (
     <Box
@@ -80,7 +94,7 @@ export function Sidebar({ position, tags }: SidebarProps) {
                   marginTop="0.5rem"
                 >
                   <Text fontSize="1rem" lineHeight="1rem" fontWeight="600">
-                    {position}
+                    {locality}
                   </Text>
 
                   <Button
@@ -102,6 +116,7 @@ export function Sidebar({ position, tags }: SidebarProps) {
             padding="1rem 0.625rem"
           >
             <RadioGroup
+              name="deliveryoption"
               sx={{
                 '.chakra-radio': {
                   cursor: 'pointer',
@@ -110,7 +125,7 @@ export function Sidebar({ position, tags }: SidebarProps) {
                   }
                 }
               }}
-              onChange={setDeliveryOption}
+              onChange={value => setDeliveryOption(value)}
               value={deliveryOption}
             >
               <VStack spacing="1rem" display="flex" alignItems="flex-start">
@@ -130,7 +145,7 @@ export function Sidebar({ position, tags }: SidebarProps) {
           spacing={0}
           sx={{
             '::-webkit-scrollbar': {
-              width: '0.5rem'
+              width: '0.4rem'
             },
             '::-webkit-scrollbar-track': {
               background: 'brand.body_background'
@@ -143,6 +158,7 @@ export function Sidebar({ position, tags }: SidebarProps) {
         >
           <SidebarCollapse categoryName="Sort">
             <RadioGroup
+              name="sort"
               sx={{
                 '.chakra-radio': {
                   cursor: 'pointer',
@@ -151,7 +167,7 @@ export function Sidebar({ position, tags }: SidebarProps) {
                   }
                 }
               }}
-              onChange={setSortOption}
+              onChange={value => setSortOption(value)}
               value={sortOption}
             >
               <VStack spacing="1rem" display="flex" alignItems="flex-start">
@@ -160,13 +176,11 @@ export function Sidebar({ position, tags }: SidebarProps) {
               </VStack>
             </RadioGroup>
           </SidebarCollapse>
-          <SidebarCollapse categoryName="Price">
-            <SidebarSlider
-              values={[0, 3.75, 7.5]}
-              setPriceOption={setPriceOption}
-              priceOption={priceOption}
-            />
-          </SidebarCollapse>
+          {isDelivery && (
+            <SidebarCollapse categoryName="Delivery price">
+              <SidebarSlider values={[0, 3.75, 7.5]} />
+            </SidebarCollapse>
+          )}
           <SidebarCollapse categoryName="Tags">
             <CheckboxGroup
               onChange={value => setTagOption(value)}
