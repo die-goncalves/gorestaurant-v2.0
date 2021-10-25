@@ -57,7 +57,10 @@ export function Sidebar({ userPlace, tags, isDelivery }: SidebarProps) {
       top="0px"
     >
       <Box>
-        <Box paddingRight="0.5rem" boxShadow="0rem 0.8rem 1.25rem -2rem black">
+        <Box
+          paddingRight="0.375rem"
+          boxShadow="0rem 0.8rem 1.25rem -2rem black"
+        >
           <Box
             display="flex"
             justifyContent="space-between"
@@ -139,20 +142,22 @@ export function Sidebar({ userPlace, tags, isDelivery }: SidebarProps) {
         <VStack
           maxHeight="calc(100vh - 16rem)"
           display="block"
-          overflowY="scroll"
-          overflowX="hidden"
+          overflow="auto"
           divider={<Box h="1px" w="100%" borderColor="#E2E8F0" />}
           spacing={0}
           sx={{
+            scrollbarGutter: 'stable',
             '::-webkit-scrollbar': {
-              width: '0.4rem'
+              width: '0.375rem'
             },
             '::-webkit-scrollbar-track': {
               background: 'brand.body_background'
             },
             '::-webkit-scrollbar-thumb': {
-              background: '#d1cfce',
-              borderRadius: 'full'
+              background: 'scrollbar.thumb_color',
+              '&:hover': {
+                background: 'scrollbar.thumb_hover_color'
+              }
             }
           }}
         >

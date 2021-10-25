@@ -10,6 +10,10 @@ export const theme = extendTheme({
       list_hover: '#E6E6E6',
       text_color: '#0C0600',
       card_restaurant_background: '#FCFBF9'
+    },
+    scrollbar: {
+      thumb_color: '#D1CFCE',
+      thumb_hover_color: '#B3B1B0'
     }
   },
   fonts: {

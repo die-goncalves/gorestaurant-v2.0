@@ -89,7 +89,26 @@ export default function Restaurants({
   }, [data])
 
   return (
-    <>
+    <Box
+      maxHeight="100vh"
+      overflow="auto"
+      sx={{
+        scrollbarGutter: 'stable both-edges',
+        '::-webkit-scrollbar': {
+          width: '10px'
+        },
+        '::-webkit-scrollbar-thumb': {
+          background: 'scrollbar.thumb_color',
+          transition: '5s all ease-in-out',
+          '&:hover': {
+            background: 'scrollbar.thumb_hover_color'
+          }
+        },
+        '::-webkit-scrollbar-track': {
+          background: 'brand.body_background'
+        }
+      }}
+    >
       <RestaurantHeader />
 
       <Flex marginX="2rem">
@@ -135,7 +154,7 @@ export default function Restaurants({
           })()}
         </Flex>
       </Flex>
-    </>
+    </Box>
   )
 }
 
