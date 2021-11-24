@@ -1,6 +1,26 @@
 import { extendTheme } from '@chakra-ui/react'
 
 export const theme = extendTheme({
+  components: {
+    CloseButton: {
+      variants: {
+        'red-theme': {
+          color: 'red.600',
+          borderRadius: '0px',
+          background: 'transparent',
+          _focus: {
+            boxShadow: '0 0 0 3px rgb(245, 101, 101, 0.6)'
+          },
+          _hover: {
+            background: 'red.50'
+          },
+          _active: {
+            background: 'red.100'
+          }
+        }
+      }
+    }
+  },
   colors: {
     brand: {
       body_background: '#fdfdfd',

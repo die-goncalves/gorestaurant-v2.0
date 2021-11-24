@@ -16,7 +16,7 @@ type RestaurantFilterProps = {
 
 export function RestaurantsFilters({ total }: RestaurantFilterProps) {
   const {
-    locality,
+    geographicLocation,
     deliveryOption,
     sortOption,
     setSortOption,
@@ -32,8 +32,8 @@ export function RestaurantsFilters({ total }: RestaurantFilterProps) {
         <Text>
           {deliveryOption === 'delivery' ? 'Delivery to' : 'Pick up in'}
         </Text>
-        <Text marginLeft="0.25rem" fontWeight="bold">
-          {locality}
+        <Text marginLeft="0.3125rem" fontWeight="bold">
+          {geographicLocation?.place}
         </Text>
       </Flex>
 

@@ -1,6 +1,6 @@
 import { Box, Flex, Grid, Spinner } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import { useQuery } from 'react-query'
 import { RestaurantHeader } from '../components/Header/Restaurant'
 import { RestaurantCard } from '../components/RestaurantCard'
@@ -8,19 +8,23 @@ import { RestaurantsFilters } from '../components/RestaurantsFilters'
 import { Sidebar } from '../components/Sidebar'
 import { FilterContext } from '../contexts/FilterContext'
 import { api } from '../services/api'
-import { getTags } from '../utils/getTags'
+import { tagListingForFiltering } from '../utils/getTags'
 import { supabase } from '../utils/supabaseClient'
+import { Restaurant, LocationContext } from '../contexts/LocationContext'
 
 type SupabaseResponseData = {
-  id: number
+  id: string
   name: string
   coordinates: {
     lat: number
     lng: number
   }
   image: string
-  tags: Array<{ id: number; value: string }>
-  foods: Array<{ id: number; food_rating: Array<{ rating: number }> }>
+  foods: Array<{
+    id: string
+    tag: { id: string; tag_value: string }
+    food_rating: Array<{ consumer_id: string; rating: number }>
+  }>
 }
 
 type PickUpData = {
@@ -37,43 +41,69 @@ type DeliveryData = {
 } & SupabaseResponseData
 
 type RestaurantsProps = {
-  locality: string
+  geohash: string
   tags: Array<{
-    id: number
+    id: string
     tag: string
     count: number
   }>
-  geolocation: {
-    lat: number
-    lng: number
-  }
 }
 
-export default function Restaurants({
-  tags,
-  locality,
-  geolocation
-}: RestaurantsProps) {
-  const { tagOption, priceOption, sortOption, deliveryOption } =
-    useContext(FilterContext)
-  const { data, error, isLoading, isError } = useQuery(
+export default function Restaurants({ geohash, tags }: RestaurantsProps) {
+  const {
+    geographicLocation,
+    setGeographicLocation,
+    tagOption,
+    priceOption,
+    sortOption,
+    deliveryOption
+  } = useContext(FilterContext)
+  const { decodeGeohash, generateGeographicInformation } =
+    useContext(LocationContext)
+
+  useEffect(() => {
+    const { latitude, longitude } = decodeGeohash(geohash)
+    fetch(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?limit=1&access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN}`
+    )
+      .then(response => response.json())
+      .then(data => {
+        const { granular, place, place_name } = generateGeographicInformation(
+          data.features[0]
+        )
+        setGeographicLocation({
+          place_name,
+          granular,
+          geohash,
+          place,
+          coordinates: { latitude, longitude }
+        })
+      })
+  }, [geohash])
+
+  const { data, error, isLoading, isError } = useQuery<
+    Array<PickUpData | DeliveryData>,
+    Error
+  >(
     [
       deliveryOption,
       tagOption,
       priceOption,
       sortOption,
-      geolocation.lng,
-      geolocation.lat
+      geographicLocation?.coordinates.longitude,
+      geographicLocation?.coordinates.latitude,
+      geographicLocation?.place
     ],
     async () => {
       const { data } = await api.get(`/api/filters`, {
         params: {
-          user_lng: geolocation.lng,
-          user_lat: geolocation.lat,
+          user_lng: geographicLocation?.coordinates.longitude,
+          user_lat: geographicLocation?.coordinates.latitude,
           delivery: deliveryOption,
           tag: tagOption,
           delivery_price: priceOption,
-          sort: sortOption
+          sort: sortOption,
+          place: geographicLocation?.place
         }
       })
       return data
@@ -112,18 +142,14 @@ export default function Restaurants({
       <RestaurantHeader />
 
       <Flex marginX="2rem">
-        <Sidebar
-          userPlace={locality}
-          tags={tags}
-          isDelivery={deliveryOption === 'delivery' ? true : false}
-        />
-        <Flex as="main" w="100%" flexDirection="column" marginBottom="2rem">
+        <Sidebar tags={tags} />
+        <Flex as="main" w="82.5vw" flexDirection="column" marginBottom="2rem">
           <RestaurantsFilters total={filteredData.length} />
 
           {(() => {
-            if (isLoading)
+            if (isLoading) {
               return (
-                <Flex flex="1">
+                <Flex marginY="2rem" flex="1">
                   <Spinner
                     margin="auto"
                     color="orange.300"
@@ -132,8 +158,9 @@ export default function Restaurants({
                   />
                 </Flex>
               )
-            else if (isError) return <Box>Error: {error}</Box>
-            else if (filteredData) {
+            } else if (isError) {
+              return <Box>Error: {error?.message}</Box>
+            } else if (filteredData) {
               return (
                 <>
                   <Grid
@@ -141,12 +168,13 @@ export default function Restaurants({
                     gap="2rem"
                     marginY="2rem"
                   >
-                    {filteredData.map(restaurant => (
-                      <RestaurantCard
-                        key={restaurant.id}
-                        restaurant={restaurant}
-                      />
-                    ))}
+                    {filteredData.length > 0 &&
+                      filteredData.map(restaurant => (
+                        <RestaurantCard
+                          key={restaurant.id}
+                          restaurant={restaurant}
+                        />
+                      ))}
                   </Grid>
                 </>
               )
@@ -159,20 +187,18 @@ export default function Restaurants({
 }
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-  const { lng, lat } = ctx.query
+  const { place } = ctx.query
+  const { data } = await supabase
+    .from<Restaurant>('gr_restaurants')
+    .select('foods: gr_foods ( tag ( * ) )')
+    .filter('place', 'eq', place)
 
-  const { data } = await supabase.from('restaurant').select(
-    `
-      tags ( id, value: tag_value )
-    `
-  )
-  const tags = data ? getTags(data) : []
+  const tags = data ? tagListingForFiltering(data) : []
 
   return {
     props: {
-      locality: ctx.query.locality,
-      tags,
-      geolocation: { lng, lat }
+      geohash: ctx.query.geohash,
+      tags
     }
   }
 }

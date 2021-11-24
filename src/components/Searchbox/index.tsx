@@ -2,19 +2,12 @@ import { Button, Flex } from '@chakra-ui/react'
 import { DrawerUserLocation } from './DrawerUserLocation'
 import { Autocomplete } from './Autocomplete'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
-
-type MyLocation = {
-  lat: number
-  lng: number
-  place_description: string
-}
+import { useContext, useState } from 'react'
+import { LocationContext } from '../../contexts/LocationContext'
 
 export default function Searchbox() {
+  const { chosenLocation } = useContext(LocationContext)
   const router = useRouter()
-  const [geoposition, setGeoposition] = useState<MyLocation | null>(null)
-  const [isDataComingFromDrawer, setIsDataComingFromDrawer] =
-    useState<boolean>(false)
 
   return (
     <>
@@ -27,24 +20,23 @@ export default function Searchbox() {
         marginTop="2rem"
         marginBottom="1rem"
       >
-        <Autocomplete
-          geoposition={geoposition}
-          isDataComingFromDrawer={isDataComingFromDrawer}
-          setIsDataComingFromDrawer={setIsDataComingFromDrawer}
-        />
+        <Autocomplete />
+
         <Button
           borderRadius="0"
           colorScheme="orange"
           variant="solid"
           paddingY="1.5rem"
-          onClick={() => router.push('/feed')}
+          onClick={() =>
+            router.push(
+              `/restaurants?place=${chosenLocation?.place}&geohash=${chosenLocation?.geohash}`
+            )
+          }
         >
           Find Food
         </Button>
-        <DrawerUserLocation
-          setGeoposition={setGeoposition}
-          setIsDataComingFromDrawer={setIsDataComingFromDrawer}
-        />
+
+        <DrawerUserLocation />
       </Flex>
     </>
   )

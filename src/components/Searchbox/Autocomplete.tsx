@@ -1,122 +1,80 @@
 import { Box, Flex, Input, Link, List, ListItem } from '@chakra-ui/react'
-import { ChangeEvent, useEffect, useState } from 'react'
-import mapboxgl from 'mapbox-gl'
+import { ChangeEvent, useContext, useEffect, useState } from 'react'
+import {
+  FeaturesCollection,
+  GeographicFeature,
+  LocationContext
+} from '../../contexts/LocationContext'
 
-type InputGeolocateData = {
-  context: Array<{
-    id: string
-    text: string
-  }>
-  place_type: Array<string>
-  text: string
-  geometry: {
-    coordinates: Array<number>
-  }
-}
-
-type InfoAddress = {
-  lng: number
-  lat: number
-  array_locations: Array<string | undefined>
-}
-
-type MyLocation = {
-  lat: number
-  lng: number
-  place_description: string
-}
-
-type AutocompleteProps = {
-  geoposition: MyLocation | null
-  isDataComingFromDrawer: boolean
-  setIsDataComingFromDrawer: (state: boolean) => void
-}
-
-export const Autocomplete = ({
-  geoposition,
-  isDataComingFromDrawer,
-  setIsDataComingFromDrawer
-}: AutocompleteProps) => {
-  const [userInput, setUserInput] = useState('')
+export const Autocomplete = () => {
+  const {
+    encodeGeohash,
+    generateGeographicInformation,
+    chosenLocation,
+    setChosenLocation
+  } = useContext(LocationContext)
+  const [userInput, setUserInput] = useState<string>('')
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [filteredSuggestions, setFilteredSuggestions] = useState<
-    Array<InfoAddress>
+    Array<GeographicFeature>
   >([])
-  mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setIsDataComingFromDrawer(false)
     setShowSuggestions(true)
     setUserInput(event.target.value)
   }
-  const onClick = (item: InfoAddress) => {
-    setIsDataComingFromDrawer(false)
+
+  const onClick = (item: GeographicFeature) => {
     setShowSuggestions(false)
-    setUserInput(item.array_locations.join(', '))
-  }
-
-  const geographicFeatures = (inputTypes: Array<InputGeolocateData>) => {
-    const options = [
-      'address',
-      'neighborhood',
-      'locality',
-      'place',
-      'district',
-      'postcode',
-      'region',
-      'country',
-      'poi'
-    ]
-
-    let allAddress: Array<InfoAddress> = []
-    for (const item of inputTypes) {
-      let eachAddress: InfoAddress
-      let array_locations = options.map(el => {
-        for (const opt of item.context)
-          if (opt.id.includes(el)) {
-            return opt.text
-          }
-      })
-      array_locations[options.findIndex(el => el === item.place_type[0])] =
-        item.text
-      eachAddress = {
-        lng: item.geometry.coordinates[0],
-        lat: item.geometry.coordinates[1],
-        array_locations: array_locations
-      }
-      allAddress.push(eachAddress)
-    }
-    return allAddress
-  }
-  const formatGeographicFeatures = (
-    resultGeographicFeatures: Array<InfoAddress>
-  ) => {
-    const formatAddress = resultGeographicFeatures.map((el: InfoAddress) => {
-      return {
-        ...el,
-        array_locations: el.array_locations.filter(
-          (t: string | undefined) => t !== undefined
-        )
-      }
+    setChosenLocation({
+      geohash: item.geohash,
+      granular: item.granular,
+      place: item.place,
+      place_name: item.place_name
     })
-    return formatAddress
+    setUserInput(item.place_name ?? '')
+  }
+
+  const geographicFeatures = (data: FeaturesCollection) => {
+    let allFeatures: Array<GeographicFeature> = []
+
+    for (const item of data.features) {
+      const { granular, place, place_name } =
+        generateGeographicInformation(item)
+      let eachFeature = {
+        geohash: encodeGeohash({
+          latitude: item.geometry.coordinates[1],
+          longitude: item.geometry.coordinates[0]
+        }),
+        granular,
+        place_name,
+        place
+      }
+      allFeatures.push(eachFeature)
+    }
+    return allFeatures
   }
 
   useEffect(() => {
-    if (userInput.length !== 0) {
+    if (userInput && userInput.length !== 0) {
       fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${userInput}.json?bbox=-41.87537769666548,-21.311923538580672,-39.6882975718911,-17.875156159159033&access_token=${mapboxgl.accessToken}&limit=3`
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${userInput}.json?bbox=-41.87537769666548,-21.311923538580672,-39.6882975718911,-17.875156159159033&access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN}&limit=3`
       )
         .then(response => response.json())
-        .then(data =>
-          setFilteredSuggestions(
-            formatGeographicFeatures(geographicFeatures(data.features))
-          )
-        )
+        .then(data => {
+          setFilteredSuggestions(geographicFeatures(data))
+        })
     } else {
       setFilteredSuggestions([])
     }
   }, [userInput])
+
+  useEffect(() => {
+    if (chosenLocation) {
+      setShowSuggestions(false)
+      setUserInput(chosenLocation.place_name ?? '')
+    } else setUserInput('')
+  }, [chosenLocation])
 
   return (
     <Flex id="inputWithAutocomplete" flex="1" position="relative" h="inherit">
@@ -143,9 +101,7 @@ export const Autocomplete = ({
           borderRadius="0"
           placeholder="Enter the delivery address"
           _placeholder={{ color: 'brand.input_placeholder' }}
-          value={
-            isDataComingFromDrawer ? geoposition?.place_description : userInput
-          }
+          value={userInput}
           onChange={onChange}
         />
       </Flex>
@@ -157,10 +113,10 @@ export const Autocomplete = ({
           background="brand.list_background"
         >
           {filteredSuggestions &&
-            filteredSuggestions.map((item: InfoAddress) => {
+            filteredSuggestions.map((item: GeographicFeature) => {
               return (
                 <Link
-                  key={item.array_locations.join(', ')}
+                  key={item.place_name}
                   sx={{
                     '&:hover': {
                       textDecoration: 'none'
@@ -188,7 +144,7 @@ export const Autocomplete = ({
                     >
                       place
                     </Box>
-                    {item.array_locations.join(', ')}
+                    {item.place_name}
                   </ListItem>
                 </Link>
               )

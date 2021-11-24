@@ -1054,6 +1054,11 @@
   dependencies:
     "@types/geojson" "*"
 
+"@types/ngeohash@^0.6.4":
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/@types/ngeohash/-/ngeohash-0.6.4.tgz#a1ba2c25c4d1ef71f067de247a61490019ea0757"
+  integrity sha512-rr20mmx41OkWx4q5du2dv2sESR/6xH2tzScUQXwO8SiaQWa6PYTuan1nqBtA76FR9qkVfZY7nwQwZNC9StX/Ww==
+
 "@types/node@*":
   version "16.7.10"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.7.10.tgz#7aa732cc47341c12a16b7d562f519c2383b6d4fc"
@@ -3277,6 +3282,11 @@ next@11.1.2:
     "@next/swc-darwin-x64" "11.1.2"
     "@next/swc-linux-x64-gnu" "11.1.2"
     "@next/swc-win32-x64-msvc" "11.1.2"
+
+ngeohash@^0.6.3:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/ngeohash/-/ngeohash-0.6.3.tgz#10b1e80be5488262ec95c56cf2dbb6c45fbdf245"
+  integrity sha512-kltF0cOxgx1AbmVzKxYZaoB0aj7mOxZeHaerEtQV0YaqnkXNq26WWqMmJ6lTqShYxVRWZ/mwvvTrNeOwdslWiw==
 
 node-fetch@2.6.1:
   version "2.6.1"

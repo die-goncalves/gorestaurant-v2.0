@@ -1,38 +1,18 @@
-import {
-  Box,
-  Text,
-  RadioGroup,
-  VStack,
-  CheckboxGroup,
-  Button,
-  Flex,
-  Tag
-} from '@chakra-ui/react'
-import Image from 'next/image'
-import DeliveryLogo from '../../assets/delivery.svg'
+import { Box, RadioGroup, VStack, CheckboxGroup } from '@chakra-ui/react'
 import { SidebarRadio } from './SidebarRadio'
 import { SidebarCollapse } from './SidebarCollapse'
 import { SidebarSlider } from './SidebarSlider'
 import { SidebarCheckbox } from './SidebarCheckbox'
 import { useContext } from 'react'
 import { FilterContext } from '../../contexts/FilterContext'
-import { useEffect } from 'react'
+import { ModalMap } from './ModalMap'
 
-type Tag = {
-  id: number
-  tag: string
-  count: number
-}
 type SidebarProps = {
-  userPlace: string
-  tags: Array<Tag>
-  isDelivery: boolean
+  tags: Array<{ id: string; tag: string; count: number }>
 }
 
-export function Sidebar({ userPlace, tags, isDelivery }: SidebarProps) {
+export function Sidebar({ tags }: SidebarProps) {
   const {
-    locality,
-    setLocality,
     deliveryOption,
     setDeliveryOption,
     sortOption,
@@ -41,15 +21,10 @@ export function Sidebar({ userPlace, tags, isDelivery }: SidebarProps) {
     setTagOption
   } = useContext(FilterContext)
 
-  useEffect(() => {
-    setLocality(userPlace)
-  }, [userPlace])
-
   return (
     <Box
       maxHeight="calc(100vh - 4.5rem)"
       width="17.5rem"
-      maxWidth="17.5rem"
       paddingTop="2rem"
       marginRight="2rem"
       background="transparent"
@@ -61,58 +36,8 @@ export function Sidebar({ userPlace, tags, isDelivery }: SidebarProps) {
           paddingRight="0.375rem"
           boxShadow="0rem 0.8rem 1.25rem -2rem black"
         >
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            w="100%"
-            borderBottom="1px solid #E2E8F0"
-            paddingBottom="1rem"
-          >
-            <Box display="flex" w="inherit" alignItems="center">
-              <Box
-                width="2.25rem"
-                height="2.25rem"
-                position="relative"
-                verticalAlign="middle"
-              >
-                <Image src={DeliveryLogo} alt="GoRestaurant" layout="fill" />
-              </Box>
-              <Flex
-                flex="1"
-                flexDirection="column"
-                marginLeft="0.5rem"
-                alignItems="flex-start"
-                justifyContent="center"
-              >
-                <Flex w="100%" alignItems="flex-start">
-                  <Text fontSize="0.875rem" lineHeight="0.875rem">
-                    Now
-                  </Text>
-                </Flex>
+          <ModalMap />
 
-                <Flex
-                  w="100%"
-                  alignItems="flex-end"
-                  justifyContent="space-between"
-                  marginTop="0.5rem"
-                >
-                  <Text fontSize="1rem" lineHeight="1rem" fontWeight="600">
-                    {locality}
-                  </Text>
-
-                  <Button
-                    colorScheme="orange"
-                    borderRadius="0px"
-                    variant="ghost"
-                    padding="0px"
-                    h="1rem"
-                  >
-                    <Text fontSize="1rem">Change</Text>
-                  </Button>
-                </Flex>
-              </Flex>
-            </Box>
-          </Box>
           <Box
             w="100%"
             borderBottom="1px solid #E2E8F0"
@@ -181,7 +106,7 @@ export function Sidebar({ userPlace, tags, isDelivery }: SidebarProps) {
               </VStack>
             </RadioGroup>
           </SidebarCollapse>
-          {isDelivery && (
+          {deliveryOption === 'delivery' && (
             <SidebarCollapse categoryName="Delivery price">
               <SidebarSlider values={[0, 3.75, 7.5]} />
             </SidebarCollapse>
@@ -200,7 +125,7 @@ export function Sidebar({ userPlace, tags, isDelivery }: SidebarProps) {
                   >
                     {element.tag}
                   </SidebarCheckbox>
-                ))}{' '}
+                ))}
               </VStack>
             </CheckboxGroup>
           </SidebarCollapse>

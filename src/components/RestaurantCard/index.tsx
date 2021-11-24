@@ -4,17 +4,21 @@ import Image from 'next/image'
 import { Tags } from './Tags'
 import { Rating } from './Rating'
 import { Delivery } from './Delivery'
+import { useRouter } from 'next/router'
 
 type Restaurant = {
-  id: number
+  id: string
   name: string
   coordinates: {
     lat: number
     lng: number
   }
   image: string
-  tags: Array<{ id: number; value: string }>
-  foods: Array<{ id: number; food_rating: Array<{ rating: number }> }>
+  foods: Array<{
+    id: string
+    tag: { id: string; tag_value: string }
+    food_rating: Array<{ consumer_id: string; rating: number }>
+  }>
   rating: number | undefined
   reviews: number
   delivery_time?: number
@@ -26,11 +30,24 @@ type RestaurantCardProps = {
 }
 
 export function RestaurantCard({ restaurant }: RestaurantCardProps) {
+  const router = useRouter()
+
   return (
     <Box
       position="relative"
       overflow="hidden"
       background="brand.card_restaurant_background"
+      transitionDuration="0.4s"
+      transitionTimingFunction="ease-in-out"
+      transitionProperty="transform, box-shadow"
+      cursor="pointer"
+      onClick={() => {
+        router.push(`/restaurant/${restaurant.id}`)
+      }}
+      _hover={{
+        transform: 'translateY(-3px)',
+        boxShadow: '0px 3px 0px 0px rgba(221,107,32,1)'
+      }}
     >
       <Box w="100%" h="9.375rem" position="relative">
         <Image
@@ -52,7 +69,15 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
             {restaurant.name}
           </Heading>
 
-          <Tags tags={restaurant.tags} />
+          <Tags
+            tags={restaurant.foods.map(food => {
+              if (food.tag)
+                return {
+                  id: food.tag.id,
+                  value: food.tag.tag_value
+                }
+            })}
+          />
 
           <Rating rating={restaurant.rating} reviews={restaurant.reviews} />
 

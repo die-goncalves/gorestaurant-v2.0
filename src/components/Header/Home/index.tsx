@@ -14,7 +14,7 @@ export function HomeHeader() {
       justifyContent="space-between"
       background="brand.body_background"
     >
-      <Logo font_size="1.25rem" size_logo="2rem" />
+      <Logo fontSize="1.25rem" sizeLogo="2rem" />
 
       <ButtonGroup isAttached variant="solid" colorScheme="orange">
         <SignIn />

@@ -3,7 +3,7 @@ import { getRouteTimeAndDistance } from '../../../utils/directionsMapBox'
 import { supabase } from '../../../utils/supabaseClient'
 
 type SupabaseResponseData = {
-  id: number
+  id: string
   name: string
   coordinates: {
     lat: number
@@ -11,8 +11,11 @@ type SupabaseResponseData = {
   }
   created_at: string
   image: string
-  tags: Array<{ id: number; value: string }>
-  foods: Array<{ id: number; food_rating: Array<{ rating: number }> }>
+  foods: Array<{
+    tag: { id: string; tag_value: string }
+    food_rating: Array<{ food_id: string; rating: number }>
+  }>
+  place: string
 }
 
 type PickUpData = {
@@ -38,7 +41,7 @@ type Filters = {
 }
 
 function overallRatingRestaurant(
-  foods: Array<{ id: number; food_rating: Array<{ rating: number }> }>,
+  foods: Array<{ food_rating: Array<{ food_id: string; rating: number }> }>,
   reviews = 0,
   sum = 0
 ): { overallRating: number | undefined; numberRatings: number } {
@@ -100,17 +103,21 @@ async function dataForPickUp(
   if (filters['tag[]'] !== undefined) {
     if (typeof filters['tag[]'] === 'object') {
       filterByTags = addRatingInfo.filter(value => {
-        const testes = value.tags.filter(item =>
-          filters['tag[]'].includes(item.value.toLowerCase())
-        )
+        const testes = value.foods.filter(item => {
+          if (item.tag) {
+            return filters['tag[]'].includes(item.tag.tag_value.toLowerCase())
+          } else return false
+        })
         if (testes.length !== 0) return true
       })
     } else {
-      filterByTags = addRatingInfo.filter(item => {
-        const found = item.tags.find(
-          tag => tag.value.toLowerCase() === filters['tag[]']
-        )
-        if (found) return true
+      filterByTags = addRatingInfo.filter(value => {
+        const found = value.foods.filter(item => {
+          if (item.tag) {
+            return item.tag.tag_value.toLowerCase() === filters['tag[]']
+          } else return false
+        })
+        if (found.length !== 0) return true
       })
     }
   } else {
@@ -197,21 +204,25 @@ async function dataForDelivery(
     }
   })
 
-  let filterByTags: Array<DeliveryData>
+  let filterByTags: Array<DeliveryData> = []
   if (filters['tag[]'] !== undefined) {
     if (typeof filters['tag[]'] === 'object') {
       filterByTags = addInfos.filter(value => {
-        const testes = value.tags.filter(item =>
-          filters['tag[]'].includes(item.value.toLowerCase())
-        )
+        const testes = value.foods.filter(item => {
+          if (item.tag) {
+            return filters['tag[]'].includes(item.tag.tag_value.toLowerCase())
+          } else return false
+        })
         if (testes.length !== 0) return true
       })
     } else {
-      filterByTags = addInfos.filter(item => {
-        const found = item.tags.find(
-          tag => tag.value.toLowerCase() === filters['tag[]']
-        )
-        if (found) return true
+      filterByTags = addInfos.filter(value => {
+        const found = value.foods.filter(item => {
+          if (item.tag) {
+            return item.tag.tag_value.toLowerCase() === filters['tag[]']
+          } else return false
+        })
+        if (found.length !== 0) return true
       })
     }
   } else {
@@ -307,10 +318,10 @@ export default async function handler(
   res: NextApiResponse
 ): Promise<void> {
   if (req.method === 'GET') {
-    const { delivery, user_lng, user_lat } = req.query
+    const { delivery, user_lng, user_lat, place } = req.query
 
     const { data, error } = await supabase
-      .from<SupabaseResponseData>('restaurant')
+      .from<SupabaseResponseData>('gr_restaurants')
       .select(
         `
           id,
@@ -318,12 +329,17 @@ export default async function handler(
           coordinates,
           image,
           created_at,
-          tags ( id, value: tag_value ),
-          foods: foods ( id, food_rating: food_rating ( rating ))
+          foods: gr_foods (
+            tag ( * ),
+            food_rating: gr_food_rating ( * )
+          ),
+          place
         `
       )
+      .filter('place', 'eq', place)
       .order('created_at', { ascending: true })
 
+    console.log(JSON.stringify(data, null, 4))
     if (error) {
       return res.status(400).json(error)
     }

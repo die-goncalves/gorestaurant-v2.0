@@ -3,22 +3,28 @@ import Image from 'next/image'
 import SVGLogo from '../../assets/logo.svg'
 
 type LogoProps = {
-  size_logo: string
-  font_size: string
+  sizeLogo: string
+  fontSize: string
+  marginX?: string
 }
 
-export function Logo({ font_size, size_logo }: LogoProps) {
+export function Logo({ fontSize, sizeLogo, marginX = '0px' }: LogoProps) {
   return (
-    <Stack direction="row" spacing="0.5rem" alignItems="center">
+    <Stack
+      direction="row"
+      spacing="0.5rem"
+      alignItems="center"
+      marginX={marginX}
+    >
       <Box
-        width={size_logo}
-        height={size_logo}
+        width={sizeLogo}
+        height={sizeLogo}
         position="relative"
         verticalAlign="middle"
       >
         <Image src={SVGLogo} alt="GoRestaurant" layout="fill" />
       </Box>
-      <Box as="span" fontSize={font_size} fontWeight="600" color="black">
+      <Box as="span" fontSize={fontSize} fontWeight="600" color="black">
         GoRestaurant
       </Box>
     </Stack>

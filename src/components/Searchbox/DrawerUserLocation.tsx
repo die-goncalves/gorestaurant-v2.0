@@ -11,29 +11,48 @@ import {
   CloseButton,
   Flex,
   Text,
-  ButtonGroup
+  Input
 } from '@chakra-ui/react'
-import React, { useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { MapDrawer } from './MapDrawer'
+import mapboxgl from 'mapbox-gl'
+import { LocationContext } from '../../contexts/LocationContext'
 
-type MyLocation = {
-  lat: number
-  lng: number
-  place_description: string
-}
-
-type DrawerUserLocationProps = {
-  setGeoposition: (state: MyLocation | null) => void
-  setIsDataComingFromDrawer: (state: boolean) => void
-}
-
-export const DrawerUserLocation = ({
-  setGeoposition,
-  setIsDataComingFromDrawer
-}: DrawerUserLocationProps) => {
+export const DrawerUserLocation = () => {
+  const {
+    chosenLocation,
+    setChosenLocation,
+    generateGeographicInformation,
+    encodeGeohash
+  } = useContext(LocationContext)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [myCoordinates, setMyCoordinates] = useState<MyLocation | null>(null)
+  const [myGeographicCoordinates, setMyGeographicCoordinates] =
+    useState<{ lat: number; lng: number }>()
   const firstField = useRef<any>()
+
+  useEffect(() => {
+    if (myGeographicCoordinates) {
+      fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${myGeographicCoordinates.lng},${myGeographicCoordinates.lat}.json?limit=1&access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN}`
+      )
+        .then(response => response.json())
+        .then(data => {
+          if (data.features.length !== 0) {
+            const { granular, place, place_name } =
+              generateGeographicInformation(data.features[0])
+            setChosenLocation({
+              geohash: encodeGeohash({
+                latitude: data.features[0].geometry.coordinates[1],
+                longitude: data.features[0].geometry.coordinates[0]
+              }),
+              granular,
+              place_name,
+              place
+            })
+          }
+        })
+    }
+  }, [myGeographicCoordinates])
 
   return (
     <>
@@ -66,39 +85,67 @@ export const DrawerUserLocation = ({
       >
         <DrawerOverlay />
         <DrawerContent minW="40vw" background="brand.body_background">
-          <DrawerHeader borderBottomWidth="1px" paddingRight="0.6rem">
+          <DrawerHeader padding="0.625rem">
             <Flex alignItems="center" justifyContent="space-between">
-              <Text fontWeight="bold">Where you are?</Text>
-              <CloseButton onClick={onClose} borderRadius="0" />
+              <Text lineHeight="1.25rem" fontWeight="bold">
+                Where you are?
+              </Text>
+
+              <CloseButton
+                onClick={() => {
+                  setChosenLocation(undefined)
+                  onClose()
+                }}
+                variant="red-theme"
+              />
             </Flex>
           </DrawerHeader>
 
-          <DrawerBody margin="0" padding="0">
-            <MapDrawer setMycoordinates={setMyCoordinates} />
+          <DrawerBody margin="0px" padding="0px" position="relative">
+            <MapDrawer
+              setMyGeographicCoordinates={setMyGeographicCoordinates}
+            />
           </DrawerBody>
 
-          <DrawerFooter borderTopWidth="1px" paddingRight="0.6rem">
-            <ButtonGroup isAttached>
-              <Button
-                variant="ghost"
-                onClick={onClose}
-                borderRadius="0"
-                colorScheme="red"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={() => {
-                  setGeoposition(myCoordinates)
-                  setIsDataComingFromDrawer(true)
-                  onClose()
-                }}
-                borderRadius="0"
-                colorScheme="green"
-              >
-                Confirm location
-              </Button>
-            </ButtonGroup>
+          <DrawerFooter
+            display="flex"
+            justifyContent="space-between"
+            padding="0.625rem"
+            sx={{ gap: '0.625rem' }}
+          >
+            <Input
+              flex="1"
+              variant="filled"
+              borderRadius="0px"
+              value={chosenLocation?.place_name ?? ''}
+              placeholder="Here you will see your exact location"
+              isReadOnly
+              background="orange.50"
+              fontWeight="semibold"
+              borderColor="orange.100"
+              _focus={{
+                background: 'orange.100',
+                borderColor: 'rgb(237, 137, 54, 0.6)'
+              }}
+              _hover={{
+                background: 'orange.100'
+              }}
+              _placeholder={{
+                color: 'orange.500'
+              }}
+            />
+            <Button
+              onClick={onClose}
+              borderRadius="0px"
+              colorScheme="green"
+              sx={{
+                _focus: {
+                  boxShadow: '0 0 0 3px rgb(72, 187, 120, 0.6)'
+                }
+              }}
+            >
+              Confirm
+            </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

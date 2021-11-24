@@ -18,6 +18,7 @@
     "framer-motion": "^4",
     "mapbox-gl": "^2.4.1",
     "next": "11.1.2",
+    "ngeohash": "^0.6.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.15.2",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@types/mapbox-gl": "^2.4.1",
+    "@types/ngeohash": "^0.6.4",
     "@types/react": "17.0.19",
     "@types/zxcvbn": "^4.4.1",
     "eslint": "7.32.0",

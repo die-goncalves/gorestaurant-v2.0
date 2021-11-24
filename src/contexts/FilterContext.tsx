@@ -1,8 +1,21 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
 
-type FilterContextProps = {
-  locality: string | undefined
-  setLocality: (state: string | undefined) => void
+export type GeographicFeatureWithCoordinates = {
+  coordinates: {
+    latitude: number
+    longitude: number
+  }
+  geohash: string
+  place_name: string | undefined
+  granular: { id: string; text: string } | undefined
+  place: string | undefined
+}
+
+type FilterContextData = {
+  geographicLocation: GeographicFeatureWithCoordinates | undefined
+  setGeographicLocation: (
+    state: GeographicFeatureWithCoordinates | undefined
+  ) => void
   sortOption: string
   setSortOption: (state: string) => void
   deliveryOption: string
@@ -12,14 +25,16 @@ type FilterContextProps = {
   priceOption: string | undefined
   setPriceOption: (state: string | undefined) => void
 }
+
 type FilterProviderProps = {
   children: ReactNode
 }
 
-export const FilterContext = createContext({} as FilterContextProps)
+export const FilterContext = createContext({} as FilterContextData)
 
 export function FilterProvider({ children }: FilterProviderProps) {
-  const [locality, setLocality] = useState<string | undefined>()
+  const [geographicLocation, setGeographicLocation] =
+    useState<GeographicFeatureWithCoordinates>()
   const [sortOption, setSortOption] = useState<string>('')
   const [deliveryOption, setDeliveryOption] = useState<string>('delivery')
   const [tagOption, setTagOption] = useState<Array<string | number>>([])
@@ -38,8 +53,8 @@ export function FilterProvider({ children }: FilterProviderProps) {
   return (
     <FilterContext.Provider
       value={{
-        locality,
-        setLocality,
+        geographicLocation,
+        setGeographicLocation,
         sortOption,
         setSortOption,
         deliveryOption,

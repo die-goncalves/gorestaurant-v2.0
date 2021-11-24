@@ -10,7 +10,7 @@ export function RestaurantHeader() {
       alignItems="center"
       justifyContent="space-between"
     >
-      <Logo font_size="1.25rem" size_logo="2rem" />
+      <Logo fontSize="1.25rem" sizeLogo="2rem" marginX="4px" />
 
       <HStack spacing="1rem">
         <Button

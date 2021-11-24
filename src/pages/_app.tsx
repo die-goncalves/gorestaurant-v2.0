@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { useState } from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { FilterProvider } from '../contexts/FilterContext'
+import { LocationProvider } from '../contexts/LocationContext'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient())
@@ -15,13 +16,15 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
-        <FilterProvider>
-          <QueryClientProvider client={queryClient}>
-            <Component {...pageProps} />
-            <Notifications />
-            <ReactQueryDevtools />
-          </QueryClientProvider>
-        </FilterProvider>
+        <LocationProvider>
+          <FilterProvider>
+            <QueryClientProvider client={queryClient}>
+              <Component {...pageProps} />
+              <Notifications />
+              <ReactQueryDevtools />
+            </QueryClientProvider>
+          </FilterProvider>
+        </LocationProvider>
       </AuthProvider>
     </ChakraProvider>
   )
