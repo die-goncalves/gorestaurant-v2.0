@@ -9,6 +9,7 @@ import { useState } from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { FilterProvider } from '../contexts/FilterContext'
 import { LocationProvider } from '../contexts/LocationContext'
+import { RestaurantProvider } from '../contexts/RestaurantContext'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient())
@@ -18,11 +19,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       <AuthProvider>
         <LocationProvider>
           <FilterProvider>
-            <QueryClientProvider client={queryClient}>
-              <Component {...pageProps} />
-              <Notifications />
-              <ReactQueryDevtools />
-            </QueryClientProvider>
+            <RestaurantProvider>
+              <QueryClientProvider client={queryClient}>
+                <Component {...pageProps} />
+                <Notifications />
+                <ReactQueryDevtools />
+              </QueryClientProvider>
+            </RestaurantProvider>
           </FilterProvider>
         </LocationProvider>
       </AuthProvider>
