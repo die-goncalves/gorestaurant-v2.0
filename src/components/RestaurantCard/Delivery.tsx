@@ -1,5 +1,7 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
+import { MdDeliveryDining } from 'react-icons/md'
+import { BiShoppingBag } from 'react-icons/bi'
 
 type TimeDelivery = {
   minutes: string | null
@@ -46,28 +48,22 @@ export function Delivery({ deliveryPrice, deliveryTime }: DeliveryProps) {
   return (
     <Flex
       justifyContent="flex-start"
-      fontFamily="Spectral"
+      fontFamily="Barlow Semi Condensed"
       fontSize="1rem"
       lineHeight="1rem"
     >
       {deliveryPrice ? (
-        <Box
-          as="span"
-          className="material-icons-sharp"
-          fontSize="1rem"
-          marginRight="0.25rem"
-        >
-          delivery_dining
+        <Box as="span" fontSize="1rem" marginRight="0.25rem">
+          <MdDeliveryDining />
         </Box>
       ) : (
         <Box
           as="span"
-          className="material-icons-outlined"
           fontSize="1rem"
           lineHeight="0.8rem"
           marginRight="0.25rem"
         >
-          local_mall
+          <BiShoppingBag />
         </Box>
       )}
 

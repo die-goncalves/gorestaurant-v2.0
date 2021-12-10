@@ -1,5 +1,6 @@
 import { useDisclosure, Button, Collapse, Box, Flex } from '@chakra-ui/react'
 import { ReactNode, useState } from 'react'
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 
 type SidebarCollapseProps = {
   categoryName: string
@@ -39,13 +40,12 @@ export function SidebarCollapse({
           padding="0px"
           borderRadius="0px"
           as="span"
-          className="material-icons-outlined"
           color="orange.500"
           fontSize="1.5rem"
           transform={toogleCollapse ? 'rotate(-180deg)' : 'undefined'}
           transition="transform 0.2s"
         >
-          expand_more
+          <MdOutlineKeyboardArrowDown fontSize="24px" />
         </Box>
       </Button>
 

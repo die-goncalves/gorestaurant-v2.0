@@ -5,6 +5,7 @@ import {
   GeographicFeature,
   LocationContext
 } from '../../contexts/LocationContext'
+import { MdOutlineEditLocationAlt, MdLocationPin } from 'react-icons/md'
 
 export const Autocomplete = () => {
   const {
@@ -85,13 +86,8 @@ export const Autocomplete = () => {
         background="brand.input_background"
         w="100%"
       >
-        <Box
-          as="span"
-          className="material-icons-outlined"
-          marginRight="0.625rem"
-          color="orange.500"
-        >
-          edit_location_alt
+        <Box as="span" marginRight="0.625rem" color="orange.500">
+          <MdOutlineEditLocationAlt fontSize="24px" />
         </Box>
 
         <Input
@@ -136,13 +132,8 @@ export const Autocomplete = () => {
                       }
                     }}
                   >
-                    <Box
-                      as="span"
-                      className="material-icons-round"
-                      marginRight="0.625rem"
-                      color="orange.500"
-                    >
-                      place
+                    <Box as="span" marginRight="0.625rem" color="orange.500">
+                      <MdLocationPin fontSize="24px" />
                     </Box>
                     {item.place_name}
                   </ListItem>

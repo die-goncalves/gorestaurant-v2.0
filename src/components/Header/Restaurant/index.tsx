@@ -1,4 +1,6 @@
-import { Flex, HStack, Button, Box } from '@chakra-ui/react'
+import { Flex, HStack, Button } from '@chakra-ui/react'
+import { RiRestaurant2Line } from 'react-icons/ri'
+import { VscSignOut } from 'react-icons/vsc'
 import { Logo } from '../../Logo'
 
 export function RestaurantHeader() {
@@ -19,9 +21,7 @@ export function RestaurantHeader() {
           colorScheme="orange"
           borderRadius="0"
         >
-          <Box as="span" className="material-icons-outlined">
-            ramen_dining
-          </Box>
+          <RiRestaurant2Line fontSize="24px" />
         </Button>
         <Button
           onClick={() => {}}
@@ -30,9 +30,7 @@ export function RestaurantHeader() {
           colorScheme="red"
           borderRadius="0"
         >
-          <Box as="span" className="material-icons-outlined">
-            logout
-          </Box>
+          <VscSignOut fontSize="24px" />
         </Button>
       </HStack>
     </Flex>

@@ -15,8 +15,8 @@ import {
 } from '@chakra-ui/react'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { MapDrawer } from './MapDrawer'
-import mapboxgl from 'mapbox-gl'
 import { LocationContext } from '../../contexts/LocationContext'
+import { FiMap } from 'react-icons/fi'
 
 export const DrawerUserLocation = () => {
   const {
@@ -71,9 +71,7 @@ export const DrawerUserLocation = () => {
           paddingX="0"
           marginX="1rem"
         >
-          <Box as="span" className="material-icons-outlined" color="orange.500">
-            map
-          </Box>
+          <FiMap fontSize="20px" />
         </Button>
       </Box>
 
