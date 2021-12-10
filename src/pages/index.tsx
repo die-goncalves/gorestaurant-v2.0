@@ -2,6 +2,7 @@ import { Box, Flex, Image as ImageChakra } from '@chakra-ui/react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { ContentHome } from '../components/ContentHome'
+import { Footer } from '../components/Footer'
 import { HomeHeader } from '../components/Header/Home'
 import { withSSRGuest } from '../utils/withSSRGuest'
 
@@ -27,6 +28,8 @@ const Home: NextPage = () => {
           />
         </Box>
       </Flex>
+
+      <Footer noBorderTop />
     </>
   )
 }
