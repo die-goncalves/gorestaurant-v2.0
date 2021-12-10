@@ -48,7 +48,7 @@ export function Delivery({ deliveryPrice, deliveryTime }: DeliveryProps) {
   return (
     <Flex
       justifyContent="flex-start"
-      fontFamily="Barlow Semi Condensed"
+      fontFamily="Spectral"
       fontSize="1rem"
       lineHeight="1rem"
     >

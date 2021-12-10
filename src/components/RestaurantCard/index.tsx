@@ -1,10 +1,11 @@
 import { Box, Heading, VStack, Container } from '@chakra-ui/react'
-import React from 'react'
+import React, { useContext } from 'react'
 import Image from 'next/image'
 import { Tags } from './Tags'
-import { Rating } from './Rating'
 import { Delivery } from './Delivery'
 import { useRouter } from 'next/router'
+import { FilterContext } from '../../contexts/FilterContext'
+import { Rating } from '../Rating'
 
 type Restaurant = {
   id: string
@@ -31,6 +32,7 @@ type RestaurantCardProps = {
 
 export function RestaurantCard({ restaurant }: RestaurantCardProps) {
   const router = useRouter()
+  const { geographicLocation } = useContext(FilterContext)
 
   return (
     <Box
@@ -42,7 +44,9 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
       transitionProperty="transform, box-shadow"
       cursor="pointer"
       onClick={() => {
-        router.push(`/restaurant/${restaurant.id}`)
+        router.push(
+          `/restaurant/${restaurant.id}?geohash=${geographicLocation?.geohash}`
+        )
       }}
       _hover={{
         transform: 'translateY(-3px)',
@@ -79,7 +83,13 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
             })}
           />
 
-          <Rating rating={restaurant.rating} reviews={restaurant.reviews} />
+          <Rating
+            value={restaurant.rating}
+            critics={restaurant.reviews}
+            fontSize="16px"
+            starSize="16px"
+            oneStar
+          />
 
           <Delivery
             deliveryPrice={restaurant.delivery_price}
