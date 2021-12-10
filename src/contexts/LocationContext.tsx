@@ -30,6 +30,7 @@ export type Restaurant = {
     food_rating: Array<{ consumer_id: string; rating: number }>
   }>
   place: string
+  description: string
 }
 
 export type GeographicFeature = {

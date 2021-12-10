@@ -8,7 +8,7 @@ import { RestaurantsFilters } from '../components/RestaurantsFilters'
 import { Sidebar } from '../components/Sidebar'
 import { FilterContext } from '../contexts/FilterContext'
 import { api } from '../services/api'
-import { tagListingForFiltering } from '../utils/getTags'
+import { tagListingForFiltering } from '../utils/tags'
 import { supabase } from '../utils/supabaseClient'
 import { Restaurant, LocationContext } from '../contexts/LocationContext'
 
