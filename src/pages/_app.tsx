@@ -10,6 +10,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { FilterProvider } from '../contexts/FilterContext'
 import { LocationProvider } from '../contexts/LocationContext'
 import { RestaurantProvider } from '../contexts/RestaurantContext'
+import { CartProvider } from '../hooks/useCart'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient())
@@ -17,17 +18,19 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
-        <LocationProvider>
-          <FilterProvider>
-            <RestaurantProvider>
-              <QueryClientProvider client={queryClient}>
-                <Component {...pageProps} />
-                <Notifications />
-                <ReactQueryDevtools />
-              </QueryClientProvider>
-            </RestaurantProvider>
-          </FilterProvider>
-        </LocationProvider>
+        <CartProvider>
+          <LocationProvider>
+            <FilterProvider>
+              <RestaurantProvider>
+                <QueryClientProvider client={queryClient}>
+                  <Component {...pageProps} />
+                  <Notifications />
+                  <ReactQueryDevtools />
+                </QueryClientProvider>
+              </RestaurantProvider>
+            </FilterProvider>
+          </LocationProvider>
+        </CartProvider>
       </AuthProvider>
     </ChakraProvider>
   )
