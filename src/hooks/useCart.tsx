@@ -11,7 +11,11 @@ type Food = {
   tag: { id: string; tag_value: string }
   food_rating: Array<{ consumer_id: string; rating: number }>
   amount: number
-  restaurant: { name: string }
+  restaurant: { id: string; name: string; image: string }
+  stripe: {
+    stripe_food_id: string
+    stripe_food_price: string
+  }
 }
 
 type CartProviderProps = {
@@ -61,7 +65,8 @@ export function CartProvider({ children }: CartProviderProps) {
               *,  
               tag ( * ),
               food_rating: gr_food_rating ( * ),
-              restaurant: gr_restaurants ( name )
+              stripe: gr_stripe_foods ( * ),
+              restaurant: gr_restaurants ( id, name, image )
             `
           )
           .eq('id', foodId)

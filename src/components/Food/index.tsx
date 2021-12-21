@@ -164,92 +164,89 @@ export function Food({ food, rating }: FoodProps) {
             display="flex"
             justifyContent="space-between"
           >
-            <Flex>
-              <ButtonGroup spacing="3px">
-                <Button
-                  w="auto"
-                  padding="0px"
-                  variant="ghost"
-                  colorScheme="red"
-                  borderRadius="0px"
-                  sx={{
-                    _focus: {
-                      boxShadow: '0 0 0 3px rgb(245, 101, 101, 0.6)'
-                    }
-                  }}
-                  isDisabled={!thereIsASpecificFoodInTheCart(food.id)}
-                  onClick={() => handleRemoveFood(food.id)}
-                >
-                  <IoMdRemove fontSize="24px" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  colorScheme="green"
-                  borderRadius="0px"
-                  w="auto"
-                  padding="0px"
-                  sx={{
-                    _focus: {
-                      boxShadow: '0 0 0 3px rgb(72, 187, 120, 0.6)'
-                    }
-                  }}
-                  onClick={() => handleAddFood(food.id)}
-                >
-                  <IoMdAdd fontSize="24px" />
-                </Button>
-              </ButtonGroup>
-              <Flex
-                paddingX="1rem"
-                flex="1"
-                alignItems="center"
+            <ButtonGroup spacing="3px">
+              <Button
+                w="auto"
+                padding="0px"
+                variant="ghost"
+                colorScheme="red"
+                borderRadius="0px"
                 sx={{
-                  gap: '1.5rem'
+                  _focus: {
+                    boxShadow: '0 0 0 3px rgb(245, 101, 101, 0.6)'
+                  }
                 }}
+                isDisabled={!thereIsASpecificFoodInTheCart(food.id)}
+                onClick={() => handleRemoveFood(food.id)}
               >
-                <Flex alignItems="center" position="relative">
-                  <BsCart4 color="#C05621" fontSize="1.5rem" />
-                  {numberOfSpecificFoodInTheCart(food.id) !== 0 && (
-                    <Flex
-                      boxSize="1.5rem"
-                      position="absolute"
-                      border="1px solid #C05621"
-                      bg="orange.50"
-                      margin="0.25rem"
-                      borderRadius="50%"
-                      top="-1rem"
-                      right="-1rem"
+                <IoMdRemove fontSize="24px" />
+              </Button>
+              <Button
+                variant="ghost"
+                colorScheme="green"
+                borderRadius="0px"
+                w="auto"
+                padding="0px"
+                sx={{
+                  _focus: {
+                    boxShadow: '0 0 0 3px rgb(72, 187, 120, 0.6)'
+                  }
+                }}
+                onClick={() => handleAddFood(food.id)}
+              >
+                <IoMdAdd fontSize="24px" />
+              </Button>
+            </ButtonGroup>
+            <Flex
+              alignItems="center"
+              sx={{
+                gap: '1.5rem'
+              }}
+            >
+              <Flex alignItems="center" position="relative">
+                <BsCart4 color="#C05621" fontSize="1.5rem" />
+                {numberOfSpecificFoodInTheCart(food.id) !== 0 && (
+                  <Flex
+                    boxSize="1.5rem"
+                    position="absolute"
+                    boxShadow="0px 0px 0px 2.5px #FDFDFD"
+                    background="#C05621"
+                    borderRadius="full"
+                    justifyContent="center"
+                    alignItems="center"
+                    top="0px"
+                    right="0px"
+                    transform="translate(50%, -50%)"
+                  >
+                    <Text
+                      color="#FFFAF0"
+                      margin="auto"
+                      fontSize="0.75rem"
+                      fontWeight="600"
                     >
-                      <Text
-                        color="#C05621"
-                        margin="auto"
-                        fontSize="0.75rem"
-                        fontWeight="700"
-                      >
-                        {numberOfSpecificFoodInTheCart(food.id)}
-                      </Text>
-                    </Flex>
-                  )}
-                </Flex>
+                      {numberOfSpecificFoodInTheCart(food.id) > 99
+                        ? '+99'
+                        : numberOfSpecificFoodInTheCart(food.id)}
+                    </Text>
+                  </Flex>
+                )}
+              </Flex>
 
-                <Flex
-                  h="40px"
-                  paddingX="0.5rem"
-                  border="1px solid #E2E8F0"
-                  bg="gray.50"
-                >
-                  <Text margin="auto" fontWeight="600">
-                    {formatNumber({
-                      options: { currency: 'USD' },
-                      numberToBeFormatted:
-                        priceOfSpecificFoodAccumulatedInTheCart(food.id)
-                    })}
-                  </Text>
-                </Flex>
+              <Flex
+                h="40px"
+                paddingX="0.5rem"
+                border="1px solid #E2E8F0"
+                bg="gray.50"
+              >
+                <Text margin="auto" fontWeight="600">
+                  {formatNumber({
+                    options: { currency: 'USD' },
+                    numberToBeFormatted:
+                      priceOfSpecificFoodAccumulatedInTheCart(food.id)
+                  })}
+                </Text>
               </Flex>
             </Flex>
-            <Button variant="outline" colorScheme="blue" borderRadius="0px">
-              Add cart
-            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -13,6 +13,8 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@hookform/resolvers": "^2.8.0",
+    "@stripe/react-stripe-js": "^1.7.0",
+    "@stripe/stripe-js": "^1.22.0",
     "@supabase/supabase-js": "^1.22.6",
     "axios": "^0.22.0",
     "framer-motion": "^4",
@@ -29,6 +31,7 @@
     "react-query": "^3.25.1",
     "react-simple-typewriter": "^3.0.1",
     "scroll-into-view": "^1.16.0",
+    "stripe": "^8.193.0",
     "yup": "^0.32.9",
     "zxcvbn": "^4.4.2"
   },

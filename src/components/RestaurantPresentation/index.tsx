@@ -13,6 +13,7 @@ import { ModalForNonInteractionMap } from './ModalForNonInteractionMap'
 import { ratingNumberToText } from '../../utils/ratingNumberToText'
 import { overallRatingRestaurant } from '../../utils/overallRatingRestaurant'
 import { groupTags } from '../../utils/tags'
+import { setCookie } from 'nookies'
 
 type RestaurantPresentationProps = {
   restaurant: IRestaurant
@@ -63,6 +64,19 @@ export function RestaurantPresentation({
           distance: result.distance,
           time: result.duration
         })
+        setCookie(
+          null,
+          '@GoRestaurant:shippingFee',
+          JSON.stringify({
+            price: (Math.round(result.distance / 1000) * 0.12).toFixed(2),
+            distance: (result.distance / 1000).toFixed(2),
+            time: (result.duration / 60).toFixed(2)
+          }),
+          {
+            maxAge: 60 * 60 * 24 * 30,
+            path: '/'
+          }
+        )
       }
     }
     deliveryInfo()
