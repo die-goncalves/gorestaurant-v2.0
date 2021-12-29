@@ -66,11 +66,12 @@ export function RestaurantPresentation({
         })
         setCookie(
           null,
-          '@GoRestaurant:shippingFee',
+          '@GoRestaurant:shipping',
           JSON.stringify({
             price: (Math.round(result.distance / 1000) * 0.12).toFixed(2),
             distance: (result.distance / 1000).toFixed(2),
-            time: (result.duration / 60).toFixed(2)
+            time: (result.duration / 60).toFixed(2),
+            user_location: userLocation
           }),
           {
             maxAge: 60 * 60 * 24 * 30,

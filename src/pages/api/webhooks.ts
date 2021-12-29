@@ -3,10 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { Readable } from 'stream'
 import Stripe from 'stripe'
 import { stripe } from '../../services/stripe'
-import {
-  createPaymentIntent,
-  updatePaymentIntent
-} from './_lib/managePaymentIntent'
+import { updatePaymentIntent } from './_lib/managePaymentIntent'
 
 async function buffer(readable: Readable) {
   const chunks = []
@@ -50,50 +47,8 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     const { type } = event
     if (relevantEvents.has(type)) {
       try {
-        switch (type) {
-          case 'payment_intent.created':
-            const paymentIntent = event.data.object as Stripe.PaymentIntent
-            await createPaymentIntent(
-              paymentIntent.id,
-              paymentIntent.customer,
-              paymentIntent.status
-            )
-            break
-          case 'payment_intent.succeeded':
-            const paymentIntentSucceeded = event.data
-              .object as Stripe.PaymentIntent
-            await updatePaymentIntent(
-              paymentIntentSucceeded.id,
-              paymentIntentSucceeded.status
-            )
-            break
-          case 'payment_intent.canceled':
-            const paymentIntentCanceled = event.data
-              .object as Stripe.PaymentIntent
-            await updatePaymentIntent(
-              paymentIntentCanceled.id,
-              paymentIntentCanceled.status
-            )
-            break
-          case 'payment_intent.processing':
-            const paymentIntentProcessing = event.data
-              .object as Stripe.PaymentIntent
-            await updatePaymentIntent(
-              paymentIntentProcessing.id,
-              paymentIntentProcessing.status
-            )
-            break
-          case 'payment_intent.payment_failed':
-            const paymentIntentPaymentFailed = event.data
-              .object as Stripe.PaymentIntent
-            await updatePaymentIntent(
-              paymentIntentPaymentFailed.id,
-              paymentIntentPaymentFailed.status
-            )
-            break
-          default:
-            throw new Error('Unhandled event.')
-        }
+        const paymentIntent = event.data.object as Stripe.PaymentIntent
+        await updatePaymentIntent(paymentIntent.id, paymentIntent.status)
       } catch (error) {
         return response.json({ error: 'Webhook handler failed' })
       }
