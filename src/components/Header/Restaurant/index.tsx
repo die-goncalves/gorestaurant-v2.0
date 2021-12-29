@@ -1,8 +1,8 @@
-import { Flex, HStack, Button } from '@chakra-ui/react'
+import { Flex, HStack } from '@chakra-ui/react'
 import React from 'react'
-import { VscSignOut } from 'react-icons/vsc'
 import { Cart } from '../../Cart'
 import { Logo } from '../../Logo'
+import { SignInOrSignOut } from '../../SignInOrSignUp'
 
 export function RestaurantHeader() {
   return (
@@ -13,19 +13,12 @@ export function RestaurantHeader() {
       alignItems="center"
       justifyContent="space-between"
     >
-      <Logo fontSize="1.25rem" sizeLogo="2rem" marginX="4px" />
+      <Logo fontSize="1.25rem" sizeLogo="2rem" marginX="0.25rem" />
 
       <HStack spacing="1rem">
         <Cart />
-        <Button
-          onClick={() => {}}
-          padding="0"
-          variant="ghost"
-          colorScheme="red"
-          borderRadius="0"
-        >
-          <VscSignOut fontSize="24px" />
-        </Button>
+
+        <SignInOrSignOut />
       </HStack>
     </Flex>
   )

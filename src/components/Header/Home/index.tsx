@@ -1,13 +1,12 @@
-import { Flex, ButtonGroup } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import { Logo } from '../../Logo'
-import SignUp from '../../SignUp'
-import SignIn from '../../SignIn'
+import { SignInOrSignOut } from '../../SignInOrSignUp'
 
 export function HomeHeader() {
   return (
     <Flex
       as="header"
-      paddingX="60px"
+      paddingX="3.75rem"
       paddingY="1rem"
       width="inherit"
       alignItems="center"
@@ -16,10 +15,7 @@ export function HomeHeader() {
     >
       <Logo fontSize="1.25rem" sizeLogo="2rem" />
 
-      <ButtonGroup isAttached variant="solid" colorScheme="orange">
-        <SignIn />
-        <SignUp />
-      </ButtonGroup>
+      <SignInOrSignOut />
     </Flex>
   )
 }
