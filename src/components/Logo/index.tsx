@@ -1,5 +1,6 @@
-import { Box, Stack } from '@chakra-ui/react'
+import { Box, Link as ChakraLink, Stack } from '@chakra-ui/react'
 import Image from 'next/image'
+import NextLink from 'next/link'
 import SVGLogo from '../../assets/logo.svg'
 
 type LogoProps = {
@@ -10,23 +11,50 @@ type LogoProps = {
 
 export function Logo({ fontSize, sizeLogo, marginX = '0px' }: LogoProps) {
   return (
-    <Stack
-      direction="row"
-      spacing="0.5rem"
-      alignItems="center"
-      marginX={marginX}
-    >
-      <Box
-        width={sizeLogo}
-        height={sizeLogo}
-        position="relative"
-        verticalAlign="middle"
+    <NextLink href="/" passHref>
+      <ChakraLink
+        display="flex"
+        alignItems="center"
+        sx={{
+          _focus: { boxShadow: 'none' },
+          _hover: { textDecoration: 'none' }
+        }}
+        draggable={false}
       >
-        <Image src={SVGLogo} alt="GoRestaurant" layout="fill" />
-      </Box>
-      <Box as="span" fontSize={fontSize} fontWeight="600" color="black">
-        GoRestaurant
-      </Box>
-    </Stack>
+        <Stack
+          direction="row"
+          spacing="0.5rem"
+          alignItems="center"
+          marginX={marginX}
+        >
+          <Box
+            width={sizeLogo}
+            height={sizeLogo}
+            position="relative"
+            verticalAlign="middle"
+          >
+            <Image
+              src={SVGLogo}
+              alt="GoRestaurant"
+              layout="fill"
+              draggable={false}
+            />
+          </Box>
+
+          <Box
+            as="span"
+            fontSize={fontSize}
+            fontWeight="600"
+            sx={{
+              background: 'linear-gradient(to left, #000000 50%, #DD6B20 85%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}
+          >
+            GoRestaurant
+          </Box>
+        </Stack>
+      </ChakraLink>
+    </NextLink>
   )
 }
