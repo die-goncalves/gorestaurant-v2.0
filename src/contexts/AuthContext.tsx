@@ -14,7 +14,7 @@ type AuthContextData = {
   signUp(credentials: Credentials): Promise<void>
   signIn(credentials: Credentials): Promise<void>
   signOut: () => void
-  userData: User | null
+  userData: User | null | undefined
 }
 
 type AuthProviderProps = {
@@ -24,7 +24,7 @@ type AuthProviderProps = {
 export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [userData, setUserData] = useState<User | null>(null)
+  const [userData, setUserData] = useState<User | null | undefined>(undefined)
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
@@ -53,20 +53,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
         email,
         password
       })
-      if (error) throw error
+      if (error) {
+        toast.error(<Box as="span">{error.message}</Box>)
+        throw error
+      }
       toast.success(
-        <Box as="span" fontWeight="600">
+        <Box as="span">
           <Text>You&apos;ve been registered successfully</Text>
         </Box>
       )
       setUserData(user)
       Router.push('/dashboard')
     } catch (error) {
-      toast.error(
-        <Box as="span" fontWeight="600">
-          {error.error_description || error.message}
-        </Box>
-      )
+      console.error(error)
     }
   }
 
@@ -76,39 +75,36 @@ export function AuthProvider({ children }: AuthProviderProps) {
         email,
         password
       })
-      if (error) throw error
+      if (error) {
+        toast.error(<Box as="span">{error.message}</Box>)
+        throw error
+      }
       toast.success(
-        <Box as="span" fontWeight="600">
+        <Box as="span">
           <Text>You&apos;ve been logged successfully</Text>
         </Box>
       )
       setUserData(user)
-      Router.push('/dashboard')
     } catch (error) {
-      toast.error(
-        <Box as="span" fontWeight="600">
-          {error.error_description || error.message}
-        </Box>
-      )
+      console.error(error)
     }
   }
 
   async function signOut() {
     try {
       const { error } = await supabase.auth.signOut()
-      if (error) throw error
+      if (error) {
+        toast.error(<Box as="span">{error.message}</Box>)
+        throw error
+      }
       toast.success(
-        <Box as="span" fontWeight="600">
+        <Box as="span">
           <Text>You have successfully logged out</Text>
         </Box>
       )
-      Router.push('/')
+      setUserData(null)
     } catch (error) {
-      toast.error(
-        <Box as="span" fontWeight="600">
-          {error.error_description || error.message}
-        </Box>
-      )
+      console.error(error)
     }
   }
 
