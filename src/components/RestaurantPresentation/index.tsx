@@ -114,8 +114,8 @@ export function RestaurantPresentation({
           <Rating
             value={rating.current?.overallRating}
             critics={rating.current.numberRatings}
-            starSize="16px"
-            fontSize="16px"
+            starSize="1.2rem"
+            fontSize="1rem"
           />
         </Flex>
 

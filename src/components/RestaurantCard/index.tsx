@@ -5,7 +5,7 @@ import { Tags } from './Tags'
 import { Delivery } from './Delivery'
 import { useRouter } from 'next/router'
 import { FilterContext } from '../../contexts/FilterContext'
-import { Rating } from '../Rating'
+import { OneStar } from '../Rating/OneStar'
 
 type Restaurant = {
   id: string
@@ -83,12 +83,11 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
             })}
           />
 
-          <Rating
+          <OneStar
             value={restaurant.rating}
             critics={restaurant.reviews}
-            fontSize="16px"
-            starSize="16px"
-            oneStar
+            fontSize="1rem"
+            starSize="1.2rem"
           />
 
           <Delivery
