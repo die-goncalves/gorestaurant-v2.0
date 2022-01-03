@@ -23,7 +23,7 @@ type SupabaseResponseData = {
   foods: Array<{
     id: string
     tag: { id: string; tag_value: string }
-    food_rating: Array<{ consumer_id: string; rating: number }>
+    food_rating: Array<{ customer_id: string; rating: number }>
   }>
 }
 

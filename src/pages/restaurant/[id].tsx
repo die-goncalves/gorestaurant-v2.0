@@ -134,7 +134,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             price: food.price,
             tag: { id: food.tag.id, tag_value: food.tag.tag_value },
             food_rating: food.food_rating.map(food_rating => ({
-              consumer_id: food_rating.consumer_id,
+              customer_id: food_rating.customer_id,
               rating: food_rating.rating
             }))
           }
