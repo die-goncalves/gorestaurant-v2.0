@@ -4,7 +4,6 @@ import Head from 'next/head'
 import { ContentHome } from '../components/ContentHome'
 import { Footer } from '../components/Footer'
 import { HomeHeader } from '../components/Header/Home'
-import { withSSRGuest } from '../utils/withSSRGuest'
 
 const Home: NextPage = () => {
   return (
@@ -35,9 +34,3 @@ const Home: NextPage = () => {
 }
 
 export default Home
-
-export const getServerSideProps = withSSRGuest(async ctx => {
-  return {
-    props: {}
-  }
-})
