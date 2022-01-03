@@ -4,9 +4,9 @@ import { AuthContext } from '../../contexts/AuthContext'
 import { supabase } from '../../utils/supabaseClient'
 import { HomeHeader } from '../../components/Header/Home'
 import DashboardSidebar from '../../components/DashboardSidebar'
-import { GetServerSideProps } from 'next'
 import Router from 'next/router'
 import { Payment } from '../../components/Payment'
+import { withSSRAuth } from '../../utils/withSSRAuth'
 
 type IndividualPayment = {
   payment_intent_id: string
@@ -137,19 +137,8 @@ export default function DashboardOrders() {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const infos = await supabase.auth.api.getUserByCookie(ctx.req)
-
-  if (infos.user === null) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false
-      }
-    }
-  }
-
+export const getServerSideProps = withSSRAuth(async ctx => {
   return {
     props: {}
   }
-}
+})

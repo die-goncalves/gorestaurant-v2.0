@@ -5,8 +5,8 @@ import { supabase } from '../../utils/supabaseClient'
 import { HomeHeader } from '../../components/Header/Home'
 import DashboardSidebar from '../../components/DashboardSidebar'
 import Router from 'next/router'
-import { GetServerSideProps } from 'next'
 import { FoodRatingCard } from '../../components/FoodRatingCard'
+import { withSSRAuth } from '../../utils/withSSRAuth'
 
 export default function DashboardRating() {
   const { userData } = useContext(AuthContext)
@@ -129,19 +129,8 @@ export default function DashboardRating() {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const infos = await supabase.auth.api.getUserByCookie(ctx.req)
-
-  if (infos.user === null) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false
-      }
-    }
-  }
-
+export const getServerSideProps = withSSRAuth(async ctx => {
   return {
     props: {}
   }
-}
+})
