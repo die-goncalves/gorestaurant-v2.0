@@ -1,7 +1,6 @@
 import { Box, Text, Wrap, WrapItem } from '@chakra-ui/react'
 
 type TagInfo = {
-  id: string
   value: string
 }
 type TagsProps = {
@@ -14,7 +13,7 @@ export function Tags({ tags }: TagsProps) {
       {tags.map((tag, index) => {
         if (tag)
           return (
-            <WrapItem key={tag.id} as="span" alignItems="center">
+            <WrapItem key={tag.value} as="span" alignItems="center">
               <Text
                 fontFamily="Spectral"
                 fontSize="0.875rem"

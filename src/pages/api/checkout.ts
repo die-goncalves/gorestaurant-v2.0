@@ -11,8 +11,8 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     const cart = JSON.parse(cookies['@GoRestaurant:cart'])
 
     const foodToPay = cart.map(
-      (food: { stripe: { stripe_food_price: string }; amount: number }) => ({
-        price: food.stripe.stripe_food_price,
+      (food: { stripe_price_id: string; amount: number }) => ({
+        price: food.stripe_price_id,
         quantity: food.amount
       })
     )
@@ -30,31 +30,35 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
 
     if (loggedUser) {
       const stripeCustomerInDatabase = await supabase
-        .from('gr_stripe_customers')
+        .from('stripe_customer')
         .select('*')
-        .eq('id', loggedUser.id)
+        .eq('customer_id', loggedUser.id)
 
-      let customerId = ''
-      if (stripeCustomerInDatabase.data) {
-        if (stripeCustomerInDatabase.data.length === 1) {
-          customerId = stripeCustomerInDatabase.data[0].stripe_customer_id
-        }
+      let stripeCustomerId = ''
+      if (
+        stripeCustomerInDatabase.data &&
+        stripeCustomerInDatabase.data.length > 0
+      ) {
+        stripeCustomerId = stripeCustomerInDatabase.data[0].stripe_customer_id
       }
 
-      if (!customerId) {
+      if (!stripeCustomerId) {
         const stripeCustomer = await stripe.customers.create({
           email: loggedUser.email
         })
         const insertStripeCustomerInDatabase = await supabase
-          .from('gr_stripe_customers')
+          .from('stripe_customer')
           .insert([
-            { id: loggedUser.id, stripe_customer_id: stripeCustomer.id }
+            {
+              customer_id: loggedUser.id,
+              stripe_customer_id: stripeCustomer.id
+            }
           ])
-        customerId = stripeCustomer.id
+        stripeCustomerId = stripeCustomer.id
       }
 
       const stripeCheckoutSession = await stripe.checkout.sessions.create({
-        customer: customerId,
+        customer: stripeCustomerId,
         payment_method_types: ['card'],
         line_items: foodToPay,
         mode: 'payment',
@@ -75,7 +79,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
         ]
       })
 
-      await supabase.from('gr_orders').insert([
+      await supabase.from('orders').insert([
         {
           payment_intent_id: stripeCheckoutSession.payment_intent,
           line_items: cart.map((food: { id: string; amount: number }) => ({

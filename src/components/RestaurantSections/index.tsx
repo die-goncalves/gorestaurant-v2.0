@@ -10,13 +10,13 @@ type RestaurantDetailsProps = {
     price: number
     image: string
     description: string
-    tag: { id: string; tag_value: string }
+    tag: string
     food_rating: Array<{ customer_id: string; rating: number }>
   }>
 }
 
 export default function RestaurantSections({ foods }: RestaurantDetailsProps) {
-  const [tags, setTags] = useState<Array<{ id: string; tag_value: string }>>([])
+  const [tags, setTags] = useState<Array<string>>([])
 
   useEffect(() => {
     const foodFormatted = groupTags(foods)

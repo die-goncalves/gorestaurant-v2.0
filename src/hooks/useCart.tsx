@@ -8,14 +8,12 @@ type Food = {
   price: number
   image: string
   description: string
-  tag: { id: string; tag_value: string }
-  food_rating: Array<{ customer_id: string; rating: number }>
+  tag: string
   amount: number
+  stripe_food_id: string
+  stripe_price_id: string
   restaurant: { id: string; name: string; image: string }
-  stripe: {
-    stripe_food_id: string
-    stripe_food_price: string
-  }
+  food_rating: Array<{ customer_id: string; rating: number }>
 }
 
 type CartProviderProps = {
@@ -59,14 +57,12 @@ export function CartProvider({ children }: CartProviderProps) {
         })
       } else {
         const { data, error } = await supabase
-          .from<Food>('gr_foods')
+          .from<Food>('foods')
           .select(
             `
-              *,  
-              tag ( * ),
-              food_rating: gr_food_rating ( * ),
-              stripe: gr_stripe_foods ( * ),
-              restaurant: gr_restaurants ( id, name, image )
+              *,
+              food_rating ( * ),
+              restaurant: restaurants ( id, name, image )
             `
           )
           .eq('id', foodId)

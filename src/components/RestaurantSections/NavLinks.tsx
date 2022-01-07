@@ -16,17 +16,14 @@ import { MemoizedFoodSections } from './FoodSections'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 
 type NavLinksProps = {
-  tags: {
-    id: string
-    tag_value: string
-  }[]
+  tags: string[]
   foods: Array<{
     id: string
     name: string
     price: number
     image: string
     description: string
-    tag: { id: string; tag_value: string }
+    tag: string
     food_rating: Array<{ customer_id: string; rating: number }>
   }>
 }
@@ -34,10 +31,10 @@ type NavLinksProps = {
 export default function NavLinks({ tags, foods }: NavLinksProps) {
   const navRef = useRef<HTMLDivElement>(null)
   const [visibilityNavLinks, setVisibilityNavLinks] = useState<{
-    [key: string]: { isIntersecting: boolean; id: string; tag_value: string }
+    [key: string]: { isIntersecting: boolean; id: string; tag: string }
   }>({})
   const [notVisible, setNotVisible] = useState<
-    [string, { isIntersecting: boolean; id: string; tag_value: string }][]
+    [string, { isIntersecting: boolean; id: string; tag: string }][]
   >([])
   const [activeSectionId, setActiveSectionId] = useState('')
   const [activeSection, setActiveSection] = useState('')
@@ -52,7 +49,7 @@ export default function NavLinks({ tags, foods }: NavLinksProps) {
         [key: string]: {
           isIntersecting: boolean
           id: string
-          tag_value: string
+          tag: string
         }
       }>
     >
@@ -64,7 +61,7 @@ export default function NavLinks({ tags, foods }: NavLinksProps) {
           [key: string]: {
             isIntersecting: boolean
             id: string
-            tag_value: string
+            tag: string
           }
         } = {}
         entries.forEach(entryElement => {
@@ -72,13 +69,13 @@ export default function NavLinks({ tags, foods }: NavLinksProps) {
             updatedEntries[entryElement.target.id] = {
               isIntersecting: true,
               id: entryElement.target.id,
-              tag_value: entryElement.target.innerHTML
+              tag: entryElement.target.innerHTML
             }
           } else {
             updatedEntries[entryElement.target.id] = {
               isIntersecting: false,
               id: entryElement.target.id,
-              tag_value: entryElement.target.innerHTML
+              tag: entryElement.target.innerHTML
             }
           }
         })
@@ -134,14 +131,14 @@ export default function NavLinks({ tags, foods }: NavLinksProps) {
         if (visibleEntries.length === 1) {
           if (visibleEntries[0]['intersectionRatio'] >= 0.5) {
             throttledEventHandler.current(
-              visibleEntries[0].target.id.replace('section', '')
+              visibleEntries[0].target.id.replace('section', 'button')
             )
           } else {
             throttledEventHandler.current('')
           }
         } else if (visibleEntries.length > 1) {
           throttledEventHandler.current(
-            visibleEntries[0].target.id.replace('section', '')
+            visibleEntries[0].target.id.replace('section', 'button')
           )
         } else {
           throttledEventHandler.current('')
@@ -178,7 +175,7 @@ export default function NavLinks({ tags, foods }: NavLinksProps) {
     if (notVisible) {
       notVisible.forEach(entry => {
         if (entry && entry[0] === activeSectionId)
-          setActiveSection(entry[1].tag_value)
+          setActiveSection(entry[1].tag)
       })
     }
   }, [activeSectionId, visibilityNavLinks])
@@ -231,16 +228,16 @@ export default function NavLinks({ tags, foods }: NavLinksProps) {
             >
               {tags.map((tag, index) => (
                 <Button
-                  key={tag.id}
-                  id={tag.id}
+                  key={`button-key-${tag}`}
+                  id={`button-${tag}`}
                   display="flex"
                   padding="0.5rem"
                   borderRadius="0px"
                   colorScheme="orange"
                   variant="ghost"
-                  onClick={() => scrollFunction(`section${tag.id}`)}
+                  onClick={() => scrollFunction(`section-${tag}`)}
                   color={
-                    activeSectionId === tag.id
+                    activeSectionId === `button-${tag}`
                       ? 'orange.600'
                       : 'brand.text_color'
                   }
@@ -249,13 +246,15 @@ export default function NavLinks({ tags, foods }: NavLinksProps) {
                   }}
                   transition="border 0.1s ease-in-out"
                   borderBottom={
-                    activeSectionId === tag.id
+                    activeSectionId === `button-${tag}`
                       ? '3px solid #C05621'
                       : '0px solid #C05621'
                   }
-                  visibility={visibilityNavLinks[tag.id] ? 'visible' : 'hidden'}
+                  visibility={
+                    visibilityNavLinks[`button-${tag}`] ? 'visible' : 'hidden'
+                  }
                 >
-                  {tag.tag_value}
+                  {tag}
                 </Button>
               ))}
             </Flex>
@@ -296,7 +295,10 @@ export default function NavLinks({ tags, foods }: NavLinksProps) {
                   {Object.entries(visibilityNavLinks).map(link => {
                     if (!link[1].isIntersecting)
                       return (
-                        <MenuItem key={link[1].tag_value} padding="0px">
+                        <MenuItem
+                          key={`menuitem-key-${link[1].tag}`}
+                          padding="0px"
+                        >
                           <Button
                             id={link[1].id}
                             padding="0.5rem"
@@ -309,7 +311,7 @@ export default function NavLinks({ tags, foods }: NavLinksProps) {
                                 : 'brand.text_color'
                             }
                             onClick={() =>
-                              scrollFunction(`section${link[1].id}`)
+                              scrollFunction(`section-${link[1].tag}`)
                             }
                             transition="border 0.1s ease-in-out"
                             borderLeft={
@@ -320,7 +322,7 @@ export default function NavLinks({ tags, foods }: NavLinksProps) {
                             colorScheme="orange"
                             variant="ghost"
                           >
-                            {link[1].tag_value}
+                            {link[1].tag}
                           </Button>
                         </MenuItem>
                       )

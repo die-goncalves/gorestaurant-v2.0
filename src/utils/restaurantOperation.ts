@@ -2,10 +2,7 @@ function restaurantSituation(
   dailyOperation: Array<{
     start_hour: string
     end_hour: string
-    weekday: {
-      id: number
-      name: string
-    }
+    weekday: string
   }>,
   currentTime: string
 ) {
@@ -40,84 +37,93 @@ export function orderTime(
     id: string
     start_hour: string
     end_hour: string
-    weekday: {
-      id: number
-      name: string
-    }
+    weekday: string
   }>
 ) {
-  let separateDaysOfTheWeek = Array.from(
-    Array<{
-      id: string
-      start_hour: string
-      end_hour: string
-      weekday: {
-        id: number
-        name: string
-      }
-    }>(7),
-    () =>
-      new Array<{
+  const separateDaysOfTheWeek = operating_hours.reduce<
+    Record<
+      string,
+      Array<{
         id: string
         start_hour: string
         end_hour: string
-        weekday: {
-          id: number
-          name: string
-        }
-      }>()
-  )
-  operating_hours.forEach(item => {
-    separateDaysOfTheWeek[item.weekday.id].push(item)
-  })
-
-  let timeOrdering = separateDaysOfTheWeek.map(day => {
-    if (day.length === 0) return day
-    return day.sort(function (a, b) {
+        weekday: string
+      }>
+    >
+  >((acc, element) => {
+    const day = acc[element.weekday] ?? []
+    day.push(element)
+    day.sort(function (a, b) {
       if (a.start_hour > b.start_hour) return 1
       if (a.start_hour < b.start_hour) return -1
       return 0
     })
-  })
+    return {
+      ...acc,
+      [element.weekday]: day
+    }
+  }, {})
 
-  return { timeOrdering }
+  return { separateDaysOfTheWeek }
 }
 
 export function whenOpen(
   operating_hours: Array<{
+    id: string
     start_hour: string
     end_hour: string
-    weekday: {
-      id: number
-      name: string
-    }
+    weekday: string
   }>,
   time: { day: number; timer: string }
 ) {
-  let separateDaysOfTheWeek = Array.from(Array(7), () => new Array())
-  operating_hours.forEach(item => {
-    separateDaysOfTheWeek[item.weekday.id].push(item)
-  })
+  enum weekday {
+    Sunday = 0,
+    Monday = 1,
+    Tuesday = 2,
+    Wednesday = 3,
+    Thursday = 4,
+    Friday = 5,
+    Saturday = 6
+  }
 
-  let timeOrdering = separateDaysOfTheWeek.map(day => {
-    if (day.length === 0) return day
-    return day.sort(function (a, b) {
+  const timeOrdering = operating_hours.reduce<
+    Record<
+      string,
+      Array<{
+        id: string
+        start_hour: string
+        end_hour: string
+        weekday: string
+      }>
+    >
+  >((acc, element) => {
+    const day = acc[element.weekday] ?? []
+    day.push(element)
+    day.sort(function (a, b) {
       if (a.start_hour > b.start_hour) return 1
       if (a.start_hour < b.start_hour) return -1
       return 0
     })
-  })
+    return {
+      ...acc,
+      [element.weekday]: day
+    }
+  }, {})
 
   let countDay = time.day
+
   let isOpen = {} as { open: boolean; for_coming?: any; current?: any }
   while (true) {
     if (countDay !== time.day) {
-      if (timeOrdering[countDay].length > 0) {
-        isOpen = { open: false, for_coming: timeOrdering[countDay][0] }
+      if (timeOrdering[weekday[countDay]].length > 0) {
+        isOpen = {
+          open: false,
+          for_coming: timeOrdering[weekday[countDay]][0]
+        }
         break
       }
     }
-    isOpen = restaurantSituation(timeOrdering[countDay], time.timer)
+    isOpen = restaurantSituation(timeOrdering[weekday[countDay]], time.timer)
 
     if (isOpen.for_coming || isOpen.current) {
       break

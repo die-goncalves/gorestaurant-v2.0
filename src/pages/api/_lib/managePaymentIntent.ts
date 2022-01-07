@@ -5,7 +5,7 @@ export async function updatePaymentIntent(
   status: string
 ) {
   await supabase
-    .from('gr_orders')
+    .from('orders')
     .update({
       payment_intent_status: status,
       updated_at: new Date().toISOString().toLocaleString()

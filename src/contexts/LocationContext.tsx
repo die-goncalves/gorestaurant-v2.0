@@ -13,10 +13,7 @@ export type Restaurant = {
     id: string
     start_hour: string
     end_hour: string
-    weekday: {
-      id: number
-      name: string
-    }
+    weekday: string
   }>
   address: string
   image: string
@@ -26,7 +23,7 @@ export type Restaurant = {
     price: number
     image: string
     description: string
-    tag: { id: string; tag_value: string }
+    tag: string
     food_rating: Array<{ customer_id: string; rating: number }>
   }>
   place: string

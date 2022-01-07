@@ -22,7 +22,7 @@ type SupabaseResponseData = {
   image: string
   foods: Array<{
     id: string
-    tag: { id: string; tag_value: string }
+    tag: string
     food_rating: Array<{ customer_id: string; rating: number }>
   }>
 }
@@ -189,8 +189,8 @@ export default function Restaurants({ geohash, tags }: RestaurantsProps) {
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const { place } = ctx.query
   const { data } = await supabase
-    .from<Restaurant>('gr_restaurants')
-    .select('foods: gr_foods ( tag ( * ) )')
+    .from('restaurants')
+    .select('foods ( tag )')
     .filter('place', 'eq', place)
 
   const tags = data ? tagListingForFiltering(data) : []

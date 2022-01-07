@@ -28,14 +28,12 @@ type Food = {
   price: number
   image: string
   description: string
-  tag: { id: string; tag_value: string }
-  food_rating: Array<{ customer_id: string; rating: number }>
+  tag: string
   amount: number
+  stripe_food_id: string
+  stripe_price_id: string
   restaurant: { id: string; name: string; image: string }
-  stripe: {
-    stripe_food_id: string
-    stripe_food_price: string
-  }
+  food_rating: Array<{ customer_id: string; rating: number }>
 }
 
 export function Cart() {

@@ -75,7 +75,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     params: { id: string }
   }[] = []
 
-  const { data, error } = await supabase.from('gr_restaurants').select('*')
+  const { data, error } = await supabase.from('restaurants').select('*')
 
   if (data) {
     paths = data.map(restaurant => {
@@ -98,19 +98,20 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { id } = params
 
     const { data, error } = await supabase
-      .from<IRestaurant>('gr_restaurants')
+      .from<IRestaurant>('restaurants')
       .select(
         `
           *,
-          foods: gr_foods (
+          foods (
             *,
-            tag ( * ),
-            food_rating: gr_food_rating ( * ) ),
-          operating_hours: gr_operating_hours (
+            food_rating ( * )
+          ),
+          operating_hours (
             id,
             start_hour,
             end_hour,
-            weekday: gr_weekday ( * ) )
+            weekday
+          )
         `
       )
       .match({ id: id })
@@ -132,7 +133,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             description: food.description,
             image: food.image,
             price: food.price,
-            tag: { id: food.tag.id, tag_value: food.tag.tag_value },
+            tag: food.tag,
             food_rating: food.food_rating.map(food_rating => ({
               customer_id: food_rating.customer_id,
               rating: food_rating.rating
@@ -142,6 +143,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         place: data.place,
         description: data.description
       }
+
       return {
         props: { restaurant }
       }

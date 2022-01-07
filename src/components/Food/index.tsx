@@ -29,7 +29,7 @@ type FoodProps = {
     price: number
     image: string
     description: string
-    tag: { id: string; tag_value: string }
+    tag: string
     food_rating: Array<{ customer_id: string; rating: number }>
   }
   rating: number | undefined
@@ -104,12 +104,12 @@ export function Food({ food, rating }: FoodProps) {
             <Text
               position="absolute"
               top="7px"
-              right="7px"
+              right="3.5px"
               fontSize="14px"
               lineHeight="14px"
               fontWeight="600"
             >
-              {rating}
+              {rating?.toFixed(2)}
             </Text>
           </Box>
           <Image

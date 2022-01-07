@@ -42,7 +42,7 @@ export default function DashboardOrders() {
     async function fetchPayments() {
       if (userData) {
         const { data } = await supabase
-          .from('gr_orders')
+          .from('orders')
           .select('*')
           .eq('customer_id', userData.id)
 
@@ -53,8 +53,8 @@ export default function DashboardOrders() {
             let index = 0
             for (const item of payment.line_items) {
               const currentFood = await supabase
-                .from('gr_foods')
-                .select(`*, restaurant ( * )`)
+                .from('foods')
+                .select(`*, restaurant: restaurants ( * )`)
                 .eq('id', item.food_id)
               if (currentFood.data) {
                 result[indexPayment].line_items[index].food =

@@ -20,7 +20,7 @@ type Restaurant = {
   coordinates: { lat: number; lng: number }
   place: string
   foods: Array<{
-    tag: { id: string; tag_value: string }
+    tag: string
     food_rating: Array<{ customer_id: string; rating: number }>
   }>
 }
@@ -41,12 +41,11 @@ export function Footer({ noBorderTop }: FooterProps) {
   useEffect(() => {
     async function fetchData() {
       let geojson: FeatureCollection
-      const { data } = await supabase.from<Restaurant>('gr_restaurants').select(
+      const { data } = await supabase.from<Restaurant>('restaurants').select(
         `
-            *, 
-            foods: gr_foods ( tag ( * ), 
-            food_rating: gr_food_rating ( * ) )
-          `
+          *, 
+          foods ( tag, food_rating ( * ) )
+        `
       )
 
       if (data) {

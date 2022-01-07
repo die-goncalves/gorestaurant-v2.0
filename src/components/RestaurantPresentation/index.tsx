@@ -32,12 +32,7 @@ export function RestaurantPresentation({
     text: string
     color: string
   }>()
-  const tags = useRef<
-    Array<{
-      id: string
-      tag_value: string
-    }>
-  >()
+  const tags = useRef<Array<string>>()
 
   const infoRating = overallRatingRestaurant([...restaurant.foods])
   const transformRating = ratingNumberToText(infoRating.overallRating)
@@ -129,8 +124,8 @@ export function RestaurantPresentation({
           spacing={2}
         >
           {tags.current?.map(tag => (
-            <Text lineHeight="1.5rem" key={tag.id}>
-              {tag.tag_value}
+            <Text lineHeight="1.5rem" key={tag}>
+              {tag}
             </Text>
           ))}
         </HStack>

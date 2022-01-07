@@ -22,10 +22,7 @@ type RestaurantStatus = {
     id: string
     start_hour: string
     end_hour: string
-    weekday: {
-      id: number
-      name: string
-    }
+    weekday: string
   }>
 }
 
@@ -42,7 +39,7 @@ export function RestaurantStatus({ operatingHours }: RestaurantStatus) {
     onClose: onCloseModal
   } = useDisclosure()
 
-  const { timeOrdering } = orderTime(operatingHours)
+  const { separateDaysOfTheWeek: timeOrdering } = orderTime(operatingHours)
 
   function updateClock() {
     setTime({

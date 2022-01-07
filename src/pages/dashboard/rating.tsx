@@ -24,7 +24,7 @@ export default function DashboardRating() {
     async function fetchFoodsAvailableForRating() {
       if (userData) {
         const { data } = await supabase
-          .from('gr_orders')
+          .from('orders')
           .select('*')
           .eq('customer_id', userData.id)
 
@@ -49,8 +49,8 @@ export default function DashboardRating() {
           }> = []
           for (const foodId of foodAvailable) {
             const currentFood = await supabase
-              .from('gr_foods')
-              .select(`*, restaurant ( * )`)
+              .from('foods')
+              .select(`*, restaurant: restaurants ( * )`)
               .eq('id', foodId)
             if (currentFood.data) {
               result.push(currentFood.data[0])

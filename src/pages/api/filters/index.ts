@@ -13,7 +13,7 @@ type SupabaseResponseData = {
   created_at: string
   image: string
   foods: Array<{
-    tag: { id: string; tag_value: string }
+    tag: string
     food_rating: Array<{ food_id: string; rating: number }>
   }>
   place: string
@@ -79,7 +79,7 @@ async function dataForPickUp(
       filterByTags = addRatingInfo.filter(value => {
         const testes = value.foods.filter(item => {
           if (item.tag) {
-            return filters['tag[]'].includes(item.tag.tag_value.toLowerCase())
+            return filters['tag[]'].includes(item.tag.toLowerCase())
           } else return false
         })
         if (testes.length !== 0) return true
@@ -88,7 +88,7 @@ async function dataForPickUp(
       filterByTags = addRatingInfo.filter(value => {
         const found = value.foods.filter(item => {
           if (item.tag) {
-            return item.tag.tag_value.toLowerCase() === filters['tag[]']
+            return item.tag.toLowerCase() === filters['tag[]']
           } else return false
         })
         if (found.length !== 0) return true
@@ -184,7 +184,7 @@ async function dataForDelivery(
       filterByTags = addInfos.filter(value => {
         const testes = value.foods.filter(item => {
           if (item.tag) {
-            return filters['tag[]'].includes(item.tag.tag_value.toLowerCase())
+            return filters['tag[]'].includes(item.tag.toLowerCase())
           } else return false
         })
         if (testes.length !== 0) return true
@@ -193,7 +193,7 @@ async function dataForDelivery(
       filterByTags = addInfos.filter(value => {
         const found = value.foods.filter(item => {
           if (item.tag) {
-            return item.tag.tag_value.toLowerCase() === filters['tag[]']
+            return item.tag.toLowerCase() === filters['tag[]']
           } else return false
         })
         if (found.length !== 0) return true
@@ -295,7 +295,7 @@ export default async function handler(
     const { delivery, user_lng, user_lat, place } = req.query
 
     const { data, error } = await supabase
-      .from<SupabaseResponseData>('gr_restaurants')
+      .from<SupabaseResponseData>('restaurants')
       .select(
         `
           id,
@@ -303,9 +303,9 @@ export default async function handler(
           coordinates,
           image,
           created_at,
-          foods: gr_foods (
-            tag ( * ),
-            food_rating: gr_food_rating ( * )
+          foods (
+            tag,
+            food_rating: food_rating ( * )
           ),
           place
         `

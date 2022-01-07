@@ -30,7 +30,7 @@ export function ClickableRating({ starSize, foodId }: ClickableRatingProps) {
     try {
       setIsSavingRating(true)
       const { data, error } = await supabase
-        .from('gr_food_rating')
+        .from('food_rating')
         .update({
           rating,
           updated_at: new Date().toISOString().toLocaleString()
@@ -54,7 +54,7 @@ export function ClickableRating({ starSize, foodId }: ClickableRatingProps) {
   async function createRating(rating: number) {
     try {
       setIsSavingRating(true)
-      const { error } = await supabase.from('gr_food_rating').insert([
+      const { error } = await supabase.from('food_rating').insert([
         {
           food_id: foodId,
           customer_id: userData?.id,
@@ -88,7 +88,7 @@ export function ClickableRating({ starSize, foodId }: ClickableRatingProps) {
   > {
     try {
       const { data, error } = await supabase
-        .from('gr_food_rating')
+        .from('food_rating')
         .select('*')
         .match({ food_id: foodId, customer_id: userData?.id })
 
@@ -125,7 +125,7 @@ export function ClickableRating({ starSize, foodId }: ClickableRatingProps) {
     async function foodAlreadyRated() {
       try {
         const { data, error } = await supabase
-          .from('gr_food_rating')
+          .from('food_rating')
           .select('*')
           .match({ food_id: foodId, customer_id: userData?.id })
 

@@ -17,7 +17,7 @@ type Restaurant = {
   image: string
   foods: Array<{
     id: string
-    tag: { id: string; tag_value: string }
+    tag: string
     food_rating: Array<{ customer_id: string; rating: number }>
   }>
   rating: number | undefined
@@ -75,11 +75,9 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
 
           <Tags
             tags={restaurant.foods.map(food => {
-              if (food.tag)
-                return {
-                  id: food.tag.id,
-                  value: food.tag.tag_value
-                }
+              return {
+                value: food.tag
+              }
             })}
           />
 
