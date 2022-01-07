@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/router'
 
 export const Notifications = () => {
@@ -8,7 +8,6 @@ export const Notifications = () => {
 
   useEffect(() => {
     setIsOnTheHomePage(router.asPath)
-    toast.dismiss()
   }, [router.asPath])
 
   return (
@@ -30,7 +29,7 @@ export const Notifications = () => {
           }
         },
         success: {
-          duration: 5000,
+          duration: 2500,
           style: {
             border: '1.5px solid#EBFFEB',
             background: '#FAFFFA',

@@ -15,6 +15,7 @@ type AuthContextData = {
   signIn(credentials: Credentials): Promise<void>
   signOut: () => void
   userData: User | null | undefined
+  deleteUser: () => Promise<void>
 }
 
 type AuthProviderProps = {
@@ -108,8 +109,44 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  async function deleteUser() {
+    try {
+      if (userData) {
+        //delete cookie sb:token
+        const signOut = await supabase.auth.signOut()
+        if (signOut.error) {
+          toast.error(<Box as="span">{signOut.error.message}</Box>)
+          throw signOut.error
+        }
+
+        //delete auth user
+        const deleteUser = await supabase.auth.api.deleteUser(
+          userData.id,
+          `${process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_SECRET_KEY}`
+        )
+        if (deleteUser.error) {
+          toast.error(<Box as="span">{deleteUser.error.message}</Box>)
+          throw deleteUser.error
+        }
+
+        toast.success(
+          <Box as="span">
+            <Text>Congratulations! You have just deleted your account</Text>
+          </Box>
+        )
+        setUserData(null)
+      } else {
+        throw new Error('Unable to find the user')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ signUp, signIn, signOut, userData }}>
+    <AuthContext.Provider
+      value={{ signUp, signIn, signOut, userData, deleteUser }}
+    >
       {children}
     </AuthContext.Provider>
   )
