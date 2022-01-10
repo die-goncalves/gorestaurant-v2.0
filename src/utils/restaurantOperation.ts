@@ -1,11 +1,17 @@
 function restaurantSituation(
-  dailyOperation: Array<{
-    start_hour: string
-    end_hour: string
-    weekday: string
-  }>,
+  dailyOperation:
+    | Array<{
+        start_hour: string
+        end_hour: string
+        weekday: string
+      }>
+    | undefined,
   currentTime: string
 ) {
+  if (dailyOperation === undefined) {
+    return { open: false }
+  }
+
   let dailySituation = {} as { open: boolean; for_coming?: any; current?: any }
   let start, end
   for (let i = 0; i < dailyOperation.length; i++) {
@@ -115,7 +121,10 @@ export function whenOpen(
   let isOpen = {} as { open: boolean; for_coming?: any; current?: any }
   while (true) {
     if (countDay !== time.day) {
-      if (timeOrdering[weekday[countDay]].length > 0) {
+      if (
+        timeOrdering[weekday[countDay]] &&
+        timeOrdering[weekday[countDay]].length > 0
+      ) {
         isOpen = {
           open: false,
           for_coming: timeOrdering[weekday[countDay]][0]
@@ -124,7 +133,6 @@ export function whenOpen(
       }
     }
     isOpen = restaurantSituation(timeOrdering[weekday[countDay]], time.timer)
-
     if (isOpen.for_coming || isOpen.current) {
       break
     }
