@@ -15,18 +15,16 @@ import {
 import React from 'react'
 import { GiWorld } from 'react-icons/gi'
 import { NonInteractionMap } from './NonInteractionMap'
+import { TRestaurant } from '../../types'
 
-type ModalForNonInteractionMapProps = {
-  coordinates: {
-    lat: number
-    lng: number
-  }
-  placeName: string
-}
+type ModalForNonInteractionMapProps = Pick<
+  TRestaurant,
+  'coordinates' | 'address'
+>
 
 export function ModalForNonInteractionMap({
   coordinates,
-  placeName
+  address
 }: ModalForNonInteractionMapProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -85,7 +83,7 @@ export function ModalForNonInteractionMap({
               flex="1"
               variant="filled"
               borderRadius="0px"
-              value={placeName}
+              value={address}
               placeholder="Here you will see your exact location"
               isReadOnly
               background="orange.50"

@@ -10,19 +10,14 @@ import { supabase } from '../../utils/supabaseClient'
 import { overallRatingRestaurant } from '../../utils/overallRatingRestaurant'
 import { ratingNumberToText } from '../../utils/ratingNumberToText'
 import { backgroundColorOfTheStar } from '../../utils/backgroundColorOfTheStar'
+import { TRestaurant, TFoods, TFoodRating } from '../../types'
 
-type Restaurant = {
-  id: string
-  name: string
-  phone_number: string
-  image: string
-  description: string
-  coordinates: { lat: number; lng: number }
-  place: string
-  foods: Array<{
-    tag: string
-    food_rating: Array<{ customer_id: string; rating: number }>
-  }>
+type Restaurant = Omit<TRestaurant, 'address' | 'created_at' | 'updated_at'> & {
+  foods: Array<
+    Pick<TFoods, 'tag'> & {
+      food_rating: Array<Pick<TFoodRating, 'customer_id' | 'rating'>>
+    }
+  >
 }
 
 type FooterProps = {

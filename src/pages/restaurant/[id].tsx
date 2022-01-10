@@ -4,14 +4,32 @@ import { useRouter } from 'next/router'
 import { supabase } from '../../utils/supabaseClient'
 import { RestaurantHeader } from '../../components/Header/Restaurant'
 import { useEffect, useContext } from 'react'
-import { Restaurant as IRestaurant } from '../../contexts/LocationContext'
 import { RestaurantPresentation } from '../../components/RestaurantPresentation'
 import RestaurantSections from '../../components/RestaurantSections'
 import { RestaurantContext } from '../../contexts/RestaurantContext'
 import { Footer } from '../../components/Footer'
+import { TRestaurant, TFoods, TFoodRating, TOperatingHours } from '../../types'
+
+type Restaurant = Omit<TRestaurant, 'created_at' | 'updated_at'> & {
+  operating_hours: Array<Omit<TOperatingHours, 'restaurant_id'>>
+  foods: Array<
+    Omit<
+      TFoods,
+      | 'restaurant_id'
+      | 'stripe_food_id'
+      | 'stripe_price_id'
+      | 'created_at'
+      | 'updated_at'
+    > & {
+      food_rating: Array<
+        Omit<TFoodRating, 'food_id' | 'created_at' | 'updated_at'>
+      >
+    }
+  >
+}
 
 type RestaurantProps = {
-  restaurant: IRestaurant
+  restaurant: Restaurant
 }
 
 export default function Restaurant({ restaurant }: RestaurantProps) {
@@ -75,7 +93,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
     params: { id: string }
   }[] = []
 
-  const { data, error } = await supabase.from('restaurants').select('*')
+  const { data, error } = await supabase
+    .from<TRestaurant>('restaurants')
+    .select('*')
 
   if (data) {
     paths = data.map(restaurant => {
@@ -98,7 +118,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { id } = params
 
     const { data, error } = await supabase
-      .from<IRestaurant>('restaurants')
+      .from<Restaurant>('restaurants')
       .select(
         `
           *,
@@ -118,7 +138,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       .single()
 
     if (data) {
-      const restaurant: IRestaurant = {
+      const restaurant: Restaurant = {
         id: data.id,
         name: data.name,
         image: data.image,

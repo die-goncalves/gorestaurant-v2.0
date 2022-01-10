@@ -21,17 +21,18 @@ import { BsCart4 } from 'react-icons/bs'
 import { IoMdAdd, IoMdRemove } from 'react-icons/io'
 import { useCart } from '../../hooks/useCart'
 import { formatNumber } from '../../utils/formatNumber'
+import { TFoods } from '../../types'
 
 type FoodProps = {
-  food: {
-    id: string
-    name: string
-    price: number
-    image: string
-    description: string
-    tag: string
-    food_rating: Array<{ customer_id: string; rating: number }>
-  }
+  food: Omit<
+    TFoods,
+    | 'restaurant_id'
+    | 'tag'
+    | 'stripe_food_id'
+    | 'stripe_price_id'
+    | 'created_at'
+    | 'updated_at'
+  >
   rating: number | undefined
 }
 

@@ -21,19 +21,12 @@ import { formatNumber } from '../../utils/formatNumber'
 import { api } from '../../services/api'
 import { getStripeJs } from '../../services/stripe-js'
 import { AuthContext } from '../../contexts/AuthContext'
+import { TRestaurant, TFoods, TFoodRating } from '../../types'
 
-type Food = {
-  id: string
-  name: string
-  price: number
-  image: string
-  description: string
-  tag: string
+type Food = Omit<TFoods, 'restaurant_id' | 'created_at' | 'updated_at'> & {
   amount: number
-  stripe_food_id: string
-  stripe_price_id: string
-  restaurant: { id: string; name: string; image: string }
-  food_rating: Array<{ customer_id: string; rating: number }>
+  restaurant: Pick<TRestaurant, 'id' | 'name' | 'image'>
+  food_rating: Array<Pick<TFoodRating, 'customer_id' | 'rating'>>
 }
 
 export function Cart() {

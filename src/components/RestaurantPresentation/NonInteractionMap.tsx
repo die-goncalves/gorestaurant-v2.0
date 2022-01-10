@@ -1,13 +1,9 @@
 import { Box } from '@chakra-ui/react'
 import mapboxgl from 'mapbox-gl'
 import React, { useEffect, useRef } from 'react'
+import { TRestaurant } from '../../types'
 
-type NonInteractionMapProps = {
-  coordinates: {
-    lat: number
-    lng: number
-  }
-}
+type NonInteractionMapProps = Pick<TRestaurant, 'coordinates'>
 
 export function NonInteractionMap({ coordinates }: NonInteractionMapProps) {
   const map = useRef<mapboxgl.Map | null>(null)

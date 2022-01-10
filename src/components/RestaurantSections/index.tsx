@@ -2,17 +2,23 @@ import { useEffect, useState } from 'react'
 import { Box } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import { groupTags } from '../../utils/tags'
+import { TFoods, TFoodRating } from '../../types'
 
 type RestaurantDetailsProps = {
-  foods: Array<{
-    id: string
-    name: string
-    price: number
-    image: string
-    description: string
-    tag: string
-    food_rating: Array<{ customer_id: string; rating: number }>
-  }>
+  foods: Array<
+    Omit<
+      TFoods,
+      | 'restaurant_id'
+      | 'stripe_food_id'
+      | 'stripe_price_id'
+      | 'created_at'
+      | 'updated_at'
+    > & {
+      food_rating: Array<
+        Omit<TFoodRating, 'food_id' | 'created_at' | 'updated_at'>
+      >
+    }
+  >
 }
 
 export default function RestaurantSections({ foods }: RestaurantDetailsProps) {

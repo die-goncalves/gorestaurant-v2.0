@@ -6,20 +6,10 @@ import { Delivery } from './Delivery'
 import { useRouter } from 'next/router'
 import { FilterContext } from '../../contexts/FilterContext'
 import { OneStar } from '../Rating/OneStar'
+import { TRestaurant, TFoods } from '../../types'
 
-type Restaurant = {
-  id: string
-  name: string
-  coordinates: {
-    lat: number
-    lng: number
-  }
-  image: string
-  foods: Array<{
-    id: string
-    tag: string
-    food_rating: Array<{ customer_id: string; rating: number }>
-  }>
+type Restaurant = Pick<TRestaurant, 'id' | 'image' | 'name'> & {
+  foods: Array<Pick<TFoods, 'tag'>>
   rating: number | undefined
   reviews: number
   delivery_time?: number

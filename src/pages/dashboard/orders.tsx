@@ -7,55 +7,44 @@ import DashboardSidebar from '../../components/DashboardSidebar'
 import Router from 'next/router'
 import { Payment } from '../../components/Payment'
 import { withSSRAuth } from '../../utils/withSSRAuth'
+import { TRestaurant, TFoods, TOrder } from '../../types'
 
-type IndividualPayment = {
-  payment_intent_id: string
-  payment_intent_status: string
-  created_at: string
-  updated_at: string
-  line_items: {
+type Payment = Omit<TOrder, 'line_items'> & {
+  line_items: Array<{
     food_id: string
     quantity: number
-    food: {
-      name: string
-      price: number
-      restaurant: {
-        name: string
-      }
-    }
-  }[]
-  shipping_options: {
-    shipping_amount: number
-    shipping_address: string
-    shipping_geohash: string
-  }
+    food: { name: string; price: number; restaurant: { name: string } }
+  }>
 }
 
 export default function DashboardOrders() {
   const { userData } = useContext(AuthContext)
-  const [payments, setPayments] = useState<IndividualPayment[] | undefined>(
-    undefined
-  )
+  const [payments, setPayments] = useState<Payment[] | undefined>(undefined)
   const [loadData, setLoadData] = useState(true)
 
   useEffect(() => {
     async function fetchPayments() {
       if (userData) {
         const { data } = await supabase
-          .from('orders')
+          .from<TOrder>('orders')
           .select('*')
           .eq('customer_id', userData.id)
 
         if (data) {
-          let result = data
+          let result = data as Payment[]
           let indexPayment = 0
           for (const payment of data) {
             let index = 0
             for (const item of payment.line_items) {
               const currentFood = await supabase
-                .from('foods')
-                .select(`*, restaurant: restaurants ( * )`)
+                .from<
+                  Pick<TFoods, 'id' | 'name' | 'price'> & {
+                    restaurant: Pick<TRestaurant, 'name'>
+                  }
+                >('foods')
+                .select(`name, price, restaurant: restaurants ( name )`)
                 .eq('id', item.food_id)
+
               if (currentFood.data) {
                 result[indexPayment].line_items[index].food =
                   currentFood.data[0]

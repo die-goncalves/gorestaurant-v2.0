@@ -15,29 +15,15 @@ import {
 } from '@chakra-ui/react'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { formatNumber } from '../../utils/formatNumber'
+import { TOrder } from '../../types'
 
 type PaymentProps = {
-  payment: {
-    payment_intent_id: string
-    payment_intent_status: string
-    created_at: string
-    updated_at: string
-    line_items: {
+  payment: Omit<TOrder, 'line_items'> & {
+    line_items: Array<{
       food_id: string
       quantity: number
-      food: {
-        name: string
-        price: number
-        restaurant: {
-          name: string
-        }
-      }
-    }[]
-    shipping_options: {
-      shipping_amount: number
-      shipping_address: string
-      shipping_geohash: string
-    }
+      food: { name: string; price: number; restaurant: { name: string } }
+    }>
   }
 }
 

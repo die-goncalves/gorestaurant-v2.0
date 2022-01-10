@@ -1,5 +1,7 @@
+import { TFoodRating } from '../types'
+
 export function overallRatingRestaurant(
-  foods: Array<{ food_rating: Array<{ rating: number }> }>,
+  foods: Array<{ food_rating: Array<Pick<TFoodRating, 'rating'>> }>,
   reviews = 0,
   sum = 0
 ): { overallRating: number | undefined; numberRatings: number } {

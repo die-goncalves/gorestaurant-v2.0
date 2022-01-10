@@ -16,14 +16,10 @@ import { useEffect, useState } from 'react'
 import { FiHelpCircle } from 'react-icons/fi'
 import { orderTime, whenOpen } from '../../utils/restaurantOperation'
 import { Day } from './Day'
+import { TOperatingHours } from '../../types'
 
 type RestaurantStatus = {
-  operatingHours: Array<{
-    id: string
-    start_hour: string
-    end_hour: string
-    weekday: string
-  }>
+  operatingHours: Array<Omit<TOperatingHours, 'restaurant_id'>>
 }
 
 export function RestaurantStatus({ operatingHours }: RestaurantStatus) {

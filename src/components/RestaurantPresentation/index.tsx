@@ -1,7 +1,6 @@
 import { Box, Flex, Grid, Heading, HStack, Text } from '@chakra-ui/react'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { FaWhatsapp } from 'react-icons/fa'
-import { Restaurant as IRestaurant } from '../../contexts/LocationContext'
 import Image from 'next/image'
 import { RestaurantStatus } from '../RestaurantStatus'
 import { Rating } from '../Rating'
@@ -14,9 +13,28 @@ import { ratingNumberToText } from '../../utils/ratingNumberToText'
 import { overallRatingRestaurant } from '../../utils/overallRatingRestaurant'
 import { groupTags } from '../../utils/tags'
 import { setCookie } from 'nookies'
+import { TRestaurant, TFoods, TFoodRating, TOperatingHours } from '../../types'
+
+type Restaurant = Omit<TRestaurant, 'created_at' | 'updated_at'> & {
+  operating_hours: Array<Omit<TOperatingHours, 'restaurant_id'>>
+  foods: Array<
+    Omit<
+      TFoods,
+      | 'restaurant_id'
+      | 'stripe_food_id'
+      | 'stripe_price_id'
+      | 'created_at'
+      | 'updated_at'
+    > & {
+      food_rating: Array<
+        Omit<TFoodRating, 'food_id' | 'created_at' | 'updated_at'>
+      >
+    }
+  >
+}
 
 type RestaurantPresentationProps = {
-  restaurant: IRestaurant
+  restaurant: Restaurant
 }
 
 export function RestaurantPresentation({
@@ -150,7 +168,7 @@ export function RestaurantPresentation({
         <Flex paddingTop="0.5rem">
           <ModalForNonInteractionMap
             coordinates={restaurant.coordinates}
-            placeName={restaurant.address}
+            address={restaurant.address}
           />
           <Text lineHeight="1.5rem" marginLeft="0.25rem">
             {restaurant.address}

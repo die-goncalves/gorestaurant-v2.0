@@ -8,7 +8,7 @@ import { FilterContext } from '../../contexts/FilterContext'
 import { ModalMap } from './ModalMap'
 
 type SidebarProps = {
-  tags: Array<{ id: string; tag: string; count: number }>
+  tags: Array<{ tag: string; count: number }>
 }
 
 export function Sidebar({ tags }: SidebarProps) {
@@ -119,7 +119,7 @@ export function Sidebar({ tags }: SidebarProps) {
               <VStack spacing="1rem" display="flex" alignItems="flex-start">
                 {tags.map(element => (
                   <SidebarCheckbox
-                    key={element.id}
+                    key={`sidebar-checkbox-key-${element.tag.toLowerCase()}`}
                     value={element.tag.toLowerCase()}
                     count={element.count}
                   >

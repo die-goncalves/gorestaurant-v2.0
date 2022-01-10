@@ -2,21 +2,17 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { getRouteTimeAndDistance } from '../../../utils/directionsMapBox'
 import { overallRatingRestaurant } from '../../../utils/overallRatingRestaurant'
 import { supabase } from '../../../utils/supabaseClient'
+import { TRestaurant, TFoods, TFoodRating } from '../../../types'
 
-type SupabaseResponseData = {
-  id: string
-  name: string
-  coordinates: {
-    lat: number
-    lng: number
-  }
-  created_at: string
-  image: string
-  foods: Array<{
-    tag: string
-    food_rating: Array<{ food_id: string; rating: number }>
-  }>
-  place: string
+type SupabaseResponseData = Omit<
+  TRestaurant,
+  'phone_number' | 'address' | 'description' | 'updated_at'
+> & {
+  foods: Array<
+    Pick<TFoods, 'tag'> & {
+      food_rating: Array<TFoodRating>
+    }
+  >
 }
 
 type PickUpData = {
@@ -305,7 +301,7 @@ export default async function handler(
           created_at,
           foods (
             tag,
-            food_rating: food_rating ( * )
+            food_rating ( * )
           ),
           place
         `
@@ -313,7 +309,7 @@ export default async function handler(
       .filter('place', 'eq', place)
       .order('created_at', { ascending: true })
 
-    console.log(JSON.stringify(data, null, 4))
+    // console.log(JSON.stringify(data, null, 4))
     if (error) {
       return res.status(400).json(error)
     }

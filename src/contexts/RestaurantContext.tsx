@@ -1,45 +1,7 @@
 import { createContext, ReactNode, useState } from 'react'
 import geohash from 'ngeohash'
 
-export type Restaurant = {
-  id: string
-  name: string
-  phone_number: string
-  coordinates: {
-    lat: number
-    lng: number
-  }
-  operating_hours: Array<{
-    id: string
-    start_hour: string
-    end_hour: string
-    weekday: {
-      id: number
-      name: string
-    }
-  }>
-  address: string
-  image: string
-  foods: Array<{
-    id: string
-    name: string
-    price: number
-    image: string
-    description: string
-    tag: { id: string; tag_value: string }
-    food_rating: Array<{ customer_id: string; rating: number }>
-  }>
-  place: string
-}
-
-export type GeographicFeature = {
-  geohash: string
-  place_name: string | undefined
-  granular: { id: string; text: string } | undefined
-  place: string | undefined
-}
-
-type GeographicFeatureWithCoordinates = {
+export type GeographicFeatureWithCoordinates = {
   coordinates: {
     latitude: number
     longitude: number

@@ -10,21 +10,18 @@ import { FilterContext } from '../contexts/FilterContext'
 import { api } from '../services/api'
 import { tagListingForFiltering } from '../utils/tags'
 import { supabase } from '../utils/supabaseClient'
-import { Restaurant, LocationContext } from '../contexts/LocationContext'
+import { LocationContext } from '../contexts/LocationContext'
+import { TRestaurant, TFoods, TFoodRating } from '../types'
 
-type SupabaseResponseData = {
-  id: string
-  name: string
-  coordinates: {
-    lat: number
-    lng: number
-  }
-  image: string
-  foods: Array<{
-    id: string
-    tag: string
-    food_rating: Array<{ customer_id: string; rating: number }>
-  }>
+type SupabaseResponseData = Omit<
+  TRestaurant,
+  'phone_number' | 'address' | 'description' | 'updated_at'
+> & {
+  foods: Array<
+    Pick<TFoods, 'tag'> & {
+      food_rating: Array<TFoodRating>
+    }
+  >
 }
 
 type PickUpData = {
@@ -95,17 +92,20 @@ export default function Restaurants({ geohash, tags }: RestaurantsProps) {
       geographicLocation?.place
     ],
     async () => {
-      const { data } = await api.get(`/api/filters`, {
-        params: {
-          user_lng: geographicLocation?.coordinates.longitude,
-          user_lat: geographicLocation?.coordinates.latitude,
-          delivery: deliveryOption,
-          tag: tagOption,
-          delivery_price: priceOption,
-          sort: sortOption,
-          place: geographicLocation?.place
+      const { data } = await api.get<Array<PickUpData> | Array<DeliveryData>>(
+        `/api/filters`,
+        {
+          params: {
+            user_lng: geographicLocation?.coordinates.longitude,
+            user_lat: geographicLocation?.coordinates.latitude,
+            delivery: deliveryOption,
+            tag: tagOption,
+            delivery_price: priceOption,
+            sort: sortOption,
+            place: geographicLocation?.place
+          }
         }
-      })
+      )
       return data
     },
     {
@@ -189,7 +189,11 @@ export default function Restaurants({ geohash, tags }: RestaurantsProps) {
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const { place } = ctx.query
   const { data } = await supabase
-    .from('restaurants')
+    .from<
+      Pick<TRestaurant, 'place'> & {
+        foods: Array<Pick<TFoods, 'tag'>>
+      }
+    >('restaurants')
     .select('foods ( tag )')
     .filter('place', 'eq', place)
 

@@ -1,11 +1,9 @@
 import { Flex, Heading, SimpleGrid, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
+import { TOperatingHours } from '../../types'
 
 type DayProps = {
-  timeOrdering: Record<
-    string,
-    { id: string; start_hour: string; end_hour: string; weekday: string }[]
-  >
+  timeOrdering: Record<string, Array<Omit<TOperatingHours, 'restaurant_id'>>>
   isOpen:
     | {
         open: boolean
@@ -18,25 +16,12 @@ type DayProps = {
 export function Day({ timeOrdering, isOpen }: DayProps) {
   const [days, setDays] = useState(Object.entries(timeOrdering))
   const [orderDays, setOrderDays] = useState<
-    Array<
-      Array<{
-        end_hour: string
-        id: string
-        start_hour: string
-        weekday: string
-      }>
-    >
+    Array<Array<Omit<TOperatingHours, 'restaurant_id'>>>
   >([])
 
   useEffect(() => {
-    let storeOrderDays: Array<
-      Array<{
-        end_hour: string
-        id: string
-        start_hour: string
-        weekday: string
-      }>
-    > = []
+    let storeOrderDays: Array<Array<Omit<TOperatingHours, 'restaurant_id'>>> =
+      []
     days.forEach(item => {
       if (item[0] === 'Sunday') storeOrderDays[0] = item[1]
       if (item[0] === 'Monday') storeOrderDays[1] = item[1]

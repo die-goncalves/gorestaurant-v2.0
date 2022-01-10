@@ -1,13 +1,11 @@
 import { Flex, GridItem, Text } from '@chakra-ui/react'
 import Image from 'next/image'
 import { ClickableRating } from '../Rating/ClickableRating'
+import { TRestaurant, TFoods } from '../../types'
 
 type FoodRatingCardProps = {
-  food: {
-    id: string
-    name: string
-    image: string
-    restaurant: { name: string }
+  food: Pick<TFoods, 'id' | 'name' | 'image'> & {
+    restaurant: Pick<TRestaurant, 'name'>
   }
 }
 
