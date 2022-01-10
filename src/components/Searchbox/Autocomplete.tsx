@@ -1,23 +1,23 @@
 import { Box, Flex, Input, Link, List, ListItem } from '@chakra-ui/react'
 import { ChangeEvent, useContext, useEffect, useState } from 'react'
-import {
-  FeaturesCollection,
-  GeographicFeature,
-  LocationContext
-} from '../../contexts/LocationContext'
 import { MdOutlineEditLocationAlt, MdLocationPin } from 'react-icons/md'
+import {
+  UserLocationContext,
+  GeographicFeatureWithCoordinates,
+  FeaturesCollection
+} from '../../contexts/UserLocationContext'
 
 export const Autocomplete = () => {
   const {
     encodeGeohash,
     generateGeographicInformation,
-    chosenLocation,
-    setChosenLocation
-  } = useContext(LocationContext)
+    userLocation,
+    setUserLocation
+  } = useContext(UserLocationContext)
   const [userInput, setUserInput] = useState<string>('')
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [filteredSuggestions, setFilteredSuggestions] = useState<
-    Array<GeographicFeature>
+    Array<GeographicFeatureWithCoordinates>
   >([])
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -25,24 +25,31 @@ export const Autocomplete = () => {
     setUserInput(event.target.value)
   }
 
-  const onClick = (item: GeographicFeature) => {
+  const onClick = async (item: GeographicFeatureWithCoordinates) => {
     setShowSuggestions(false)
-    setChosenLocation({
+
+    setUserLocation({
+      coordinates: item.coordinates,
       geohash: item.geohash,
       granular: item.granular,
       place: item.place,
       place_name: item.place_name
     })
+
     setUserInput(item.place_name ?? '')
   }
 
   const geographicFeatures = (data: FeaturesCollection) => {
-    let allFeatures: Array<GeographicFeature> = []
+    let allFeatures: Array<GeographicFeatureWithCoordinates> = []
 
     for (const item of data.features) {
       const { granular, place, place_name } =
         generateGeographicInformation(item)
       let eachFeature = {
+        coordinates: {
+          latitude: item.geometry.coordinates[1],
+          longitude: item.geometry.coordinates[0]
+        },
         geohash: encodeGeohash({
           latitude: item.geometry.coordinates[1],
           longitude: item.geometry.coordinates[0]
@@ -71,11 +78,11 @@ export const Autocomplete = () => {
   }, [userInput])
 
   useEffect(() => {
-    if (chosenLocation) {
+    if (userLocation) {
       setShowSuggestions(false)
-      setUserInput(chosenLocation.place_name ?? '')
+      setUserInput(userLocation.place_name ?? '')
     } else setUserInput('')
-  }, [chosenLocation])
+  }, [userLocation])
 
   return (
     <Flex id="inputWithAutocomplete" flex="1" position="relative" h="inherit">
@@ -109,37 +116,39 @@ export const Autocomplete = () => {
           background="brand.list_background"
         >
           {filteredSuggestions &&
-            filteredSuggestions.map((item: GeographicFeature) => {
-              return (
-                <Link
-                  key={item.place_name}
-                  sx={{
-                    '&:hover': {
-                      textDecoration: 'none'
-                    }
-                  }}
-                  onClick={() => onClick(item)}
-                >
-                  <ListItem
-                    display="flex"
-                    alignItems="center"
-                    paddingY="0.5rem"
-                    paddingX="1rem"
-                    fontSize="0.85rem"
+            filteredSuggestions.map(
+              (item: GeographicFeatureWithCoordinates) => {
+                return (
+                  <Link
+                    key={item.place_name}
                     sx={{
                       '&:hover': {
-                        background: 'brand.list_hover'
+                        textDecoration: 'none'
                       }
                     }}
+                    onClick={() => onClick(item)}
                   >
-                    <Box as="span" marginRight="0.625rem" color="orange.500">
-                      <MdLocationPin fontSize="24px" />
-                    </Box>
-                    {item.place_name}
-                  </ListItem>
-                </Link>
-              )
-            })}
+                    <ListItem
+                      display="flex"
+                      alignItems="center"
+                      paddingY="0.5rem"
+                      paddingX="1rem"
+                      fontSize="0.85rem"
+                      sx={{
+                        '&:hover': {
+                          background: 'brand.list_hover'
+                        }
+                      }}
+                    >
+                      <Box as="span" marginRight="0.625rem" color="orange.500">
+                        <MdLocationPin fontSize="24px" />
+                      </Box>
+                      {item.place_name}
+                    </ListItem>
+                  </Link>
+                )
+              }
+            )}
         </List>
       )}
     </Flex>

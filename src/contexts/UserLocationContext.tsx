@@ -24,7 +24,7 @@ export type FeaturesCollection = {
   features: Array<Feature>
 }
 
-type RestaurantContextData = {
+type UserLocationContextData = {
   userLocation: GeographicFeatureWithCoordinates | undefined
   setUserLocation: (state: GeographicFeatureWithCoordinates | undefined) => void
   encodeGeohash: (coord: { latitude: number; longitude: number }) => string
@@ -51,13 +51,13 @@ type RestaurantContextData = {
   }>
 }
 
-type RestaurantProviderProps = {
+type UserLocationProviderProps = {
   children: ReactNode
 }
 
-export const RestaurantContext = createContext({} as RestaurantContextData)
+export const UserLocationContext = createContext({} as UserLocationContextData)
 
-export function RestaurantProvider({ children }: RestaurantProviderProps) {
+export function UserLocationProvider({ children }: UserLocationProviderProps) {
   const [userLocation, setUserLocation] =
     useState<GeographicFeatureWithCoordinates>()
 
@@ -133,7 +133,7 @@ export function RestaurantProvider({ children }: RestaurantProviderProps) {
   }
 
   return (
-    <RestaurantContext.Provider
+    <UserLocationContext.Provider
       value={{
         userLocation,
         setUserLocation,
@@ -144,6 +144,6 @@ export function RestaurantProvider({ children }: RestaurantProviderProps) {
       }}
     >
       {children}
-    </RestaurantContext.Provider>
+    </UserLocationContext.Provider>
   )
 }

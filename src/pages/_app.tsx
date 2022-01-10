@@ -8,8 +8,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { useState } from 'react'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { FilterProvider } from '../contexts/FilterContext'
-import { LocationProvider } from '../contexts/LocationContext'
-import { RestaurantProvider } from '../contexts/RestaurantContext'
+import { UserLocationProvider } from '../contexts/UserLocationContext'
 import { CartProvider } from '../hooks/useCart'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -18,19 +17,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
-        <CartProvider>
-          <LocationProvider>
+        <UserLocationProvider>
+          <CartProvider>
             <FilterProvider>
-              <RestaurantProvider>
-                <QueryClientProvider client={queryClient}>
-                  <Component {...pageProps} />
-                  <Notifications />
-                  <ReactQueryDevtools />
-                </QueryClientProvider>
-              </RestaurantProvider>
+              <QueryClientProvider client={queryClient}>
+                <Component {...pageProps} />
+                <Notifications />
+                <ReactQueryDevtools />
+              </QueryClientProvider>
             </FilterProvider>
-          </LocationProvider>
-        </CartProvider>
+          </CartProvider>
+        </UserLocationProvider>
       </AuthProvider>
     </ChakraProvider>
   )

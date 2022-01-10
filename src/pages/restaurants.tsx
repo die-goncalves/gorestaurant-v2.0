@@ -10,7 +10,7 @@ import { FilterContext } from '../contexts/FilterContext'
 import { api } from '../services/api'
 import { tagListingForFiltering } from '../utils/tags'
 import { supabase } from '../utils/supabaseClient'
-import { LocationContext } from '../contexts/LocationContext'
+import { UserLocationContext } from '../contexts/UserLocationContext'
 import { TRestaurant, TFoods, TFoodRating } from '../types'
 
 type SupabaseResponseData = Omit<
@@ -56,7 +56,7 @@ export default function Restaurants({ geohash, tags }: RestaurantsProps) {
     deliveryOption
   } = useContext(FilterContext)
   const { decodeGeohash, generateGeographicInformation } =
-    useContext(LocationContext)
+    useContext(UserLocationContext)
 
   useEffect(() => {
     const { latitude, longitude } = decodeGeohash(geohash)

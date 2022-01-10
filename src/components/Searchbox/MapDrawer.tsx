@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useContext } from 'react'
 import mapboxgl from 'mapbox-gl'
 import { Box } from '@chakra-ui/react'
-import { LocationContext } from '../../contexts/LocationContext'
+import { UserLocationContext } from '../../contexts/UserLocationContext'
 
 type MapDrawerProps = {
   setMyGeographicCoordinates: (
@@ -15,7 +15,7 @@ type MapDrawerProps = {
 }
 
 export const MapDrawer = ({ setMyGeographicCoordinates }: MapDrawerProps) => {
-  const { chosenLocation, decodeGeohash } = useContext(LocationContext)
+  const { userLocation, decodeGeohash } = useContext(UserLocationContext)
   const map = useRef<mapboxgl.Map | null>(null)
   const mainMarker = useRef<mapboxgl.Marker | null>(null)
 
@@ -27,8 +27,8 @@ export const MapDrawer = ({ setMyGeographicCoordinates }: MapDrawerProps) => {
 
   useEffect(() => {
     if (map.current) return
-    if (chosenLocation) {
-      const { latitude, longitude } = decodeGeohash(chosenLocation.geohash)
+    if (userLocation) {
+      const { latitude, longitude } = decodeGeohash(userLocation.geohash)
       map.current = new mapboxgl.Map({
         accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
         container: 'mapviews',

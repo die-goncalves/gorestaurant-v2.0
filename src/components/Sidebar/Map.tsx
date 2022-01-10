@@ -5,7 +5,7 @@ import {
   FilterContext,
   GeographicFeatureWithCoordinates
 } from '../../contexts/FilterContext'
-import { LocationContext } from '../../contexts/LocationContext'
+import { UserLocationContext } from '../../contexts/UserLocationContext'
 
 type MapProps = {
   setPreviewLocation: (state: GeographicFeatureWithCoordinates) => void
@@ -14,7 +14,7 @@ type MapProps = {
 export function Map({ setPreviewLocation }: MapProps) {
   const { geographicLocation } = useContext(FilterContext)
   const { encodeGeohash, generateGeographicInformation } =
-    useContext(LocationContext)
+    useContext(UserLocationContext)
   const [lngLat, setLngLat] =
     useState<{ longitude: number; latitude: number }>()
 

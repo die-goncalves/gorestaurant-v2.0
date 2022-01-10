@@ -1,6 +1,6 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react'
 import { useContext } from 'react'
-import { RestaurantContext } from '../contexts/RestaurantContext'
+import { UserLocationContext } from '../contexts/UserLocationContext'
 
 type RestaurantPathsProps = {
   restaurantName: string
@@ -11,7 +11,7 @@ export function RestaurantPaths({
   restaurantName,
   place
 }: RestaurantPathsProps) {
-  const { userLocation } = useContext(RestaurantContext)
+  const { userLocation } = useContext(UserLocationContext)
   return (
     <Breadcrumb separator="/">
       <BreadcrumbItem>

@@ -2,8 +2,7 @@ import { Box } from '@chakra-ui/react'
 import mapboxgl from 'mapbox-gl'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { GeographicFeatureWithCoordinates } from '../../contexts/FilterContext'
-import { LocationContext } from '../../contexts/LocationContext'
-import { RestaurantContext } from '../../contexts/RestaurantContext'
+import { UserLocationContext } from '../../contexts/UserLocationContext'
 
 type RegionRestrictedMapProps = {
   setPreviewLocation: (state: GeographicFeatureWithCoordinates) => void
@@ -12,9 +11,8 @@ type RegionRestrictedMapProps = {
 export function RegionRestrictedMap({
   setPreviewLocation
 }: RegionRestrictedMapProps) {
-  const { userLocation } = useContext(RestaurantContext)
-  const { encodeGeohash, generateGeographicInformation } =
-    useContext(LocationContext)
+  const { userLocation, encodeGeohash, generateGeographicInformation } =
+    useContext(UserLocationContext)
   const [lngLat, setLngLat] =
     useState<{ longitude: number; latitude: number }>()
 

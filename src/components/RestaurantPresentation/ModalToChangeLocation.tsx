@@ -19,7 +19,7 @@ import { useContext, useState } from 'react'
 import { RegionRestrictedMap } from './RegionRestrictedMap'
 import { GeographicFeatureWithCoordinates } from '../../contexts/FilterContext'
 import { useRouter } from 'next/router'
-import { RestaurantContext } from '../../contexts/RestaurantContext'
+import { UserLocationContext } from '../../contexts/UserLocationContext'
 import DeliveryBike from '../../assets/delivery-bike.svg'
 
 type ModalToChangeLocationProps = {
@@ -37,7 +37,7 @@ export function ModalToChangeLocation({
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [previewLocation, setPreviewLocation] =
     useState<GeographicFeatureWithCoordinates>()
-  const { userLocation } = useContext(RestaurantContext)
+  const { userLocation } = useContext(UserLocationContext)
 
   return (
     <>

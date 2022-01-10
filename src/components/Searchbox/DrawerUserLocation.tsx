@@ -15,16 +15,16 @@ import {
 } from '@chakra-ui/react'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { MapDrawer } from './MapDrawer'
-import { LocationContext } from '../../contexts/LocationContext'
 import { FiMap } from 'react-icons/fi'
+import { UserLocationContext } from '../../contexts/UserLocationContext'
 
 export const DrawerUserLocation = () => {
   const {
-    chosenLocation,
-    setChosenLocation,
+    userLocation,
+    setUserLocation,
     generateGeographicInformation,
     encodeGeohash
-  } = useContext(LocationContext)
+  } = useContext(UserLocationContext)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [myGeographicCoordinates, setMyGeographicCoordinates] =
     useState<{ lat: number; lng: number }>()
@@ -40,7 +40,11 @@ export const DrawerUserLocation = () => {
           if (data.features.length !== 0) {
             const { granular, place, place_name } =
               generateGeographicInformation(data.features[0])
-            setChosenLocation({
+            setUserLocation({
+              coordinates: {
+                latitude: data.features[0].geometry.coordinates[1],
+                longitude: data.features[0].geometry.coordinates[0]
+              },
               geohash: encodeGeohash({
                 latitude: data.features[0].geometry.coordinates[1],
                 longitude: data.features[0].geometry.coordinates[0]
@@ -91,7 +95,7 @@ export const DrawerUserLocation = () => {
 
               <CloseButton
                 onClick={() => {
-                  setChosenLocation(undefined)
+                  setUserLocation(undefined)
                   onClose()
                 }}
                 variant="red-theme"
@@ -115,7 +119,7 @@ export const DrawerUserLocation = () => {
               flex="1"
               variant="filled"
               borderRadius="0px"
-              value={chosenLocation?.place_name ?? ''}
+              value={userLocation?.place_name ?? ''}
               placeholder="Here you will see your exact location"
               isReadOnly
               background="orange.50"

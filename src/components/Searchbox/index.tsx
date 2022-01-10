@@ -2,11 +2,11 @@ import { Button, Flex } from '@chakra-ui/react'
 import { DrawerUserLocation } from './DrawerUserLocation'
 import { Autocomplete } from './Autocomplete'
 import { useRouter } from 'next/router'
-import { useContext, useState } from 'react'
-import { LocationContext } from '../../contexts/LocationContext'
+import { useContext } from 'react'
+import { UserLocationContext } from '../../contexts/UserLocationContext'
 
 export default function Searchbox() {
-  const { chosenLocation } = useContext(LocationContext)
+  const { userLocation } = useContext(UserLocationContext)
   const router = useRouter()
 
   return (
@@ -29,7 +29,7 @@ export default function Searchbox() {
           paddingY="1.5rem"
           onClick={() =>
             router.push(
-              `/restaurants?place=${chosenLocation?.place}&geohash=${chosenLocation?.geohash}`
+              `/restaurants?place=${userLocation?.place}&geohash=${userLocation?.geohash}`
             )
           }
         >

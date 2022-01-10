@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { RestaurantStatus } from '../RestaurantStatus'
 import { Rating } from '../Rating'
 import { RestaurantPaths } from '../RestaurantPaths'
-import { RestaurantContext } from '../../contexts/RestaurantContext'
+import { UserLocationContext } from '../../contexts/UserLocationContext'
 import { getRouteTimeAndDistance } from '../../utils/directionsMapBox'
 import { ModalToChangeLocation } from './ModalToChangeLocation'
 import { ModalForNonInteractionMap } from './ModalForNonInteractionMap'
@@ -40,7 +40,7 @@ type RestaurantPresentationProps = {
 export function RestaurantPresentation({
   restaurant
 }: RestaurantPresentationProps) {
-  const { userLocation } = useContext(RestaurantContext)
+  const { userLocation } = useContext(UserLocationContext)
   const [priceDistanceAndTime, setPriceDistanceAndTime] =
     useState<{ price: number | undefined; distance: number; time: number }>()
 

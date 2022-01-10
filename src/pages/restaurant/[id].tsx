@@ -6,7 +6,7 @@ import { RestaurantHeader } from '../../components/Header/Restaurant'
 import { useEffect, useContext } from 'react'
 import { RestaurantPresentation } from '../../components/RestaurantPresentation'
 import RestaurantSections from '../../components/RestaurantSections'
-import { RestaurantContext } from '../../contexts/RestaurantContext'
+import { UserLocationContext } from '../../contexts/UserLocationContext'
 import { Footer } from '../../components/Footer'
 import { TRestaurant, TFoods, TFoodRating, TOperatingHours } from '../../types'
 
@@ -33,7 +33,7 @@ type RestaurantProps = {
 }
 
 export default function Restaurant({ restaurant }: RestaurantProps) {
-  const { getUserLocation, setUserLocation } = useContext(RestaurantContext)
+  const { getUserLocation, setUserLocation } = useContext(UserLocationContext)
   const router = useRouter()
 
   useEffect(() => {
