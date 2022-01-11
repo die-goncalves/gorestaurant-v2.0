@@ -4,10 +4,36 @@ import { Autocomplete } from './Autocomplete'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import { UserLocationContext } from '../../contexts/UserLocationContext'
+import toast from 'react-hot-toast'
 
 export default function Searchbox() {
   const { userLocation } = useContext(UserLocationContext)
   const router = useRouter()
+
+  function handleSearchButton() {
+    if (userLocation) {
+      if (userLocation.place && userLocation.geohash) {
+        router.push(
+          `/restaurants?place=${userLocation.place}&geohash=${userLocation.geohash}`
+        )
+      }
+    } else {
+      toast(
+        `We can't get the coordinates of the address you gave, please indicate on the map where you are.`,
+        {
+          icon: '😥',
+          duration: 4000,
+          style: {
+            borderRadius: '0px',
+            background: 'rgb(250, 250, 255)',
+            border: '1.5px solid rgb(235, 235, 255)',
+            boxShadow:
+              'rgb(0 0 255 / 5%) 0px 3px 10px, rgb(0 0 0 / 5%) 0px 3px 3px'
+          }
+        }
+      )
+    }
+  }
 
   return (
     <>
@@ -27,11 +53,7 @@ export default function Searchbox() {
           colorScheme="orange"
           variant="solid"
           paddingY="1.5rem"
-          onClick={() =>
-            router.push(
-              `/restaurants?place=${userLocation?.place}&geohash=${userLocation?.geohash}`
-            )
-          }
+          onClick={handleSearchButton}
         >
           Find Food
         </Button>
