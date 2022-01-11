@@ -34,9 +34,16 @@ type FoodProps = {
     | 'updated_at'
   >
   rating: number | undefined
+  isRestaurantOpen:
+    | {
+        open: boolean
+        for_coming?: any
+        current?: any
+      }
+    | undefined
 }
 
-export function Food({ food, rating }: FoodProps) {
+export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const {
     addFood,
@@ -57,19 +64,23 @@ export function Food({ food, rating }: FoodProps) {
   return (
     <>
       <Grid
-        onClick={onOpen}
         templateColumns="repeat(3, 1fr)"
         transitionDuration="0.4s"
         transitionTimingFunction="ease-in-out"
         transitionProperty="transform, box-shadow"
-        cursor="pointer"
-        _hover={{
-          ...(!thereIsASpecificFoodInTheCart(food.id) && {
-            transform: 'translateY(-3px)',
-            boxShadow: '0px 3px 0px 0px rgba(221,107,32,1)'
-          })
-        }}
         background="brand.card_restaurant_background"
+        {...(isRestaurantOpen?.open
+          ? {
+              onClick: onOpen,
+              cursor: 'pointer',
+              _hover: {
+                ...(!thereIsASpecificFoodInTheCart(food.id) && {
+                  transform: 'translateY(-3px)',
+                  boxShadow: '0px 3px 0px 0px rgba(221,107,32,1)'
+                })
+              }
+            }
+          : { cursor: 'not-allowed', filter: 'opacity(80%)' })}
       >
         <GridItem
           colSpan={2}
@@ -77,7 +88,7 @@ export function Food({ food, rating }: FoodProps) {
           flexDirection="column"
           justifyContent="space-between"
           {...(thereIsASpecificFoodInTheCart(food.id) && {
-            boxShadow: '0px 0px 3px 0px rgb(237, 137, 54, 0.8)'
+            boxShadow: 'inset 0px 0px 3px 0px rgb(237, 137, 54, 0.8)'
           })}
         >
           <Flex flexDirection="column">

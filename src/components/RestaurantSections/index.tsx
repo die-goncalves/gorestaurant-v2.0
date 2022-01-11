@@ -4,7 +4,14 @@ import dynamic from 'next/dynamic'
 import { groupTags } from '../../utils/tags'
 import { TFoods, TFoodRating } from '../../types'
 
-type RestaurantDetailsProps = {
+type RestaurantSectionsProps = {
+  isRestaurantOpen:
+    | {
+        open: boolean
+        for_coming?: any
+        current?: any
+      }
+    | undefined
   foods: Array<
     Omit<
       TFoods,
@@ -21,7 +28,10 @@ type RestaurantDetailsProps = {
   >
 }
 
-export default function RestaurantSections({ foods }: RestaurantDetailsProps) {
+export default function RestaurantSections({
+  foods,
+  isRestaurantOpen
+}: RestaurantSectionsProps) {
   const [tags, setTags] = useState<Array<string>>([])
 
   useEffect(() => {
@@ -35,7 +45,11 @@ export default function RestaurantSections({ foods }: RestaurantDetailsProps) {
 
   return (
     <Box>
-      <DynamicNavLinkWithNoSSR tags={tags} foods={foods} />
+      <DynamicNavLinkWithNoSSR
+        tags={tags}
+        foods={foods}
+        isRestaurantOpen={isRestaurantOpen}
+      />
     </Box>
   )
 }

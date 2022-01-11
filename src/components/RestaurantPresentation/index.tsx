@@ -35,10 +35,18 @@ type Restaurant = Omit<TRestaurant, 'created_at' | 'updated_at'> & {
 
 type RestaurantPresentationProps = {
   restaurant: Restaurant
+  isRestaurantOpen:
+    | {
+        open: boolean
+        for_coming?: any
+        current?: any
+      }
+    | undefined
 }
 
 export function RestaurantPresentation({
-  restaurant
+  restaurant,
+  isRestaurantOpen
 }: RestaurantPresentationProps) {
   const { userLocation } = useContext(UserLocationContext)
   const [priceDistanceAndTime, setPriceDistanceAndTime] =
@@ -113,7 +121,10 @@ export function RestaurantPresentation({
           <Heading as="h1" fontSize="1.75rem" fontWeight="bold">
             {restaurant.name}
           </Heading>
-          <RestaurantStatus operatingHours={restaurant.operating_hours} />
+          <RestaurantStatus
+            operatingHours={restaurant.operating_hours}
+            isRestaurantOpen={isRestaurantOpen}
+          />
         </Flex>
 
         <Flex

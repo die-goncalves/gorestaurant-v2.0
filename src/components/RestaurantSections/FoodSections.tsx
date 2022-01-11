@@ -19,9 +19,20 @@ type FoodSectionsProps = {
       >
     }
   >
+  isRestaurantOpen:
+    | {
+        open: boolean
+        for_coming?: any
+        current?: any
+      }
+    | undefined
 }
 
-export function FoodSections({ tags, foods }: FoodSectionsProps) {
+export function FoodSections({
+  tags,
+  foods,
+  isRestaurantOpen
+}: FoodSectionsProps) {
   return (
     <VStack spacing="0" alignItems="flex-start" zIndex="0" paddingBottom="2rem">
       {tags.map(tag => {
@@ -50,7 +61,11 @@ export function FoodSections({ tags, foods }: FoodSectionsProps) {
                     {tag}
                   </Heading>
                   <Grid templateColumns="repeat(3, 1fr)" gridGap="24px 24px">
-                    <Food food={food} rating={rating} />
+                    <Food
+                      food={food}
+                      rating={rating}
+                      isRestaurantOpen={isRestaurantOpen}
+                    />
                   </Grid>
                 </Box>
               )

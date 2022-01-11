@@ -3,12 +3,13 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { supabase } from '../../utils/supabaseClient'
 import { RestaurantHeader } from '../../components/Header/Restaurant'
-import { useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { RestaurantPresentation } from '../../components/RestaurantPresentation'
 import RestaurantSections from '../../components/RestaurantSections'
 import { UserLocationContext } from '../../contexts/UserLocationContext'
 import { Footer } from '../../components/Footer'
 import { TRestaurant, TFoods, TFoodRating, TOperatingHours } from '../../types'
+import { whenOpen } from '../../utils/restaurantOperation'
 
 type Restaurant = Omit<TRestaurant, 'created_at' | 'updated_at'> & {
   operating_hours: Array<Omit<TOperatingHours, 'restaurant_id'>>
@@ -34,7 +35,18 @@ type RestaurantProps = {
 
 export default function Restaurant({ restaurant }: RestaurantProps) {
   const { getUserLocation, setUserLocation } = useContext(UserLocationContext)
+  const [isRestaurantOpen, setIsRestaurantOpen] =
+    useState<{ open: boolean; for_coming?: any; current?: any }>()
   const router = useRouter()
+
+  useEffect(() => {
+    setIsRestaurantOpen(
+      whenOpen(restaurant.operating_hours, {
+        day: new Date().getDay(),
+        timer: new Date().toLocaleTimeString()
+      })
+    )
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +56,6 @@ export default function Restaurant({ restaurant }: RestaurantProps) {
 
       setUserLocation(result)
     }
-
     fetchData()
   }, [router.query.geohash])
 
@@ -78,9 +89,15 @@ export default function Restaurant({ restaurant }: RestaurantProps) {
       <Flex w="100%" flexDirection="column">
         <RestaurantHeader />
 
-        <RestaurantPresentation restaurant={restaurant} />
+        <RestaurantPresentation
+          restaurant={restaurant}
+          isRestaurantOpen={isRestaurantOpen}
+        />
 
-        <RestaurantSections foods={restaurant.foods} />
+        <RestaurantSections
+          foods={restaurant.foods}
+          isRestaurantOpen={isRestaurantOpen}
+        />
 
         <Footer />
       </Flex>

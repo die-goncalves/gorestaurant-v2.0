@@ -12,23 +12,26 @@ import {
   Tooltip,
   useDisclosure
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
 import { FiHelpCircle } from 'react-icons/fi'
-import { orderTime, whenOpen } from '../../utils/restaurantOperation'
+import { orderTime } from '../../utils/restaurantOperation'
 import { Day } from './Day'
 import { TOperatingHours } from '../../types'
 
-type RestaurantStatus = {
+type RestaurantStatusProps = {
   operatingHours: Array<Omit<TOperatingHours, 'restaurant_id'>>
+  isRestaurantOpen:
+    | {
+        open: boolean
+        for_coming?: any
+        current?: any
+      }
+    | undefined
 }
 
-export function RestaurantStatus({ operatingHours }: RestaurantStatus) {
-  const [time, setTime] = useState({
-    day: new Date().getDay(),
-    timer: new Date().toLocaleTimeString()
-  })
-  const [isOpen, setIsOpen] =
-    useState<{ open: boolean; for_coming?: any; current?: any }>()
+export function RestaurantStatus({
+  operatingHours,
+  isRestaurantOpen
+}: RestaurantStatusProps) {
   const {
     isOpen: isOpenModal,
     onOpen: onOpenModal,
@@ -36,22 +39,6 @@ export function RestaurantStatus({ operatingHours }: RestaurantStatus) {
   } = useDisclosure()
 
   const { separateDaysOfTheWeek: timeOrdering } = orderTime(operatingHours)
-
-  function updateClock() {
-    setTime({
-      day: new Date().getDay(),
-      timer: new Date().toLocaleTimeString()
-    })
-  }
-
-  useEffect(() => {
-    setInterval(() => updateClock(), 60000)
-    return () => clearInterval()
-  }, [operatingHours])
-
-  useEffect(() => {
-    setIsOpen(whenOpen(operatingHours, time))
-  }, [time])
 
   const help = (
     <Flex flexDir="column">
@@ -77,6 +64,7 @@ export function RestaurantStatus({ operatingHours }: RestaurantStatus) {
       </Flex>
     </Flex>
   )
+
   return (
     <>
       <Button
@@ -85,16 +73,16 @@ export function RestaurantStatus({ operatingHours }: RestaurantStatus) {
         paddingX="0.5rem"
         borderWidth="1px"
         borderRadius="0px"
-        colorScheme={isOpen?.open ? 'green' : 'red'}
+        colorScheme={isRestaurantOpen?.open ? 'green' : 'red'}
         variant="outline"
         onClick={onOpenModal}
         _focus={{
-          boxShadow: isOpen?.open
+          boxShadow: isRestaurantOpen?.open
             ? '0 0 0 3px rgb(72, 187, 120, 0.6)'
             : '0 0 0 3px rgb(245, 101, 101, 0.6)'
         }}
       >
-        {isOpen?.open ? 'Open' : 'Closed'}
+        {isRestaurantOpen?.open ? 'Open' : 'Closed'}
       </Button>
 
       <Modal
@@ -126,7 +114,7 @@ export function RestaurantStatus({ operatingHours }: RestaurantStatus) {
             </Flex>
           </ModalHeader>
           <ModalBody paddingBottom="1.5rem" paddingTop="0px">
-            <Day timeOrdering={timeOrdering} isOpen={isOpen} />
+            <Day timeOrdering={timeOrdering} isOpen={isRestaurantOpen} />
           </ModalBody>
         </ModalContent>
       </Modal>

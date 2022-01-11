@@ -32,9 +32,20 @@ type NavLinksProps = {
       >
     }
   >
+  isRestaurantOpen:
+    | {
+        open: boolean
+        for_coming?: any
+        current?: any
+      }
+    | undefined
 }
 
-export default function NavLinks({ tags, foods }: NavLinksProps) {
+export default function NavLinks({
+  tags,
+  foods,
+  isRestaurantOpen
+}: NavLinksProps) {
   const navRef = useRef<HTMLDivElement>(null)
   const [visibilityNavLinks, setVisibilityNavLinks] = useState<{
     [key: string]: { isIntersecting: boolean; id: string; tag: string }
@@ -340,7 +351,11 @@ export default function NavLinks({ tags, foods }: NavLinksProps) {
         </Grid>
       </Flex>
 
-      <MemoizedFoodSections tags={tags} foods={foods} />
+      <MemoizedFoodSections
+        tags={tags}
+        foods={foods}
+        isRestaurantOpen={isRestaurantOpen}
+      />
     </Box>
   )
 }
