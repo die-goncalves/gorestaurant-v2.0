@@ -106,6 +106,12 @@ export const Autocomplete = () => {
           _placeholder={{ color: 'brand.input_placeholder' }}
           value={userInput}
           onChange={onChange}
+          sx={{
+            '&:-webkit-autofill:focus': {
+              WebkitBoxShadow: '0 0 0px 1000px #FAFAFA inset',
+              transition: 'background-color 5000s ease-in-out 0s'
+            }
+          }}
         />
       </Flex>
       {showSuggestions && (
