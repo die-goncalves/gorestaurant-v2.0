@@ -9,12 +9,12 @@ import {
   Text,
   IconButton
 } from '@chakra-ui/react'
-import { CgMore } from 'react-icons/cg'
 import { RiDashboardLine } from 'react-icons/ri'
 import { BsDoorOpen } from 'react-icons/bs'
 import { useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
 import Router, { useRouter } from 'next/router'
+import { Turn as Hamburger } from 'hamburger-react'
 
 export function SignedUserOptionsPopover() {
   const { asPath } = useRouter()
@@ -25,18 +25,15 @@ export function SignedUserOptionsPopover() {
   }
 
   return (
-    <Popover placement="bottom-end">
+    <Popover placement="bottom-end" closeOnBlur={false}>
       <PopoverTrigger>
         <IconButton
           colorScheme="orange"
           variant="solid"
           borderRadius="0px"
           aria-label="User options"
-          _hover={{ background: 'orange.700' }}
-          _active={{ background: 'orange.800' }}
           _focus={{ boxShadow: 'none' }}
-          icon={<CgMore fontSize="1.5rem" />}
-          sx={{ background: 'orange.600', color: 'brand.body_background' }}
+          icon={<Hamburger size={20} label="Show menu" />}
         />
       </PopoverTrigger>
       <PopoverContent
