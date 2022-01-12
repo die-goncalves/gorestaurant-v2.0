@@ -88,7 +88,6 @@ export default function DashboardRating() {
               speed="0.5s"
               emptyColor="gray.50"
               color="orange.600"
-              size="xl"
               sx={{
                 '--spinner-size': '5rem'
               }}
