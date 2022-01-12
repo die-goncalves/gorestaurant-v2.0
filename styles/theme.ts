@@ -37,8 +37,8 @@ export const theme = extendTheme({
     }
   },
   fonts: {
-    heading: 'Cairo',
-    body: 'Cairo'
+    heading: 'Barlow Semi Condensed',
+    body: 'Barlow Semi Condensed'
   },
   styles: {
     global: {

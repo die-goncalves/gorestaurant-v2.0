@@ -15,12 +15,11 @@ export function Tags({ tags }: TagsProps) {
           return (
             <WrapItem key={tag.value} as="span" alignItems="center">
               <Text
-                fontFamily="Spectral"
                 fontSize="0.875rem"
-                fontWeight="600"
+                fontWeight="500"
                 lineHeight="0.875rem"
                 color="gray.600"
-                _hover={{ color: '#f08a16' }}
+                _hover={{ color: '#DD6B20' }}
                 transition="all 0.2s ease-in-out"
               >
                 {tag.value}

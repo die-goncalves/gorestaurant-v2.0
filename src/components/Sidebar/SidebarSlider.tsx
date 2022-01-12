@@ -78,7 +78,6 @@ export function SidebarSlider({ values }: SidebarSliderProps) {
             position="absolute"
             left={`-webkit-calc(${index * eachMark}%)`}
             fontSize="0.8rem"
-            fontFamily="Spectral"
             transform="translate(-50%, +200%)"
           >
             <Text>

@@ -97,7 +97,7 @@ export function Cart() {
         onClick={onOpen}
       >
         <Flex position="relative">
-          <RiRestaurant2Line fontSize="24px" />
+          <RiRestaurant2Line fontSize="1.5rem" />
           {typeof numberOfItemsInCart !== undefined &&
             numberOfItemsInCart !== 0 && (
               <Flex
@@ -145,7 +145,7 @@ export function Cart() {
             justifyContent="space-between"
             padding="1rem"
           >
-            <Text>Cart</Text>
+            <Text fontWeight="600">Cart</Text>
             <CloseButton onClick={onClose} variant="red-theme" />
           </ModalHeader>
           <ModalBody
@@ -226,8 +226,7 @@ export function Cart() {
                     <Text
                       fontSize="1.5rem"
                       lineHeight="1.5rem"
-                      fontWeight="700"
-                      fontStyle="italic"
+                      fontWeight="600"
                       textAlign="center"
                     >
                       {item[0]}
@@ -261,7 +260,7 @@ export function Cart() {
                         <Text
                           fontSize="1.125rem"
                           lineHeight="1.125rem"
-                          fontWeight="600"
+                          fontWeight="500"
                         >
                           {food.name}
                         </Text>
@@ -275,7 +274,7 @@ export function Cart() {
                             borderRadius="0px"
                             sx={{
                               _focus: {
-                                boxShadow: '0 0 0 3px rgb(245, 101, 101, 0.6)'
+                                boxShadow: '0 0 0 2px rgb(245, 101, 101, 0.6)'
                               }
                             }}
                             onClick={() => handleRemoveFood(food.id)}
@@ -284,7 +283,7 @@ export function Cart() {
                           </Button>
                           <Flex
                             fontSize="1.125rem"
-                            fontWeight="600"
+                            fontWeight="500"
                             lineHeight="1.125rem"
                             alignSelf="center"
                           >
@@ -299,7 +298,7 @@ export function Cart() {
                             padding="0px"
                             sx={{
                               _focus: {
-                                boxShadow: '0 0 0 3px rgb(72, 187, 120, 0.6)'
+                                boxShadow: '0 0 0 2px rgb(72, 187, 120, 0.6)'
                               }
                             }}
                             onClick={() => handleAddFood(food.id)}
@@ -318,8 +317,8 @@ export function Cart() {
           <ModalFooter padding="1rem" display="flex" alignItems="center">
             <Flex flex="1" flexDirection="column">
               <Flex justifyContent="space-between">
-                <Flex w="70px">
-                  <Text fontWeight="700" margin="auto">
+                <Flex w="3.75rem">
+                  <Text fontWeight="600" margin="auto">
                     TOTAL
                   </Text>
                 </Flex>

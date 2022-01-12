@@ -110,15 +110,15 @@ export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
             top="0px"
             right="0px"
             backgroundColor="#fdfdfd"
-            boxSize="40px"
+            boxSize="2.5rem"
             borderBottomLeftRadius="full"
           >
             <Text
               position="absolute"
               top="7px"
               right="3.5px"
-              fontSize="14px"
-              lineHeight="14px"
+              fontSize="0.875rem"
+              lineHeight="0.875rem"
               fontWeight="600"
             >
               {rating?.toFixed(2)}
@@ -146,7 +146,7 @@ export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
             justifyContent="space-between"
             padding="0.625rem"
           >
-            <Text>{food.name}</Text>
+            <Text fontWeight="600">{food.name}</Text>
             <CloseButton onClick={onClose} variant="red-theme" />
           </ModalHeader>
           <ModalBody
@@ -156,7 +156,7 @@ export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
             padding="0"
             position="relative"
           >
-            <Flex w="100%" h="200px" position="relative">
+            <Flex w="100%" h="12.5rem" position="relative">
               <Image
                 objectFit="cover"
                 layout="fill"
@@ -191,7 +191,7 @@ export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
                 isDisabled={!thereIsASpecificFoodInTheCart(food.id)}
                 onClick={() => handleRemoveFood(food.id)}
               >
-                <IoMdRemove fontSize="24px" />
+                <IoMdRemove fontSize="1.5rem" />
               </Button>
               <Button
                 variant="ghost"
@@ -206,7 +206,7 @@ export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
                 }}
                 onClick={() => handleAddFood(food.id)}
               >
-                <IoMdAdd fontSize="24px" />
+                <IoMdAdd fontSize="1.5rem" />
               </Button>
             </ButtonGroup>
             <Flex
@@ -245,7 +245,7 @@ export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
               </Flex>
 
               <Flex
-                h="40px"
+                h="2.5rem"
                 paddingX="0.5rem"
                 border="1px solid #E2E8F0"
                 bg="gray.50"

@@ -70,7 +70,7 @@ export function DeliveryAddressesUsed() {
       {(() => {
         if (!userData) {
           return (
-            <Text>
+            <Text as="h3" fontSize="1rem" lineHeight="1rem" fontWeight="500">
               Sign in to see the delivery addresses you have already used
             </Text>
           )
@@ -78,7 +78,12 @@ export function DeliveryAddressesUsed() {
           if (loadingAddresses) {
             return (
               <Flex alignItems="center">
-                <Text lineHeight="1rem">
+                <Text
+                  as="h3"
+                  fontSize="1rem"
+                  lineHeight="1rem"
+                  fontWeight="500"
+                >
                   Searching for the delivery addresses used
                 </Text>
                 <Spinner
@@ -97,7 +102,12 @@ export function DeliveryAddressesUsed() {
             if (deliveryAddresses.length > 0) {
               return (
                 <Flex flexDirection="column" sx={{ gap: '0.5rem' }}>
-                  <Box as="h3">
+                  <Box
+                    as="h3"
+                    fontSize="1rem"
+                    lineHeight="1rem"
+                    fontWeight="500"
+                  >
                     Addresses where we have already delivered for you
                   </Box>
                   <Flex
@@ -132,7 +142,6 @@ export function DeliveryAddressesUsed() {
                             passHref
                           >
                             <ChakraLink
-                              fontSize="0.8rem"
                               padding="0.5rem"
                               title={item.place_name}
                               _focus={{ boxShadow: 'none' }}
@@ -160,7 +169,14 @@ export function DeliveryAddressesUsed() {
             } else {
               return (
                 <Flex flexDirection="column" sx={{ gap: '0.5rem' }}>
-                  <Box as="h3">You have not made any purchases yet</Box>
+                  <Box
+                    as="h3"
+                    fontSize="1rem"
+                    lineHeight="1rem"
+                    fontWeight="500"
+                  >
+                    You have not made any purchases yet
+                  </Box>
                 </Flex>
               )
             }

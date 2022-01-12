@@ -32,9 +32,8 @@ export function RestaurantsFilters({ total }: RestaurantFilterProps) {
         <Text>
           {deliveryOption === 'delivery' ? 'Delivery to' : 'Pick up in'}
         </Text>
-        <Text marginLeft="0.3125rem" fontWeight="bold">
-          {geographicLocation?.place}
-        </Text>
+        &nbsp;
+        <Text fontWeight="600">{geographicLocation?.place}</Text>
       </Flex>
 
       <Wrap>
@@ -56,7 +55,7 @@ export function RestaurantsFilters({ total }: RestaurantFilterProps) {
               marginRight="0px"
               borderRadius="0px"
               _focus={{
-                boxShadow: '0 0 0 3px rgba(255,148,66,0.6)',
+                boxShadow: 'none',
                 background: 'rgba(255,148,66, 0.14)'
               }}
               onClick={() => setSortOption('')}
@@ -79,9 +78,8 @@ export function RestaurantsFilters({ total }: RestaurantFilterProps) {
                 ) : (
                   <>
                     <Text>Delivery price up to</Text>
-                    <Text fontWeight="600" marginLeft="0.25rem">
-                      ${priceOption}
-                    </Text>
+                    &nbsp;
+                    <Text fontWeight="600">${priceOption}</Text>
                   </>
                 )}
               </TagLabel>
@@ -90,7 +88,7 @@ export function RestaurantsFilters({ total }: RestaurantFilterProps) {
                 marginRight="0px"
                 borderRadius="0px"
                 _focus={{
-                  boxShadow: '0 0 0 3px rgba(255,148,66,0.6)',
+                  boxShadow: 'none',
                   background: 'rgba(255,148,66, 0.14)'
                 }}
                 onClick={() => setPriceOption('unrestricted')}
@@ -115,7 +113,7 @@ export function RestaurantsFilters({ total }: RestaurantFilterProps) {
                   marginRight="0px"
                   borderRadius="0px"
                   _focus={{
-                    boxShadow: '0 0 0 3px rgba(255,148,66,0.6)',
+                    boxShadow: 'none',
                     background: 'rgba(255,148,66, 0.14)'
                   }}
                   onClick={() =>
@@ -128,7 +126,7 @@ export function RestaurantsFilters({ total }: RestaurantFilterProps) {
         )}
       </Wrap>
 
-      <Flex marginY="0.25rem" fontWeight="600" fontSize="1rem" color="gray.600">
+      <Flex marginY="0.25rem" fontSize="1rem" color="gray.600">
         {total} Restaurants
       </Flex>
 

@@ -62,7 +62,7 @@ export const DrawerUserLocation = () => {
     <>
       <Box
         display="flex"
-        h="48px"
+        h="3rem"
         background="brand.body_background"
         alignItems="center"
       >
@@ -81,7 +81,7 @@ export const DrawerUserLocation = () => {
             }
           }}
         >
-          <FiMap fontSize="20px" />
+          <FiMap fontSize="1.25rem" />
         </Button>
       </Box>
 
@@ -95,7 +95,7 @@ export const DrawerUserLocation = () => {
         <DrawerContent minW="40vw" background="brand.body_background">
           <DrawerHeader padding="0.625rem">
             <Flex alignItems="center" justifyContent="space-between">
-              <Text lineHeight="1.25rem" fontWeight="bold">
+              <Text lineHeight="1.25rem" fontWeight="600">
                 Where you are?
               </Text>
 
@@ -129,7 +129,7 @@ export const DrawerUserLocation = () => {
               placeholder="Here you will see your exact location"
               isReadOnly
               background="orange.50"
-              fontWeight="semibold"
+              fontWeight="500"
               borderColor="orange.100"
               _focus={{
                 background: 'orange.100',
@@ -146,6 +146,7 @@ export const DrawerUserLocation = () => {
               onClick={onClose}
               borderRadius="0px"
               colorScheme="green"
+              fontWeight="500"
               sx={{
                 _focus: {
                   boxShadow: '0 0 0 3px rgb(72, 187, 120, 0.6)'

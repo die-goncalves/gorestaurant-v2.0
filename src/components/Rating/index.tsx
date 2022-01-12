@@ -23,7 +23,7 @@ export function Rating({ value, critics, starSize, fontSize }: RatingProps) {
                 padding="0px"
                 lineHeight={starSize}
                 fontSize={starSize}
-                fontWeight="bold"
+                fontWeight="700"
                 height={starSize}
                 minWidth={starSize}
                 sx={{
@@ -64,7 +64,7 @@ export function Rating({ value, critics, starSize, fontSize }: RatingProps) {
         {value && (
           <Text color={ratingNumberToText(value).color}>{`${value}`}</Text>
         )}
-        <Text color="#0c060080">
+        <Text color="#989898">
           {critics > 999
             ? '( 999+ ratings )'
             : critics === 1

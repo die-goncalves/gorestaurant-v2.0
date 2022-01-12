@@ -118,7 +118,7 @@ export function RestaurantPresentation({
           place={restaurant.place}
         />
         <Flex marginTop="0.75rem" alignItems="center" sx={{ gap: '1rem' }}>
-          <Heading as="h1" fontSize="1.75rem" fontWeight="bold">
+          <Heading as="h1" fontSize="1.75rem" fontWeight="600">
             {restaurant.name}
           </Heading>
           <RestaurantStatus

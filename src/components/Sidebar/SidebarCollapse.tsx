@@ -1,4 +1,11 @@
-import { useDisclosure, Button, Collapse, Box, Flex } from '@chakra-ui/react'
+import {
+  useDisclosure,
+  Button,
+  Collapse,
+  Box,
+  Flex,
+  Text
+} from '@chakra-ui/react'
 import { ReactNode, useState } from 'react'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 
@@ -22,7 +29,6 @@ export function SidebarCollapse({
         justifyContent="space-between"
         width="100%"
         h="auto"
-        fontSize="1rem"
         paddingY="1rem"
         onClick={() => {
           onToggle()
@@ -32,7 +38,9 @@ export function SidebarCollapse({
         _focus={{ outline: 'none' }}
         variant="unstyled"
       >
-        <Flex>{categoryName}</Flex>
+        <Text fontSize="1rem" fontWeight="500">
+          {categoryName}
+        </Text>
         <Box
           display="flex"
           h="1.5rem"

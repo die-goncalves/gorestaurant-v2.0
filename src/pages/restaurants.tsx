@@ -125,11 +125,10 @@ export default function Restaurants({ geohash, tags }: RestaurantsProps) {
       sx={{
         scrollbarGutter: 'stable both-edges',
         '::-webkit-scrollbar': {
-          width: '10px'
+          width: '0.625rem'
         },
         '::-webkit-scrollbar-thumb': {
           background: 'scrollbar.thumb_color',
-          transition: '5s all ease-in-out',
           '&:hover': {
             background: 'scrollbar.thumb_hover_color'
           }
@@ -149,12 +148,20 @@ export default function Restaurants({ geohash, tags }: RestaurantsProps) {
           {(() => {
             if (isLoading) {
               return (
-                <Flex marginY="2rem" flex="1">
+                <Flex
+                  marginY="2rem"
+                  flex="1"
+                  alignItems="center"
+                  justifyContent="center"
+                >
                   <Spinner
-                    margin="auto"
-                    color="orange.300"
-                    thickness="0.5rem"
-                    boxSize="5rem"
+                    thickness="0.125rem"
+                    speed="0.5s"
+                    emptyColor="gray.50"
+                    color="orange.600"
+                    sx={{
+                      '--spinner-size': '5rem'
+                    }}
                   />
                 </Flex>
               )

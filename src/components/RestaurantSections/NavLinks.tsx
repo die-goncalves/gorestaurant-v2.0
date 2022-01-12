@@ -270,6 +270,7 @@ export default function NavLinks({
                   visibility={
                     visibilityNavLinks[`button-${tag}`] ? 'visible' : 'hidden'
                   }
+                  fontWeight="600"
                 >
                   {tag}
                 </Button>
@@ -294,7 +295,7 @@ export default function NavLinks({
                     justifyContent="space-between"
                   >
                     <Text
-                      fontWeight="semibold"
+                      fontWeight="600"
                       color={
                         activeSection !== 'More'
                           ? 'orange.600'

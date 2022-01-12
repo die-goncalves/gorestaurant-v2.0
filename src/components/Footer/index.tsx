@@ -209,8 +209,8 @@ export function Footer({ noBorderTop }: FooterProps) {
                   marginLeft="0.5rem"
                   alignItems="flex-start"
                 >
-                  <Text fontSize="9px">GET IT ON</Text>
-                  <Text fontSize="16px">Google Play</Text>
+                  <Text fontSize="0.5625rem">GET IT ON</Text>
+                  <Text fontSize="1rem">Google Play</Text>
                 </Flex>
               </Link>
             </NextLink>
@@ -239,8 +239,8 @@ export function Footer({ noBorderTop }: FooterProps) {
                   marginLeft="0.5rem"
                   alignItems="flex-start"
                 >
-                  <Text fontSize="9px">Download on the</Text>
-                  <Text fontSize="16px">App Store</Text>
+                  <Text fontSize="0.5625rem">Download on the</Text>
+                  <Text fontSize="1rem">App Store</Text>
                 </Flex>
               </Link>
             </NextLink>

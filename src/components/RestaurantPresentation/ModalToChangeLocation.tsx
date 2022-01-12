@@ -70,7 +70,7 @@ export function ModalToChangeLocation({
             display="flex"
             flexDirection="column"
             alignItems="flex-start"
-            fontWeight="normal"
+            fontWeight="400"
             sx={{
               gap: '0.5rem'
             }}
@@ -85,7 +85,7 @@ export function ModalToChangeLocation({
             </Text>
           </GridItem>
           <GridItem display="flex" width="100%" justifyContent="flex-end">
-            <Text alignSelf="center" fontWeight="600">
+            <Text alignSelf="center" fontWeight="500">
               Change
             </Text>
           </GridItem>
@@ -105,7 +105,7 @@ export function ModalToChangeLocation({
             justifyContent="space-between"
             padding="0.625rem"
           >
-            <Text>Choose your new location</Text>
+            <Text fontWeight="600">Choose your new location</Text>
             <CloseButton onClick={onClose} variant="red-theme" />
           </ModalHeader>
           <ModalBody
@@ -129,7 +129,7 @@ export function ModalToChangeLocation({
               flex="1"
               variant="filled"
               borderRadius="0px"
-              fontWeight="600"
+              fontWeight="500"
               isReadOnly
               {...(previewLocation
                 ? restaurantPlace !== previewLocation.place

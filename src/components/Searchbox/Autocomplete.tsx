@@ -99,7 +99,7 @@ export const Autocomplete = () => {
 
         <Input
           color="brand.text_color"
-          fontWeight="600"
+          fontWeight="500"
           variant="unstyled"
           borderRadius="0"
           placeholder="Enter the delivery address"
@@ -140,6 +140,7 @@ export const Autocomplete = () => {
                       paddingY="0.5rem"
                       paddingX="1rem"
                       fontSize="0.85rem"
+                      fontWeight="500"
                       sx={{
                         '&:hover': {
                           background: 'brand.list_hover'
@@ -147,7 +148,7 @@ export const Autocomplete = () => {
                       }}
                     >
                       <Box as="span" marginRight="0.625rem" color="orange.500">
-                        <MdLocationPin fontSize="24px" />
+                        <MdLocationPin fontSize="1.5rem" />
                       </Box>
                       {item.place_name}
                     </ListItem>

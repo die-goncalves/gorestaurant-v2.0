@@ -59,7 +59,7 @@ export function ModalForNonInteractionMap({
             justifyContent="space-between"
             padding="0.625rem"
           >
-            <Text>Restaurant location on map</Text>
+            <Text fontWeight="600">Restaurant location on map</Text>
             <CloseButton onClick={onClose} variant="red-theme" />
           </ModalHeader>
           <ModalBody
@@ -87,7 +87,7 @@ export function ModalForNonInteractionMap({
               placeholder="Here you will see your exact location"
               isReadOnly
               background="orange.50"
-              fontWeight="semibold"
+              fontWeight="500"
               borderColor="orange.100"
               textAlign="center"
               _focus={{

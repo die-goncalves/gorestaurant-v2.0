@@ -54,13 +54,17 @@ export function FoodSections({
                   <Heading
                     as="h3"
                     fontSize="1.5rem"
+                    fontWeight="600"
                     lineHeight="2.25rem"
                     paddingTop="2rem"
                     paddingBottom="1rem"
                   >
                     {tag}
                   </Heading>
-                  <Grid templateColumns="repeat(3, 1fr)" gridGap="24px 24px">
+                  <Grid
+                    templateColumns="repeat(3, 1fr)"
+                    gridGap="1.5rem 1.5rem"
+                  >
                     <Food
                       food={food}
                       rating={rating}

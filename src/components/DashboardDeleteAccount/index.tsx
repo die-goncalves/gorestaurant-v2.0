@@ -30,7 +30,7 @@ export default function DashboardDeleteAccount() {
         background="#ffffff"
       >
         <Flex flexDirection="column">
-          <Text fontSize="1.25rem" fontWeight="600">
+          <Text fontSize="1.25rem" fontWeight="500">
             Delete account
           </Text>
           <Text fontSize="1rem" background="red.50">

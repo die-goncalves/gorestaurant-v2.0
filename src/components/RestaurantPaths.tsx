@@ -16,7 +16,7 @@ export function RestaurantPaths({
     <Breadcrumb separator="/">
       <BreadcrumbItem>
         <BreadcrumbLink
-          fontWeight="600"
+          fontWeight="500"
           href="/"
           sx={{
             transition: '0.2s ease-in-out color',
@@ -30,7 +30,7 @@ export function RestaurantPaths({
 
       <BreadcrumbItem>
         <BreadcrumbLink
-          fontWeight="600"
+          fontWeight="500"
           href={
             userLocation
               ? `/restaurants?place=${place}&geohash=${userLocation?.geohash}`

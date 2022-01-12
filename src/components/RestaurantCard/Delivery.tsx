@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Flex, Icon, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { MdDeliveryDining } from 'react-icons/md'
 import { BiShoppingBag } from 'react-icons/bi'
@@ -14,7 +14,7 @@ type DeliveryProps = {
 }
 
 const durationDelivery = (seconds: number | undefined) => {
-  if (!seconds) return { minutes: null, hour: null }
+  if (seconds === undefined) return { minutes: null, hour: null }
   const second_minutes = Math.round(seconds / 60)
   const hour_minutes = second_minutes / 60
 
@@ -46,50 +46,41 @@ export function Delivery({ deliveryPrice, deliveryTime }: DeliveryProps) {
   }, [deliveryPrice, deliveryTime])
 
   return (
-    <Flex
-      justifyContent="flex-start"
-      fontFamily="Spectral"
-      fontSize="1rem"
-      lineHeight="1rem"
-    >
-      {deliveryPrice ? (
-        <Box as="span" fontSize="1rem" marginRight="0.25rem">
-          <MdDeliveryDining />
-        </Box>
-      ) : (
-        <Box
-          as="span"
-          fontSize="1rem"
-          lineHeight="0.8rem"
-          marginRight="0.25rem"
-        >
-          <BiShoppingBag />
-        </Box>
-      )}
+    <Flex justifyContent="flex-start">
+      <Icon
+        fontSize="1.2rem"
+        lineHeight="1.2rem"
+        marginRight="0.25rem"
+        {...(deliveryPrice !== undefined
+          ? { as: MdDeliveryDining }
+          : { as: BiShoppingBag })}
+      />
 
-      {timeDelivery &&
-        (timeDelivery.hour === null ? (
-          timeDelivery.minutes === null ? (
-            <Text as="span"> -- h -- min</Text>
+      <Flex alignItems="center" fontSize="1rem" lineHeight="1rem">
+        {timeDelivery &&
+          (timeDelivery.hour === null ? (
+            timeDelivery.minutes === null ? (
+              <Text> -- h -- min</Text>
+            ) : (
+              <Text>{timeDelivery.minutes} min</Text>
+            )
+          ) : timeDelivery.minutes === null ? (
+            <Text>{timeDelivery.hour} h</Text>
           ) : (
-            <Text as="span">{timeDelivery.minutes} min</Text>
-          )
-        ) : timeDelivery.minutes === null ? (
-          <Text as="span">{timeDelivery.hour} h</Text>
-        ) : (
-          <Text as="span">
-            {timeDelivery.hour} h {timeDelivery.minutes} min
-          </Text>
-        ))}
+            <Text>
+              {timeDelivery.hour} h {timeDelivery.minutes} min
+            </Text>
+          ))}
 
-      {priceDelivery && (
-        <>
-          <Flex marginY="auto" marginX="0.25rem">
-            <Box boxSize="2.5px" borderRadius="full" background="gray.300" />
-          </Flex>
-          <Text>R$ {priceDelivery}</Text>
-        </>
-      )}
+        {priceDelivery && (
+          <>
+            <Flex marginY="auto" marginX="0.25rem">
+              <Box boxSize="2.5px" borderRadius="full" background="gray.300" />
+            </Flex>
+            <Text>R$ {priceDelivery}</Text>
+          </>
+        )}
+      </Flex>
     </Flex>
   )
 }

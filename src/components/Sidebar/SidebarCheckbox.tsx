@@ -38,7 +38,7 @@ export function SidebarCheckbox({
       <Flex>
         <Text>{children}</Text>
         <Text marginLeft="0.5rem" as="span" color="#989898">
-          ({count})
+          ( {count} )
         </Text>
       </Flex>
     </Checkbox>

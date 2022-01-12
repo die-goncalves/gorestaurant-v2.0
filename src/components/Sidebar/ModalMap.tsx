@@ -49,7 +49,7 @@ export function ModalMap() {
           flexDir="column"
           alignItems="flex-start"
           marginLeft="0.5rem"
-          fontWeight="normal"
+          fontWeight="400"
         >
           <Text fontSize="0.875rem" lineHeight="0.875rem">
             Now
@@ -60,10 +60,10 @@ export function ModalMap() {
             marginTop="0.25rem"
             justifyContent="space-between"
           >
-            <Text fontSize="1rem" isTruncated>
+            <Text fontSize="1rem" fontWeight="400" isTruncated>
               {geographicLocation?.place}
             </Text>
-            <Text marginLeft="0.5rem" fontWeight="600">
+            <Text marginLeft="0.5rem" fontWeight="500">
               Change
             </Text>
           </Flex>
@@ -83,7 +83,7 @@ export function ModalMap() {
             justifyContent="space-between"
             padding="0.625rem"
           >
-            <Text>Choose your new location</Text>
+            <Text fontWeight="600">Choose your new location</Text>
             <CloseButton onClick={onClose} variant="red-theme" />
           </ModalHeader>
           <ModalBody
@@ -111,7 +111,7 @@ export function ModalMap() {
               placeholder="Here you will see your exact location"
               isReadOnly
               background="orange.50"
-              fontWeight="semibold"
+              fontWeight="500"
               borderColor="orange.100"
               _focus={{
                 background: 'orange.100',

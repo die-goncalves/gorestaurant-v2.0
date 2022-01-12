@@ -56,7 +56,7 @@ export function OneStar({ value, critics, starSize, fontSize }: OneStarProps) {
           {value && `${value} `}
           {ratingNumberToText(value).text}
         </Text>
-        <Text color="gray.400">
+        <Text color="#989898">
           {critics > 999 ? '( 999+ )' : `( ${critics} )`}
         </Text>
       </Flex>

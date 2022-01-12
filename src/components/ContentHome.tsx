@@ -19,7 +19,7 @@ export function ContentHome() {
   return (
     <Box paddingX="3.75rem" paddingTop="6.25rem">
       <VStack spacing="1rem" alignItems="flex-start">
-        <Heading as="h1" size="2xl">
+        <Heading as="h1" fontSize="3rem" lineHeight="3rem" fontWeight="500">
           <Typewriter
             words={convincingSentences}
             loop={false}
@@ -31,7 +31,7 @@ export function ContentHome() {
           />
         </Heading>
 
-        <Heading as="h2" fontSize="1.5rem" fontWeight="300">
+        <Heading as="h2" fontSize="1.5rem" fontWeight="400">
           Order food from favourite restaurants near you.
         </Heading>
       </VStack>

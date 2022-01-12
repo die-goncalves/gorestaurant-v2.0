@@ -64,7 +64,7 @@ export function Payment({ payment }: PaymentProps) {
                 <Text
                   w="5rem"
                   textAlign="center"
-                  fontWeight="700"
+                  fontWeight="600"
                   fontSize="1rem"
                   marginRight="0.5rem"
                 >
@@ -74,7 +74,7 @@ export function Payment({ payment }: PaymentProps) {
                   {payment.payment_intent_id}
                 </Text>
               </Flex>
-              <Flex fontWeight="700" fontSize="1rem">
+              <Flex fontWeight="600" fontSize="1rem">
                 {payment.payment_intent_status.toUpperCase()}
               </Flex>
             </Flex>
@@ -149,7 +149,7 @@ export function Payment({ payment }: PaymentProps) {
       <Collapse in={isOpen} animateOpacity>
         <Flex marginTop="1rem" flexDirection="column" sx={{ gap: '1rem' }}>
           <Flex w="100%" flexDirection="column">
-            <Flex alignSelf="center" fontSize="0.8rem" fontWeight="700">
+            <Flex alignSelf="center" fontSize="0.8rem" fontWeight="600">
               <Text>
                 FOOD ORDERED AT THE RESTAURANT{' '}
                 <Text as="span" color="orange.600">
@@ -190,7 +190,7 @@ export function Payment({ payment }: PaymentProps) {
             </Table>
           </Flex>
           <Flex w="100%" flexDirection="column">
-            <Box alignSelf="center" fontSize="0.8rem" fontWeight="700">
+            <Box alignSelf="center" fontSize="0.8rem" fontWeight="600">
               SHIPPING
             </Box>
             <Table size="sm">
@@ -226,7 +226,7 @@ export function Payment({ payment }: PaymentProps) {
               </Thead>
               <Tbody>
                 <Tr>
-                  <Td isNumeric>
+                  <Td isNumeric fontWeight="600">
                     {formatNumber({
                       options: { currency: 'USD' },
                       numberToBeFormatted:

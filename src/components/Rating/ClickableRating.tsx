@@ -158,7 +158,7 @@ export function ClickableRating({ starSize, foodId }: ClickableRatingProps) {
                 padding="0px"
                 lineHeight={starSize}
                 fontSize={starSize}
-                fontWeight="bold"
+                fontWeight="700"
                 height={starSize}
                 minWidth={starSize}
                 sx={{

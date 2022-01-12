@@ -72,11 +72,10 @@ export default function Restaurant({ restaurant }: RestaurantProps) {
         scrollbarGutter: 'stable both-edges',
         margin: '0px',
         '::-webkit-scrollbar': {
-          width: '10px'
+          width: '0.625rem'
         },
         '::-webkit-scrollbar-thumb': {
           background: 'scrollbar.thumb_color',
-          transition: '5s all ease-in-out',
           '&:hover': {
             background: 'scrollbar.thumb_hover_color'
           }

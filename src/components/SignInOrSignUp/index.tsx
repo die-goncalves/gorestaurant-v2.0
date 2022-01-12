@@ -75,13 +75,13 @@ export function SignInOrSignOut() {
                     _focus: { boxShadow: 'none' },
                     '&[aria-selected="true"]': {
                       background: 'transparent',
-                      color: 'brand.text_color'
+                      color: 'brand.text_color',
+                      fontWeight: '600'
                     },
                     '&[aria-selected="false"]': {
                       background: 'orange.600',
                       color: 'orange.50',
-                      fontWeight: '200',
-                      fontStyle: 'italic'
+                      fontWeight: '300'
                     }
                   }}
                 >
@@ -92,13 +92,13 @@ export function SignInOrSignOut() {
                     _focus: { boxShadow: 'none' },
                     '&[aria-selected="true"]': {
                       background: 'transparent',
-                      color: 'brand.text_color'
+                      color: 'brand.text_color',
+                      fontWeight: '600'
                     },
                     '&[aria-selected="false"]': {
                       background: 'orange.600',
                       color: 'orange.50',
-                      fontWeight: '200',
-                      fontStyle: 'italic'
+                      fontWeight: '300'
                     }
                   }}
                 >
