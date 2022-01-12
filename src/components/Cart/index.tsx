@@ -91,7 +91,7 @@ export function Cart() {
         borderRadius="full"
         sx={{
           _focus: {
-            boxShadow: 'inset 0 0 0 1px rgb(192, 86, 33)'
+            boxShadow: 'inset 0 0 0 1px #DD6B20'
           }
         }}
         onClick={onOpen}
@@ -106,7 +106,7 @@ export function Cart() {
                 right="0px"
                 transform="translate(50%, -50%)"
                 boxSize="1.5rem"
-                background="#C05621"
+                background="#DD6B20"
                 display="flex"
                 justifyContent="center"
                 alignItems="center"

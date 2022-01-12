@@ -191,6 +191,11 @@ export default function SignUpTab({ onClose }: SignUpTabProps) {
         loadingText="Saving"
         colorScheme="green"
         borderRadius="0"
+        sx={{
+          _focus: {
+            boxShadow: '0 0 0 3px rgb(72, 187, 120, 0.6)'
+          }
+        }}
       >
         Save
       </Button>

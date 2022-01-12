@@ -54,6 +54,11 @@ export default function Searchbox() {
           variant="solid"
           paddingY="1.5rem"
           onClick={handleSearchButton}
+          sx={{
+            _focus: {
+              boxShadow: '0 0 0 3px rgba(237, 137, 54, 0.6)'
+            }
+          }}
         >
           Find Food
         </Button>

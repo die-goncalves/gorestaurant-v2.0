@@ -52,6 +52,7 @@ export function ModalToChangeLocation({
         padding="0.5rem"
         variant="outline"
         colorScheme="orange"
+        borderColor="#DD6B20"
         onClick={onOpen}
       >
         <Grid flex="1" templateColumns="auto 1fr auto" gap="0.5rem">

@@ -74,6 +74,12 @@ export const DrawerUserLocation = () => {
           paddingY="1rem"
           paddingX="0"
           marginX="1rem"
+          borderColor="#DD6B20"
+          sx={{
+            _focus: {
+              boxShadow: '0 0 0 3px rgba(237, 137, 54, 0.6)'
+            }
+          }}
         >
           <FiMap fontSize="20px" />
         </Button>

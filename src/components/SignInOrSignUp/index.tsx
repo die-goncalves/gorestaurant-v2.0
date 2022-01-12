@@ -27,7 +27,7 @@ export function SignInOrSignOut() {
       {userData ? (
         <Flex>
           <Flex
-            border="1px solid"
+            border="1px solid #DD6B20"
             alignItems="center"
             paddingX="1rem"
             color="orange.600"
@@ -42,12 +42,13 @@ export function SignInOrSignOut() {
         <Button
           onClick={onOpen}
           borderRadius="0px"
+          borderColor="#DD6B20"
           colorScheme="orange"
           variant="outline"
           fontWeight="500"
           sx={{
             _focus: {
-              boxShadow: 'none'
+              boxShadow: '0 0 0 3px rgba(237, 137, 54, 0.6)'
             }
           }}
         >
