@@ -15,10 +15,12 @@ export function SidebarCheckbox({
   return (
     <Checkbox
       value={value}
+      _hover={{
+        borderColor: '#f08a16'
+      }}
       sx={{
         '.chakra-checkbox__control': {
           transition: 'all 0.2s ease-in-out',
-          _hover: { borderColor: '#f08a16' },
           _focus: {
             boxShadow: '0 0 0 3px rgba(255,173,66,0.6)'
           },
