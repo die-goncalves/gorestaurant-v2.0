@@ -1,7 +1,6 @@
 import { Box, Flex, Grid, Heading, HStack, Text } from '@chakra-ui/react'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { FaWhatsapp } from 'react-icons/fa'
-import Image from 'next/image'
 import { RestaurantStatus } from '../RestaurantStatus'
 import { Rating } from '../Rating'
 import { RestaurantPaths } from '../RestaurantPaths'
@@ -14,6 +13,7 @@ import { overallRatingRestaurant } from '../../utils/overallRatingRestaurant'
 import { groupTags } from '../../utils/tags'
 import { setCookie } from 'nookies'
 import { TRestaurant, TFoods, TFoodRating, TOperatingHours } from '../../types'
+import { ImageWithSkeleton } from '../ImageWithSkeleton'
 
 type Restaurant = Omit<TRestaurant, 'created_at' | 'updated_at'> & {
   operating_hours: Array<Omit<TOperatingHours, 'restaurant_id'>>
@@ -194,8 +194,8 @@ export function RestaurantPresentation({
       </Box>
 
       <Box>
-        <Flex position="relative" h="256px">
-          <Image
+        <Flex position="relative" h="16rem">
+          <ImageWithSkeleton
             src={restaurant.image}
             alt={restaurant.name}
             objectFit="cover"

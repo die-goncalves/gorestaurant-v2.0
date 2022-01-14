@@ -15,13 +15,13 @@ import {
   Text,
   useDisclosure
 } from '@chakra-ui/react'
-import Image from 'next/image'
 import { ratingNumberToText } from '../../utils/ratingNumberToText'
 import { BsCart4 } from 'react-icons/bs'
 import { IoMdAdd, IoMdRemove } from 'react-icons/io'
 import { useCart } from '../../hooks/useCart'
 import { formatNumber } from '../../utils/formatNumber'
 import { TFoods } from '../../types'
+import { ImageWithSkeleton } from '../ImageWithSkeleton'
 
 type FoodProps = {
   food: Omit<
@@ -101,7 +101,7 @@ export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
           </Flex>
           <Text>$ {food.price}</Text>
         </GridItem>
-        <GridItem overflow="hidden" position="relative">
+        <GridItem display="flex" overflow="hidden" position="relative">
           <Box
             display={rating ? 'flex' : 'none'}
             position="absolute"
@@ -124,7 +124,7 @@ export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
               {rating?.toFixed(2)}
             </Text>
           </Box>
-          <Image
+          <ImageWithSkeleton
             objectFit="cover"
             layout="fill"
             src={food.image}
@@ -157,7 +157,7 @@ export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
             position="relative"
           >
             <Flex w="100%" h="12.5rem" position="relative">
-              <Image
+              <ImageWithSkeleton
                 objectFit="cover"
                 layout="fill"
                 src={food.image}

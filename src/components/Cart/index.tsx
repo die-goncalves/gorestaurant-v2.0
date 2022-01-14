@@ -22,6 +22,7 @@ import { api } from '../../services/api'
 import { getStripeJs } from '../../services/stripe-js'
 import { AuthContext } from '../../contexts/AuthContext'
 import { TRestaurant, TFoods, TFoodRating } from '../../types'
+import { ImageWithSkeleton } from '../ImageWithSkeleton'
 
 type Food = Omit<TFoods, 'restaurant_id' | 'created_at' | 'updated_at'> & {
   amount: number
@@ -206,10 +207,15 @@ export function Cart() {
                     h="4rem"
                     position="relative"
                     sx={{
-                      '& > div': { opacity: 0.25, filter: 'contrast(1.5)' }
+                      '& > div': {
+                        '&:not([class*=chakra-skeleton])': {
+                          opacity: 0.25,
+                          filter: 'contrast(1.5)'
+                        }
+                      }
                     }}
                   >
-                    <Image
+                    <ImageWithSkeleton
                       objectFit="cover"
                       layout="fill"
                       src={item[1][0].restaurant.image}
@@ -244,7 +250,7 @@ export function Cart() {
                       boxShadow="inset 0px 0px 2px 0px rgb(237, 137, 54)"
                     >
                       <Flex w="3.75rem" h="3.75rem" position="relative">
-                        <Image
+                        <ImageWithSkeleton
                           objectFit="cover"
                           layout="fill"
                           src={food.image}

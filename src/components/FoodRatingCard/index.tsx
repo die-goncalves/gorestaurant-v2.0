@@ -1,7 +1,7 @@
 import { Flex, GridItem, Text } from '@chakra-ui/react'
-import Image from 'next/image'
 import { ClickableRating } from '../Rating/ClickableRating'
 import { TRestaurant, TFoods } from '../../types'
+import { ImageWithSkeleton } from '../ImageWithSkeleton'
 
 type FoodRatingCardProps = {
   food: Pick<TFoods, 'id' | 'name' | 'image'> & {
@@ -19,7 +19,7 @@ export function FoodRatingCard({ food }: FoodRatingCardProps) {
       background="#ffffff"
     >
       <Flex w="100%" h="6rem" position="relative" overflow="hidden">
-        <Image
+        <ImageWithSkeleton
           objectFit="cover"
           layout="fill"
           src={food.image}

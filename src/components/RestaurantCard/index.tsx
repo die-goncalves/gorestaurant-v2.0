@@ -1,12 +1,12 @@
-import { Box, Heading, VStack, Container } from '@chakra-ui/react'
+import { Box, Heading, VStack, Container, Flex } from '@chakra-ui/react'
 import React, { useContext } from 'react'
-import Image from 'next/image'
 import { Tags } from './Tags'
 import { Delivery } from './Delivery'
 import { useRouter } from 'next/router'
 import { FilterContext } from '../../contexts/FilterContext'
 import { OneStar } from '../Rating/OneStar'
 import { TRestaurant, TFoods } from '../../types'
+import { ImageWithSkeleton } from '../ImageWithSkeleton'
 
 type Restaurant = Pick<TRestaurant, 'id' | 'image' | 'name'> & {
   foods: Array<Pick<TFoods, 'tag'>>
@@ -43,14 +43,14 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
         boxShadow: '0px 3px 0px 0px rgba(221,107,32,1)'
       }}
     >
-      <Box w="100%" h="9.375rem" position="relative">
-        <Image
+      <Flex w="100%" h="9.375rem" position="relative">
+        <ImageWithSkeleton
           src={restaurant.image}
           alt={restaurant.name}
           objectFit="cover"
           layout="fill"
         />
-      </Box>
+      </Flex>
 
       <Container padding="0.5rem">
         <VStack display="flex" alignItems="flex-start" spacing="0.5rem">
