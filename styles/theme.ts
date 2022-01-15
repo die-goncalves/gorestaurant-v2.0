@@ -29,7 +29,8 @@ export const theme = extendTheme({
       list_background: '#f5f5f5',
       list_hover: '#E6E6E6',
       text_color: '#0C0600',
-      card_restaurant_background: '#FCFBF9'
+      card_restaurant_background: '#FCFBF9',
+      footer_background: '#252525'
     },
     scrollbar: {
       thumb_color: '#D1CFCE',

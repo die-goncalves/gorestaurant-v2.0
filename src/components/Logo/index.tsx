@@ -6,10 +6,16 @@ import SVGLogo from '../../assets/logo.svg'
 type LogoProps = {
   sizeLogo: string
   fontSize: string
+  color?: string
   marginX?: string
 }
 
-export function Logo({ fontSize, sizeLogo, marginX = '0px' }: LogoProps) {
+export function Logo({
+  fontSize,
+  sizeLogo,
+  color = '#0C0600',
+  marginX = '0px'
+}: LogoProps) {
   return (
     <NextLink href="/" passHref>
       <ChakraLink
@@ -34,6 +40,7 @@ export function Logo({ fontSize, sizeLogo, marginX = '0px' }: LogoProps) {
             verticalAlign="middle"
           >
             <Image
+              priority
               src={SVGLogo}
               alt="GoRestaurant"
               layout="fill"
@@ -46,7 +53,7 @@ export function Logo({ fontSize, sizeLogo, marginX = '0px' }: LogoProps) {
             fontSize={fontSize}
             fontWeight="600"
             sx={{
-              background: 'linear-gradient(to left, #000000 50%, #DD6B20 85%)',
+              background: `linear-gradient(to left, ${color} 50%, #DD6B20 85%)`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}

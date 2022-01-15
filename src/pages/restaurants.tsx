@@ -12,6 +12,7 @@ import { tagListingForFiltering } from '../utils/tags'
 import { supabase } from '../utils/supabaseClient'
 import { UserLocationContext } from '../contexts/UserLocationContext'
 import { TRestaurant, TFoods, TFoodRating } from '../types'
+import { Footer } from '../components/Footer'
 
 type SupabaseResponseData = Omit<
   TRestaurant,
@@ -123,7 +124,7 @@ export default function Restaurants({ geohash, tags }: RestaurantsProps) {
       maxHeight="100vh"
       overflow="auto"
       sx={{
-        scrollbarGutter: 'stable both-edges',
+        scrollbarGutter: 'stable',
         '::-webkit-scrollbar': {
           width: '0.625rem'
         },
@@ -138,57 +139,61 @@ export default function Restaurants({ geohash, tags }: RestaurantsProps) {
         }
       }}
     >
-      <RestaurantHeader />
+      <Box minH="100vh">
+        <RestaurantHeader />
 
-      <Flex marginX="2rem">
-        <Sidebar tags={tags} />
-        <Flex as="main" w="82.5vw" flexDirection="column" marginBottom="2rem">
-          <RestaurantsFilters total={filteredData.length} />
+        <Flex marginX="2rem">
+          <Sidebar tags={tags} />
+          <Flex as="main" w="82.5vw" flexDirection="column">
+            <RestaurantsFilters total={filteredData.length} />
 
-          {(() => {
-            if (isLoading) {
-              return (
-                <Flex
-                  marginY="2rem"
-                  flex="1"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <Spinner
-                    thickness="0.125rem"
-                    speed="0.5s"
-                    emptyColor="gray.50"
-                    color="orange.600"
-                    sx={{
-                      '--spinner-size': '5rem'
-                    }}
-                  />
-                </Flex>
-              )
-            } else if (isError) {
-              return <Box>Error: {error?.message}</Box>
-            } else if (filteredData) {
-              return (
-                <>
-                  <Grid
-                    templateColumns="repeat(3, 1fr)"
-                    gap="2rem"
+            {(() => {
+              if (isLoading) {
+                return (
+                  <Flex
                     marginY="2rem"
+                    flex="1"
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    {filteredData.length > 0 &&
-                      filteredData.map(restaurant => (
-                        <RestaurantCard
-                          key={restaurant.id}
-                          restaurant={restaurant}
-                        />
-                      ))}
-                  </Grid>
-                </>
-              )
-            }
-          })()}
+                    <Spinner
+                      thickness="0.125rem"
+                      speed="0.5s"
+                      emptyColor="gray.50"
+                      color="orange.600"
+                      sx={{
+                        '--spinner-size': '5rem'
+                      }}
+                    />
+                  </Flex>
+                )
+              } else if (isError) {
+                return <Box>Error: {error?.message}</Box>
+              } else if (filteredData) {
+                return (
+                  <>
+                    <Grid
+                      templateColumns="repeat(3, 1fr)"
+                      gap="2rem"
+                      marginY="2rem"
+                    >
+                      {filteredData.length > 0 &&
+                        filteredData.map(restaurant => (
+                          <RestaurantCard
+                            key={restaurant.id}
+                            restaurant={restaurant}
+                          />
+                        ))}
+                    </Grid>
+                  </>
+                )
+              }
+            })()}
+          </Flex>
         </Flex>
-      </Flex>
+      </Box>
+
+      <Footer />
     </Box>
   )
 }

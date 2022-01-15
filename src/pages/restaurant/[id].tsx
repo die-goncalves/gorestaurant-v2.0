@@ -64,12 +64,11 @@ export default function Restaurant({ restaurant }: RestaurantProps) {
   }
 
   return (
-    <Flex
-      height="100vh"
-      width="100vw"
+    <Box
+      maxHeight="100vh"
       overflow="auto"
       sx={{
-        scrollbarGutter: 'stable both-edges',
+        scrollbarGutter: 'stable',
         margin: '0px',
         '::-webkit-scrollbar': {
           width: '0.625rem'
@@ -85,7 +84,7 @@ export default function Restaurant({ restaurant }: RestaurantProps) {
         }
       }}
     >
-      <Flex w="100%" flexDirection="column">
+      <Box minH="100vh">
         <RestaurantHeader />
 
         <RestaurantPresentation
@@ -97,10 +96,10 @@ export default function Restaurant({ restaurant }: RestaurantProps) {
           foods={restaurant.foods}
           isRestaurantOpen={isRestaurantOpen}
         />
+      </Box>
 
-        <Footer />
-      </Flex>
-    </Flex>
+      <Footer />
+    </Box>
   )
 }
 
