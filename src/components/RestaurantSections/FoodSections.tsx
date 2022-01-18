@@ -36,46 +36,46 @@ export function FoodSections({
   return (
     <VStack spacing="0" alignItems="flex-start" zIndex="0" paddingBottom="2rem">
       {tags.map(tag => {
-        return foods
-          .map(food => {
-            if (tag === food.tag) {
-              const rating =
-                food.food_rating.length > 0
-                  ? food.food_rating.reduce(function (acc, currentValue) {
-                      return acc + currentValue.rating
-                    }, 0) / food.food_rating.length
-                  : undefined
-              return (
-                <Box
-                  key={`section-${food.tag}`}
-                  id={`section-${food.tag}`}
-                  as="section"
-                >
-                  <Heading
-                    as="h3"
-                    fontSize="1.5rem"
-                    fontWeight="600"
-                    lineHeight="2.25rem"
-                    paddingTop="2rem"
-                    paddingBottom="1rem"
-                  >
-                    {tag}
-                  </Heading>
-                  <Grid
-                    templateColumns="repeat(3, 1fr)"
-                    gridGap="1.5rem 1.5rem"
-                  >
-                    <Food
-                      food={food}
-                      rating={rating}
-                      isRestaurantOpen={isRestaurantOpen}
-                    />
-                  </Grid>
-                </Box>
-              )
-            }
-          })
-          .filter(item => item)
+        return (
+          <Box
+            key={`section-${tag}`}
+            id={`section-${tag}`}
+            as="section"
+            width="100%"
+          >
+            <Heading
+              as="h3"
+              fontSize="1.5rem"
+              fontWeight="600"
+              lineHeight="2.25rem"
+              paddingTop="2rem"
+              paddingBottom="1rem"
+            >
+              {tag}
+            </Heading>
+            <Grid templateColumns="repeat(3, 1fr)" gridGap="1.5rem 1.5rem">
+              {foods
+                .map(food => {
+                  if (tag === food.tag) {
+                    const rating =
+                      food.food_rating.length > 0
+                        ? food.food_rating.reduce(function (acc, currentValue) {
+                            return acc + currentValue.rating
+                          }, 0) / food.food_rating.length
+                        : undefined
+                    return (
+                      <Food
+                        food={food}
+                        rating={rating}
+                        isRestaurantOpen={isRestaurantOpen}
+                      />
+                    )
+                  }
+                })
+                .filter(item => item)}
+            </Grid>
+          </Box>
+        )
       })}
     </VStack>
   )
