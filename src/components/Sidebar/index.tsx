@@ -67,7 +67,8 @@ export function Sidebar({ tags }: SidebarProps) {
         <VStack
           maxHeight="calc(100vh - 15.4rem)"
           display="block"
-          overflow="auto"
+          overflowY="auto"
+          overflowX="hidden"
           divider={<Box h="1px" w="100%" borderColor="#E2E8F0" />}
           spacing={0}
           sx={{
