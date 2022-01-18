@@ -64,6 +64,7 @@ export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
   return (
     <>
       <Grid
+        height="8.125rem"
         templateColumns="repeat(3, 1fr)"
         transitionDuration="0.4s"
         transitionTimingFunction="ease-in-out"
@@ -165,7 +166,7 @@ export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
               />
             </Flex>
             <Flex w="100%" padding="0.625rem">
-              <Text sx={{ textIndent: '5%', textAlign: 'justify' }}>
+              <Text w="inherit" sx={{ textIndent: '5%', textAlign: 'justify' }}>
                 {food.description}
               </Text>
             </Flex>
