@@ -41,13 +41,16 @@ export function MapWithAllRestaurants({ geojson }: MapWithAllRestaurantsProps) {
               const el = document.createElement('img')
               el.id = `marker-${item.properties.id}`
               el.className = 'pointer'
-              el.src = 'http://localhost:3000/pin-seen-from-above.svg'
-              el.alt = 'user'
-              el.width = 10
+              el.src = '/restaurant.png'
+              el.alt = 'restaurante png'
+              el.width = 30
+              el.height = 30
 
               const popup = new mapboxgl.Popup({
                 closeOnClick: true,
-                maxWidth: 'none'
+                maxWidth: 'none',
+                offset: 30,
+                anchor: 'bottom'
               }).setHTML(
                 `
                         <div class="text">
@@ -81,7 +84,7 @@ export function MapWithAllRestaurants({ geojson }: MapWithAllRestaurantsProps) {
                         <div class="image">${item.properties.image}</div>
                       `
               )
-              new mapboxgl.Marker(el)
+              new mapboxgl.Marker({ element: el, anchor: 'bottom' })
                 .setLngLat(item.geometry.coordinates)
                 .setPopup(popup)
                 .addTo(map.current)

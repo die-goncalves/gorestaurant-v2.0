@@ -9,10 +9,10 @@ export function NonInteractionMap({ coordinates }: NonInteractionMapProps) {
   const map = useRef<mapboxgl.Map | null>(null)
 
   const pin = document.createElement('img')
-  pin.src = 'http://localhost:3000/pin-seen-from-above.svg'
-  pin.alt = 'svg restaurant'
-  pin.width = 20
-  pin.height = 20
+  pin.src = '/restaurant.png'
+  pin.alt = 'restaurante png'
+  pin.width = 30
+  pin.height = 30
 
   useEffect(() => {
     if (map.current) return
