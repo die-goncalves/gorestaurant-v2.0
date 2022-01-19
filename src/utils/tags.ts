@@ -13,7 +13,7 @@ function groupTags(
   const filtered_tags = tag_array.filter(
     (tag, i) =>
       !tag_array.some((test_tag, j) => {
-        return j > i && tag === test_tag
+        return j < i && tag === test_tag
       })
   )
   return filtered_tags
@@ -30,7 +30,17 @@ function tagListingForFiltering(
     tag: string
     count: number
   }> = []
-  const tag_array = restaurants.map(restaurant => restaurant.foods).flat()
+  const tag_array = restaurants.flatMap(restaurant => {
+    const removeDuplicatesInRestaurant = [
+      ...new Map(
+        restaurant.foods.map<[string, { tag: string }]>(item => {
+          return [item.tag, item]
+        })
+      ).values()
+    ]
+    return removeDuplicatesInRestaurant
+  })
+
   for (let item of tag_array) {
     if (!item.tag) continue
     if (result.length === 0) {
