@@ -17,6 +17,7 @@
     "@stripe/stripe-js": "^1.22.0",
     "@supabase/supabase-js": "^1.22.6",
     "axios": "^0.22.0",
+    "embla-carousel-react": "^6.0.2",
     "framer-motion": "^4",
     "hamburger-react": "^2.4.1",
     "lodash.debounce": "^4.0.8",
