@@ -65,6 +65,7 @@ export function FoodSections({
                         : undefined
                     return (
                       <Food
+                        key={`foodCard:${food.id}`}
                         food={food}
                         rating={rating}
                         isRestaurantOpen={isRestaurantOpen}
