@@ -35,7 +35,7 @@ export function Tags({ tags }: TagsProps) {
   }, [tags])
 
   return (
-    <Wrap spacing="0px">
+    <Wrap spacing="0px" height="1.75rem" overflow="hidden">
       {uniqueTags.map((tag, index) => {
         if (tag)
           return (
