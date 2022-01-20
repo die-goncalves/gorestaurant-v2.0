@@ -27,6 +27,7 @@ export default function DashboardRating() {
           .from('orders')
           .select('*')
           .eq('customer_id', userData.id)
+          .order('created_at', { ascending: false })
 
         if (data) {
           const foodPayments = data.reduce((acc, current) => {

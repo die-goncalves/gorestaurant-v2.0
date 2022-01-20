@@ -29,6 +29,7 @@ export default function DashboardOrders() {
           .from<TOrder>('orders')
           .select('*')
           .eq('customer_id', userData.id)
+          .order('created_at', { ascending: false })
 
         if (data) {
           let result = data as Payment[]
