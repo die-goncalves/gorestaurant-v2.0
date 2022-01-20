@@ -28,6 +28,16 @@ const relevantEvents = new Set([
   'payment_intent.processing'
 ])
 
+const statusPTBR = new Map([
+  ['requires_payment_method', 'Requer forma de pagamento'],
+  ['requires_confirmation', 'Requer confirmação'],
+  ['requires_action', 'Requer ações adicionais'],
+  ['processing', 'Em processamento'],
+  ['requires_capture', 'Requer captura'],
+  ['canceled', 'Cancelado'],
+  ['succeeded', 'Concluído']
+])
+
 export default async (request: NextApiRequest, response: NextApiResponse) => {
   if (request.method === 'POST') {
     const buf = await buffer(request)
@@ -48,15 +58,18 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     if (relevantEvents.has(type)) {
       try {
         const paymentIntent = event.data.object as Stripe.PaymentIntent
-        await updatePaymentIntent(paymentIntent.id, paymentIntent.status)
+        await updatePaymentIntent(
+          paymentIntent.id,
+          statusPTBR.get(paymentIntent.status)
+        )
       } catch (error) {
-        return response.json({ error: 'Webhook handler failed' })
+        return response.json({ error: 'Manipulador Webhook falhou' })
       }
     }
 
     response.status(200).json({ received: true })
   } else {
     response.setHeader('Allow', 'POST')
-    response.status(405).end('Method not allowed')
+    response.status(405).end('Método não permitido')
   }
 }

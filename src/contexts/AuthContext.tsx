@@ -55,14 +55,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password
       })
       if (error) {
-        toast.error(<Box as="span">{error.message}</Box>)
+        if (error.message === 'User already registered') {
+          toast.error(
+            <Text as="span">
+              Já temos um usuário com este endereço de e-mail
+            </Text>
+          )
+        } else {
+          toast.error(
+            <Text as="span">
+              Erro ainda não abrangido pela tradução, verifique no console
+            </Text>
+          )
+        }
         throw error
       }
-      toast.success(
-        <Box as="span">
-          <Text>You&apos;ve been registered successfully</Text>
-        </Box>
-      )
+      toast.success(<Text as="span">Cadastro realizado com sucesso</Text>)
       setUserData(user)
       Router.push('/dashboard')
     } catch (error) {
@@ -77,14 +85,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password
       })
       if (error) {
-        toast.error(<Box as="span">{error.message}</Box>)
+        if (error.message === 'Invalid login credentials') {
+          toast.error(<Text as="span">Credenciais de login inválidas</Text>)
+        } else {
+          toast.error(
+            <Text as="span">
+              Erro ainda não abrangido pela tradução, verifique no console
+            </Text>
+          )
+        }
         throw error
       }
-      toast.success(
-        <Box as="span">
-          <Text>You&apos;ve been logged successfully</Text>
-        </Box>
-      )
+      toast.success(<Text as="span">Login realizado com sucesso</Text>)
       setUserData(user)
     } catch (error) {
       console.error(error)
@@ -95,14 +107,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const { error } = await supabase.auth.signOut()
       if (error) {
-        toast.error(<Box as="span">{error.message}</Box>)
+        toast.error(
+          <Text as="span">
+            Erro ainda não abrangido pela tradução, verifique no console
+          </Text>
+        )
         throw error
       }
-      toast.success(
-        <Box as="span">
-          <Text>You have successfully logged out</Text>
-        </Box>
-      )
+      toast.success(<Text as="span">Você encerrou a sessão</Text>)
       setUserData(null)
     } catch (error) {
       console.error(error)
@@ -115,7 +127,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
         //delete cookie sb:token
         const signOut = await supabase.auth.signOut()
         if (signOut.error) {
-          toast.error(<Box as="span">{signOut.error.message}</Box>)
+          toast.error(
+            <Text as="span">
+              Erro ainda não abrangido pela tradução, verifique no console
+            </Text>
+          )
           throw signOut.error
         }
 
@@ -125,18 +141,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
           `${process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_SECRET_KEY}`
         )
         if (deleteUser.error) {
-          toast.error(<Box as="span">{deleteUser.error.message}</Box>)
+          toast.error(
+            <Text as="span">
+              Erro ainda não abrangido pela tradução, verifique no console
+            </Text>
+          )
           throw deleteUser.error
         }
 
         toast.success(
           <Box as="span">
-            <Text>Congratulations! You have just deleted your account</Text>
+            <Text>Conta excluída! 😢</Text>
           </Box>
         )
         setUserData(null)
       } else {
-        throw new Error('Unable to find the user')
+        throw new Error('Não identificamos o usuário da sessão')
       }
     } catch (error) {
       console.error(error)

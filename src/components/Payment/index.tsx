@@ -68,7 +68,7 @@ export function Payment({ payment }: PaymentProps) {
                   fontSize="1rem"
                   marginRight="0.5rem"
                 >
-                  PAYMENT
+                  PAGAMENTO
                 </Text>
                 <Text fontSize="0.875rem" fontWeight="500" color="orange.600">
                   {payment.payment_intent_id}
@@ -89,10 +89,10 @@ export function Payment({ payment }: PaymentProps) {
                   textAlign="center"
                   color="gray.700"
                 >
-                  CREATED IN
+                  CRIADO EM
                 </Text>
                 <Text fontSize="0.75rem" fontWeight="500" color="gray.500">
-                  {new Intl.DateTimeFormat('en-US', {
+                  {new Intl.DateTimeFormat('pt-BR', {
                     dateStyle: 'full',
                     timeStyle: 'long'
                   }).format(new Date(payment.created_at))}
@@ -108,10 +108,10 @@ export function Payment({ payment }: PaymentProps) {
                   textAlign="center"
                   color="gray.700"
                 >
-                  UPDATED IN
+                  ATUALIZADO EM
                 </Text>
                 <Text fontSize="0.75rem" fontWeight="500" color="gray.500">
-                  {new Intl.DateTimeFormat('en-US', {
+                  {new Intl.DateTimeFormat('pt-BR', {
                     dateStyle: 'full',
                     timeStyle: 'long'
                   }).format(new Date(payment.updated_at))}
@@ -151,7 +151,7 @@ export function Payment({ payment }: PaymentProps) {
           <Flex w="100%" flexDirection="column">
             <Flex alignSelf="center" fontSize="0.8rem" fontWeight="600">
               <Text>
-                FOOD ORDERED AT THE RESTAURANT{' '}
+                COMIDA PEDIDA NO RESTAURANTE{' '}
                 <Text as="span" color="orange.600">
                   {payment.line_items[0].food.restaurant.name.toUpperCase()}
                 </Text>
@@ -160,9 +160,9 @@ export function Payment({ payment }: PaymentProps) {
             <Table size="sm">
               <Thead>
                 <Tr>
-                  <Th>Food</Th>
-                  <Th isNumeric>Price</Th>
-                  <Th isNumeric>Quantity</Th>
+                  <Th>Comida</Th>
+                  <Th isNumeric>Preço</Th>
+                  <Th isNumeric>Quantidade</Th>
                   <Th isNumeric>Total</Th>
                 </Tr>
               </Thead>
@@ -172,14 +172,14 @@ export function Payment({ payment }: PaymentProps) {
                     <Td>{item.food.name}</Td>
                     <Td isNumeric>
                       {formatNumber({
-                        options: { currency: 'USD' },
+                        options: { currency: 'BRL' },
                         numberToBeFormatted: Number(item.food.price)
                       })}
                     </Td>
                     <Td isNumeric>{item.quantity}</Td>
                     <Td isNumeric>
                       {formatNumber({
-                        options: { currency: 'USD' },
+                        options: { currency: 'BRL' },
                         numberToBeFormatted:
                           Number(item.quantity) * Number(item.food.price)
                       })}
@@ -191,14 +191,14 @@ export function Payment({ payment }: PaymentProps) {
           </Flex>
           <Flex w="100%" flexDirection="column">
             <Box alignSelf="center" fontSize="0.8rem" fontWeight="600">
-              SHIPPING
+              SOBRE O ENVIO
             </Box>
             <Table size="sm">
               <Thead>
                 <Tr>
-                  <Th>Address</Th>
+                  <Th>Endereço</Th>
                   <Th>Geohash</Th>
-                  <Th isNumeric>Price</Th>
+                  <Th isNumeric>Preço</Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -207,7 +207,7 @@ export function Payment({ payment }: PaymentProps) {
                   <Td>{payment.shipping_options.shipping_geohash}</Td>
                   <Td isNumeric>
                     {formatNumber({
-                      options: { currency: 'USD' },
+                      options: { currency: 'BRL' },
                       numberToBeFormatted: Number(
                         payment.shipping_options.shipping_amount
                       )
@@ -221,14 +221,14 @@ export function Payment({ payment }: PaymentProps) {
             <Table size="sm">
               <Thead>
                 <Tr>
-                  <Th isNumeric>Total cost</Th>
+                  <Th isNumeric>Custo total</Th>
                 </Tr>
               </Thead>
               <Tbody>
                 <Tr>
                   <Td isNumeric fontWeight="600">
                     {formatNumber({
-                      options: { currency: 'USD' },
+                      options: { currency: 'BRL' },
                       numberToBeFormatted:
                         Number(payment.shipping_options.shipping_amount) +
                         totalCost

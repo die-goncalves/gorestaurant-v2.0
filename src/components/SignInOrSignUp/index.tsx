@@ -52,7 +52,7 @@ export function SignInOrSignOut() {
             }
           }}
         >
-          Sign in or Sign up
+          Entre ou cadastre-se
         </Button>
       )}
 
@@ -85,7 +85,7 @@ export function SignInOrSignOut() {
                     }
                   }}
                 >
-                  Sign In
+                  Entrar
                 </Tab>
                 <Tab
                   sx={{
@@ -102,7 +102,7 @@ export function SignInOrSignOut() {
                     }
                   }}
                 >
-                  Sign Up
+                  Cadastrar-se
                 </Tab>
               </TabList>
               <TabPanels>

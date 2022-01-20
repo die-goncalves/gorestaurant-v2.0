@@ -32,7 +32,7 @@ export default function DashboardRating() {
         if (data) {
           const foodPayments = data.reduce((acc, current) => {
             const x = current.line_items.map((item: { food_id: string }) => {
-              if (current.payment_intent_status === 'succeeded')
+              if (current.payment_intent_status === 'Concluído')
                 return item.food_id
             })
             if (x[0] !== undefined) acc.push(x)

@@ -77,7 +77,7 @@ export function ModalToChangeLocation({
           >
             {deliveryTime && (
               <Text fontSize="0.875rem">
-                Deliver in approximately {(deliveryTime / 60).toFixed(2)} min
+                Entrega em aproximadamente {(deliveryTime / 60).toFixed(2)} min
               </Text>
             )}
             <Text maxWidth="310px" isTruncated>
@@ -86,7 +86,7 @@ export function ModalToChangeLocation({
           </GridItem>
           <GridItem display="flex" width="100%" justifyContent="flex-end">
             <Text alignSelf="center" fontWeight="500">
-              Change
+              Mudar
             </Text>
           </GridItem>
         </Grid>
@@ -105,7 +105,7 @@ export function ModalToChangeLocation({
             justifyContent="space-between"
             padding="0.625rem"
           >
-            <Text fontWeight="600">Choose your new location</Text>
+            <Text fontWeight="600">Escolha seu novo endereço de entrega</Text>
             <CloseButton onClick={onClose} variant="red-theme" />
           </ModalHeader>
           <ModalBody
@@ -134,7 +134,7 @@ export function ModalToChangeLocation({
               {...(previewLocation
                 ? restaurantPlace !== previewLocation.place
                   ? {
-                      value: `Delivery in ${restaurantPlace} only`,
+                      value: `Entregas somente em ${restaurantPlace}`,
                       textAlign: 'center',
                       color: 'red.600',
                       background: 'red.50',
@@ -164,7 +164,7 @@ export function ModalToChangeLocation({
                     },
                     _hover: { background: 'orange.100' }
                   })}
-              placeholder="Here you will see your exact location"
+              placeholder="Clique no mapa e verá o endereço aqui"
               _placeholder={{
                 color: 'orange.500'
               }}
@@ -185,7 +185,7 @@ export function ModalToChangeLocation({
                 }
               }}
             >
-              Confirm
+              Confirmar
             </Button>
           </ModalFooter>
         </ModalContent>

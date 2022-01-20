@@ -71,9 +71,9 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
               type: 'fixed_amount',
               fixed_amount: {
                 amount: shipping.price * 100,
-                currency: 'usd'
+                currency: 'brl'
               },
-              display_name: `${shipping.distance} km far from the restaurant `
+              display_name: `${shipping.distance} km longe do restaurante`
             }
           }
         ]
@@ -102,10 +102,10 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
       nookies.destroy({ res: response }, '@GoRestaurant:cart', { path: '/' })
       return response.status(200).json({ sessionId: stripeCheckoutSession.id })
     } else {
-      return response.status(401).end('Unauthenticated user')
+      return response.status(401).end('Usuário não autenticado')
     }
   } else {
     response.setHeader('Allow', 'POST')
-    response.status(405).end('Method not allowed')
+    response.status(405).end('Método não permitido')
   }
 }

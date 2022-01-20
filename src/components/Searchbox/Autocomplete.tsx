@@ -94,7 +94,7 @@ export const Autocomplete = () => {
         w="100%"
       >
         <Box as="span" marginRight="0.625rem" color="orange.500">
-          <MdOutlineEditLocationAlt fontSize="24px" />
+          <MdOutlineEditLocationAlt fontSize="1.5rem" />
         </Box>
 
         <Input
@@ -102,10 +102,11 @@ export const Autocomplete = () => {
           fontWeight="500"
           variant="unstyled"
           borderRadius="0"
-          placeholder="Enter the delivery address"
+          placeholder="Endereço de entrega"
           _placeholder={{ color: 'brand.input_placeholder' }}
           value={userInput}
           onChange={onChange}
+          paddingRight="0.625rem"
           sx={{
             '&:-webkit-autofill:focus': {
               WebkitBoxShadow: '0 0 0px 1000px #FAFAFA inset',

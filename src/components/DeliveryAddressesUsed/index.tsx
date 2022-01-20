@@ -29,7 +29,7 @@ export function DeliveryAddressesUsed() {
           .select('*')
           .match({
             customer_id: userData.id,
-            payment_intent_status: 'succeeded'
+            payment_intent_status: 'Concluído'
           })
           .order('updated_at', { ascending: false })
 
@@ -71,7 +71,8 @@ export function DeliveryAddressesUsed() {
         if (!userData) {
           return (
             <Text as="h3" fontSize="1rem" lineHeight="1rem" fontWeight="500">
-              Sign in to see the delivery addresses you have already used
+              Inicie uma sessão para ver os endereços de entrega que você já
+              utilizou
             </Text>
           )
         } else {
@@ -84,7 +85,7 @@ export function DeliveryAddressesUsed() {
                   lineHeight="1rem"
                   fontWeight="500"
                 >
-                  Searching for the delivery addresses used
+                  Pesquisando endereços de entrega
                 </Text>
                 <Spinner
                   marginLeft="0.5rem"
@@ -108,7 +109,7 @@ export function DeliveryAddressesUsed() {
                     lineHeight="1rem"
                     fontWeight="500"
                   >
-                    Addresses where we have already delivered for you
+                    Endereços onde já entregamos para você
                   </Box>
                   <Flex
                     flexDirection="column"
@@ -148,13 +149,13 @@ export function DeliveryAddressesUsed() {
                             >
                               <Box>
                                 <Text fontWeight="500" as="span">
-                                  Address:{' '}
+                                  Endereço:{' '}
                                 </Text>
                                 <Text as="span">{item.place_name}</Text>
                               </Box>
                               <Box>
                                 <Text fontWeight="500" as="span">
-                                  Region:{' '}
+                                  Região:{' '}
                                 </Text>
                                 <Text as="span">{item.place}</Text>
                               </Box>
@@ -175,7 +176,8 @@ export function DeliveryAddressesUsed() {
                     lineHeight="1rem"
                     fontWeight="500"
                   >
-                    You have not made any purchases yet
+                    Não encontramos nenhum endereço de entrega. Experimente
+                    realizar alguns pedidos
                   </Box>
                 </Flex>
               )

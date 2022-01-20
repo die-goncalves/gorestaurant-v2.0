@@ -102,7 +102,7 @@ export function Footer() {
                   marginLeft="0.5rem"
                   alignItems="flex-start"
                 >
-                  <Text fontSize="0.5625rem">GET IT ON</Text>
+                  <Text fontSize="0.5625rem">DISPONÍVEL NO</Text>
                   <Text fontSize="1rem">Google Play</Text>
                 </Flex>
               </Button>
@@ -146,7 +146,7 @@ export function Footer() {
                   marginLeft="0.5rem"
                   alignItems="flex-start"
                 >
-                  <Text fontSize="0.5625rem">Download on the</Text>
+                  <Text fontSize="0.5625rem">Disponível na</Text>
                   <Text fontSize="1rem">App Store</Text>
                 </Flex>
               </Button>
@@ -158,7 +158,7 @@ export function Footer() {
           <Text>©2021 GoRestaurant</Text>
 
           <Text>
-            Website crafted by{' '}
+            Website criado por{' '}
             <NextLink href="https://github.com/die-goncalves" passHref>
               <ChakraLink
                 sx={{
@@ -190,7 +190,7 @@ export function Footer() {
                 }
               }}
             >
-              About this project
+              Sobre este projeto
             </ChakraLink>
           </NextLink>
         </Flex>

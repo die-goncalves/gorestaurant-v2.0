@@ -19,7 +19,7 @@ export default function Searchbox() {
       }
     } else {
       toast(
-        `We can't get the coordinates of the address you gave, please indicate on the map where you are.`,
+        'Não conseguimos obter as coordenadas do endereço que nos deu, por favor indique no mapa.',
         {
           icon: '😥',
           duration: 4000,
@@ -61,7 +61,7 @@ export default function Searchbox() {
             }
           }}
         >
-          Find Food
+          Pesquisar
         </Button>
 
         <DrawerUserLocation />

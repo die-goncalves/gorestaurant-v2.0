@@ -32,14 +32,14 @@ export default function SignUpTab({ onClose }: SignUpTabProps) {
   const schema = yup.object().shape({
     email: yup
       .string()
-      .email('Must be a valid e-mail')
-      .required('E-mail required'),
+      .email('Não é um endereço de e-mail válido')
+      .required('Endereço de e-mail obrigatório'),
     password: yup
       .string()
-      .required('Password required')
+      .required('Senha obrigatória')
       .test(
         'password_test',
-        'Password is not strong enough',
+        'A senha não é forte o suficiente',
         (value, context) => {
           setScorePassword(zxcvbn(value || '').score)
           return scorePassword >= 3
@@ -47,8 +47,8 @@ export default function SignUpTab({ onClose }: SignUpTabProps) {
       ),
     passwordConfirmation: yup
       .string()
-      .required('Password confirmation required')
-      .test('passwords-match', 'Passwords must match', function (value) {
+      .required('Confirmação de senha obrigatória')
+      .test('passwords-match', 'As senhas devem coincidir', function (value) {
         return this.parent.password === value
       })
   })
@@ -106,7 +106,7 @@ export default function SignUpTab({ onClose }: SignUpTabProps) {
     >
       <FormControl isInvalid={errors.email ? true : false}>
         <FormLabel htmlFor="sign-up-email" marginBottom="0.25rem">
-          Your e-mail
+          Endereço de e-mail
         </FormLabel>
         <Input
           {...register('email')}
@@ -120,7 +120,7 @@ export default function SignUpTab({ onClose }: SignUpTabProps) {
       </FormControl>
       <FormControl isInvalid={errors.password ? true : false}>
         <FormLabel htmlFor="sign-up-password" marginBottom="0.25rem">
-          Your password
+          Senha
         </FormLabel>
         <Input
           {...register('password')}
@@ -166,7 +166,7 @@ export default function SignUpTab({ onClose }: SignUpTabProps) {
           htmlFor="sign-up-password-confirmation"
           marginBottom="0.25rem"
         >
-          Confirm your password
+          Confirme sua senha
         </FormLabel>
         <Input
           {...register('passwordConfirmation')}
@@ -188,7 +188,7 @@ export default function SignUpTab({ onClose }: SignUpTabProps) {
       <Button
         type="submit"
         isLoading={loading}
-        loadingText="Saving"
+        loadingText="Criando conta"
         colorScheme="green"
         borderRadius="0"
         sx={{
@@ -197,7 +197,7 @@ export default function SignUpTab({ onClose }: SignUpTabProps) {
           }
         }}
       >
-        Save
+        Criar conta
       </Button>
     </Flex>
   )

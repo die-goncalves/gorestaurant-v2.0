@@ -66,10 +66,10 @@ export function Rating({ value, critics, starSize, fontSize }: RatingProps) {
         )}
         <Text color="#989898">
           {critics > 999
-            ? '( 999+ ratings )'
+            ? '( 999+ avaliações )'
             : critics === 1
-            ? `( ${critics} rating )`
-            : `( ${critics} ratings )`}
+            ? `( ${critics} avaliação )`
+            : `( ${critics} avaliações )`}
         </Text>
       </Flex>
     </Flex>

@@ -24,7 +24,7 @@ export function RestaurantPaths({
             _hover: { textDecoration: 'none', color: '#C05621' }
           }}
         >
-          Home
+          Página inicial
         </BreadcrumbLink>
       </BreadcrumbItem>
 

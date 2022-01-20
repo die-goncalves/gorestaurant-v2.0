@@ -7,19 +7,18 @@ const SearchboxWithNoSSR = dynamic(() => import('../components/Searchbox'), {
 })
 
 const convincingSentences = [
-  'Hungry?',
-  'Unexpected guests?',
-  'Cooking gone wrong?',
-  'Movie marathon?',
-  'Game night?',
-  'Late night at office?'
+  'Trabalhou até tarde?',
+  'Encontro com amigos?',
+  'Não está a fim de cozinhar?',
+  'Está com fome, mas não está em casa?',
+  'Maratonando sua série favorita?'
 ]
 
 export function ContentHome() {
   return (
     <Box paddingX="3.75rem" paddingTop="6.25rem">
       <VStack spacing="1rem" alignItems="flex-start">
-        <Heading as="h1" fontSize="3rem" lineHeight="3rem" fontWeight="500">
+        <Heading as="h1" fontSize="2.8rem" lineHeight="3rem" fontWeight="500">
           <Typewriter
             words={convincingSentences}
             loop={false}
@@ -32,7 +31,7 @@ export function ContentHome() {
         </Heading>
 
         <Heading as="h2" fontSize="1.5rem" fontWeight="400">
-          Order food from favourite restaurants near you.
+          Faça pedidos de suas comidas favoritas em restaurantes pertos de você
         </Heading>
       </VStack>
 

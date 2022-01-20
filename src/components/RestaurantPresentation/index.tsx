@@ -169,8 +169,10 @@ export function RestaurantPresentation({
         >
           <Box>{`${priceDistanceAndTime?.distance.toFixed(
             2
-          )} meters away from you`}</Box>
-          <Box>{`$ ${priceDistanceAndTime?.price?.toFixed(2)} to deliver`}</Box>
+          )} metros de distância de você`}</Box>
+          <Box>{`R$${priceDistanceAndTime?.price?.toFixed(
+            2
+          )} para entrega`}</Box>
         </HStack>
         <Box paddingTop="0.5rem">
           <Text lineHeight="1.5rem">{restaurant.description}</Text>

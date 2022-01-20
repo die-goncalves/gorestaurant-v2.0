@@ -50,7 +50,7 @@ export function RestaurantStatus({
           boxShadow="inset 0px 0px 0px 1px #38A169"
           marginRight="0.5rem"
         />
-        Restaurant currently open
+        Restaurante aberto
       </Flex>
       <Flex alignItems="center">
         <Box
@@ -60,7 +60,7 @@ export function RestaurantStatus({
           boxShadow="inset 0px 0px 0px 1px #DD6B20"
           marginRight="0.5rem"
         />
-        Nearest time for restaurant opening
+        Próximo horário de funcionamento do restaurante
       </Flex>
     </Flex>
   )
@@ -82,7 +82,7 @@ export function RestaurantStatus({
             : '0 0 0 3px rgb(245, 101, 101, 0.6)'
         }}
       >
-        {isRestaurantOpen?.open ? 'Open' : 'Closed'}
+        {isRestaurantOpen?.open ? 'Aberto' : 'Fechado'}
       </Button>
 
       <Modal
@@ -96,8 +96,8 @@ export function RestaurantStatus({
           <ModalHeader>
             <Flex justifyContent="space-between" alignItems="center">
               <Flex>
-                <Heading as="h1" fontSize="1.25rem">
-                  Restaurant hours of operation
+                <Heading as="h1" fontWeight="600" fontSize="1.25rem">
+                  Horário de funcionamento do restaurante
                 </Heading>
                 <Tooltip
                   label={help}

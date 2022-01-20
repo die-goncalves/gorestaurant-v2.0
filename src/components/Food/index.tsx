@@ -100,7 +100,7 @@ export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
               {food.description}
             </Text>
           </Flex>
-          <Text>$ {food.price}</Text>
+          <Text>R$ {food.price}</Text>
         </GridItem>
         <GridItem display="flex" overflow="hidden" position="relative">
           <Box
@@ -253,7 +253,7 @@ export function Food({ food, rating, isRestaurantOpen }: FoodProps) {
               >
                 <Text margin="auto" fontWeight="600">
                   {formatNumber({
-                    options: { currency: 'USD' },
+                    options: { currency: 'BRL' },
                     numberToBeFormatted:
                       priceOfSpecificFoodAccumulatedInTheCart(food.id)
                   })}

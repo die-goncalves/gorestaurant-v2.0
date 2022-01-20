@@ -31,10 +31,10 @@ export default function DashboardDeleteAccount() {
       >
         <Flex flexDirection="column">
           <Text fontSize="1.25rem" fontWeight="500">
-            Delete account
+            Deletar conta
           </Text>
           <Text fontSize="1rem" background="red.50">
-            Be careful, this action is irreversible
+            Tenha cuidado, esta ação é irreversível
           </Text>
         </Flex>
         <Button
@@ -48,17 +48,17 @@ export default function DashboardDeleteAccount() {
             }
           }}
         >
-          Delete
+          Deletar
         </Button>
 
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />
           <ModalContent borderRadius="0px">
             <ModalHeader display="flex" padding="1rem">
-              <Text>Confirmation Exclusion</Text>
+              <Text>Confirme a exclusão</Text>
             </ModalHeader>
             <ModalBody padding="0.5rem 1rem">
-              Are you sure you want to delete your account?
+              Tem a certeza de que quer deletar a sua conta?
             </ModalBody>
 
             <ModalFooter padding="1rem">
@@ -74,7 +74,7 @@ export default function DashboardDeleteAccount() {
                     }
                   }}
                 >
-                  No
+                  Não
                 </Button>
                 <Button
                   colorScheme="red"
@@ -87,7 +87,7 @@ export default function DashboardDeleteAccount() {
                     }
                   }}
                 >
-                  Yes
+                  Sim
                 </Button>
               </ButtonGroup>
             </ModalFooter>

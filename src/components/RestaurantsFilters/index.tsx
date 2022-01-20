@@ -30,7 +30,7 @@ export function RestaurantsFilters({ total }: RestaurantFilterProps) {
     <Flex flexDirection="column">
       <Flex alignItems="center" fontSize="1.5rem" marginBottom="1rem">
         <Text>
-          {deliveryOption === 'delivery' ? 'Delivery to' : 'Pick up in'}
+          {deliveryOption === 'delivery' ? 'Entregas em' : 'Retiradas em'}
         </Text>
         &nbsp;
         <Text fontWeight="600">{geographicLocation?.place}</Text>
@@ -45,9 +45,9 @@ export function RestaurantsFilters({ total }: RestaurantFilterProps) {
             colorScheme="orange"
           >
             <TagLabel display="flex">
-              <Text>{'Sort by'}</Text>
+              <Text>{'Ordenado por'}</Text>
               <Text fontWeight="600" marginLeft="0.25rem">
-                {sortOption}
+                {sortOption === 'rating' ? 'avaliação' : 'tempo de entrega'}
               </Text>
             </TagLabel>
             <TagCloseButton
@@ -74,12 +74,12 @@ export function RestaurantsFilters({ total }: RestaurantFilterProps) {
                 {priceOption === '0' ? (
                   <Text fontWeight="600">Free delivery</Text>
                 ) : priceOption === 'unrestricted' ? (
-                  <Text fontWeight="600">All delivery prices</Text>
+                  <Text fontWeight="600">Todos os preços de entrega</Text>
                 ) : (
                   <>
-                    <Text>Delivery price up to</Text>
+                    <Text>Preço de entrega até</Text>
                     &nbsp;
-                    <Text fontWeight="600">${priceOption}</Text>
+                    <Text fontWeight="600">R${priceOption}</Text>
                   </>
                 )}
               </TagLabel>
@@ -101,7 +101,7 @@ export function RestaurantsFilters({ total }: RestaurantFilterProps) {
           <>
             {tagOption.map(tag => (
               <Tag
-                key={tag}
+                key={`tagOnRestaurantFilters:${tag}`}
                 padding="0.5rem"
                 borderRadius="0px"
                 variant="outline"
@@ -127,7 +127,7 @@ export function RestaurantsFilters({ total }: RestaurantFilterProps) {
       </Wrap>
 
       <Flex marginY="0.25rem" fontSize="1rem" color="gray.600">
-        {total} Restaurants
+        {total} Restaurantes
       </Flex>
 
       <Divider borderColor="#E2E8F0" />

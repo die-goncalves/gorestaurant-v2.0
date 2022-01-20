@@ -13,6 +13,16 @@ type DayProps = {
     | undefined
 }
 
+const weekdayPTBR = new Map([
+  ['Sunday', 'Domingo'],
+  ['Monday', 'Segunda-feira'],
+  ['Tuesday', 'Terça-feira'],
+  ['Wednesday', 'Quarta-feira'],
+  ['Thursday', 'Quinta-feira'],
+  ['Friday', 'Sexta-feira'],
+  ['Saturday', 'Sábado']
+])
+
 export function Day({ timeOrdering, isOpen }: DayProps) {
   const [days, setDays] = useState(Object.entries(timeOrdering))
   const [orderDays, setOrderDays] = useState<
@@ -47,7 +57,7 @@ export function Day({ timeOrdering, isOpen }: DayProps) {
                 margin="5px"
                 padding="5px"
               >
-                {day[0].weekday}
+                {weekdayPTBR.get(day[0].weekday)}
               </Heading>
               {day.map(time => {
                 return (

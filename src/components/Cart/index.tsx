@@ -146,7 +146,7 @@ export function Cart() {
             justifyContent="space-between"
             padding="1rem"
           >
-            <Text fontWeight="600">Cart</Text>
+            <Text fontWeight="600">Carrinho</Text>
             <CloseButton onClick={onClose} variant="red-theme" />
           </ModalHeader>
           <ModalBody
@@ -195,7 +195,7 @@ export function Cart() {
                   objectFit="cover"
                   layout="fill"
                   src="https://images.unsplash.com/photo-1624811533744-f85d5325d49c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                  alt="No food in the cart"
+                  alt="Sem comida no carrinho"
                 />
               </Flex>
             )}
@@ -330,7 +330,7 @@ export function Cart() {
                 </Flex>
                 <Text fontWeight="600">
                   {formatNumber({
-                    options: { currency: 'USD' },
+                    options: { currency: 'BRL' },
                     numberToBeFormatted: total ? total : 0
                   })}
                 </Text>
@@ -348,7 +348,7 @@ export function Cart() {
                     }}
                     onClick={onClose}
                   >
-                    Cancel
+                    Cancelar
                   </Button>
                   <Button
                     borderRadius="0px"
@@ -375,9 +375,9 @@ export function Cart() {
                   >
                     {userData
                       ? cart.length === 0
-                        ? 'Add foods in the cart'
-                        : 'Confirm'
-                      : 'You are not signed up'}
+                        ? 'Adicione comidas ao carrinho'
+                        : 'Confirmar'
+                      : 'Você não está logado'}
                   </Button>
                 </ButtonGroup>
               </Flex>

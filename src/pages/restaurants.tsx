@@ -41,7 +41,6 @@ type DeliveryData = {
 type RestaurantsProps = {
   geohash: string
   tags: Array<{
-    id: string
     tag: string
     count: number
   }>

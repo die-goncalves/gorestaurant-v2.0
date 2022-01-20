@@ -29,7 +29,7 @@ const Home: NextPage = () => {
       }}
     >
       <Head>
-        <title>Home | GoRestaurant</title>
+        <title>Página inicial | GoRestaurant</title>
       </Head>
 
       <Flex>

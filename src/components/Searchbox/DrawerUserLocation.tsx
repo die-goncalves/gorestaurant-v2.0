@@ -96,7 +96,7 @@ export const DrawerUserLocation = () => {
           <DrawerHeader padding="0.625rem">
             <Flex alignItems="center" justifyContent="space-between">
               <Text lineHeight="1.25rem" fontWeight="600">
-                Where you are?
+                Onde você está?
               </Text>
 
               <CloseButton
@@ -126,7 +126,7 @@ export const DrawerUserLocation = () => {
               variant="filled"
               borderRadius="0px"
               value={userLocation?.place_name ?? ''}
-              placeholder="Here you will see your exact location"
+              placeholder="Clique no mapa e verá o endereço aqui"
               isReadOnly
               background="orange.50"
               fontWeight="500"
@@ -153,7 +153,7 @@ export const DrawerUserLocation = () => {
                 }
               }}
             >
-              Confirm
+              Confirmar
             </Button>
           </DrawerFooter>
         </DrawerContent>

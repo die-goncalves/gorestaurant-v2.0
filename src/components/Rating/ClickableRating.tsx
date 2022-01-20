@@ -37,14 +37,14 @@ export function ClickableRating({ starSize, foodId }: ClickableRatingProps) {
         })
         .match({ food_id: foodId, customer_id: userData?.id })
       if (error) {
-        toast.error(<Box as="span">{error.message}</Box>)
+        toast.error(
+          <Text as="span">
+            Erro ainda não abrangido pela tradução, verifique no console
+          </Text>
+        )
         throw error
       }
-      toast.success(
-        <Box as="span">
-          <Text>Your rating has been updated successfully</Text>
-        </Box>
-      )
+      toast.success(<Text as="span">Avaliação atualizada!</Text>)
     } catch (error) {
       console.error(error)
     } finally {
@@ -62,13 +62,17 @@ export function ClickableRating({ starSize, foodId }: ClickableRatingProps) {
         }
       ])
       if (error) {
-        toast.error(<Box as="span">{error.message}</Box>)
+        toast.error(
+          <Text as="span">
+            Erro ainda não abrangido pela tradução, verifique no console
+          </Text>
+        )
         throw error
       }
       toast.success(
-        <Box as="span">
-          <Text>Your rating has been saved successfully</Text>
-        </Box>
+        <Text as="span">
+          <Text>Avaliação salva!</Text>
+        </Text>
       )
     } catch (error) {
       console.error(error)
@@ -93,7 +97,11 @@ export function ClickableRating({ starSize, foodId }: ClickableRatingProps) {
         .match({ food_id: foodId, customer_id: userData?.id })
 
       if (error) {
-        toast.error(<Box as="span">{error.message}</Box>)
+        toast.error(
+          <Text as="span">
+            Erro ainda não abrangido pela tradução, verifique no console
+          </Text>
+        )
         throw error
       }
 
@@ -130,7 +138,11 @@ export function ClickableRating({ starSize, foodId }: ClickableRatingProps) {
           .match({ food_id: foodId, customer_id: userData?.id })
 
         if (error) {
-          toast.error(<Box as="span">{error.message}</Box>)
+          toast.error(
+            <Text as="span">
+              Erro ainda não abrangido pela tradução, verifique no console
+            </Text>
+          )
           throw error
         }
 

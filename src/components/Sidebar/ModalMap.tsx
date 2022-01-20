@@ -52,7 +52,7 @@ export function ModalMap() {
           fontWeight="400"
         >
           <Text fontSize="0.875rem" lineHeight="0.875rem">
-            Now
+            Agora em
           </Text>
           <Flex
             w="100%"
@@ -64,7 +64,7 @@ export function ModalMap() {
               {geographicLocation?.place}
             </Text>
             <Text marginLeft="0.5rem" fontWeight="500">
-              Change
+              Mudar
             </Text>
           </Flex>
         </Flex>
@@ -83,7 +83,7 @@ export function ModalMap() {
             justifyContent="space-between"
             padding="0.625rem"
           >
-            <Text fontWeight="600">Choose your new location</Text>
+            <Text fontWeight="600">Escolha seu novo endereço de entrega</Text>
             <CloseButton onClick={onClose} variant="red-theme" />
           </ModalHeader>
           <ModalBody
@@ -108,7 +108,7 @@ export function ModalMap() {
               variant="filled"
               borderRadius="0px"
               value={previewLocation?.place_name ?? ''}
-              placeholder="Here you will see your exact location"
+              placeholder="Clique no mapa e verá o endereço aqui"
               isReadOnly
               background="orange.50"
               fontWeight="500"
@@ -139,7 +139,7 @@ export function ModalMap() {
                 }
               }}
             >
-              Confirm
+              Confirmar
             </Button>
           </ModalFooter>
         </ModalContent>

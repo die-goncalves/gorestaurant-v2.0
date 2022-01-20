@@ -91,7 +91,7 @@ export function PartnerRestaurants() {
       <Flex paddingY="1rem">
         <Flex width="60vw" flexDirection="column" sx={{ gap: '1rem' }}>
           <Text textAlign="center" fontSize="1.5rem">
-            Partner Restaurants
+            Restaurantes parceiros
           </Text>
           <Grid templateColumns="repeat(4, 1fr)" gap="1rem">
             {allRestaurants.map(restaurant => (
@@ -109,7 +109,7 @@ export function PartnerRestaurants() {
           sx={{ gap: '1rem' }}
         >
           <Text textAlign="center" fontSize="1.5rem">
-            Regions where we deliver
+            Regiões onde entregamos
           </Text>
           <Grid templateColumns="repeat(4, 1fr)" gap="1rem">
             {places.map(place => (

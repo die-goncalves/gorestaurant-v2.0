@@ -26,8 +26,8 @@ export default function SignInTab({ onClose }: SignInTabProps) {
   const [loading, setLoading] = useState(false)
 
   const schema = yup.object().shape({
-    email: yup.string().required('E-mail required'),
-    password: yup.string().required('Password required')
+    email: yup.string().required('Endereço de e-mail obrigatório'),
+    password: yup.string().required('Senha obrigatória')
   })
 
   const {
@@ -59,7 +59,7 @@ export default function SignInTab({ onClose }: SignInTabProps) {
     >
       <FormControl isInvalid={errors.email ? true : false}>
         <FormLabel htmlFor="sign-in-email" marginBottom="0.25rem">
-          Your e-mail
+          Endereço de e-mail
         </FormLabel>
         <Input
           {...register('email')}
@@ -73,7 +73,7 @@ export default function SignInTab({ onClose }: SignInTabProps) {
       </FormControl>
       <FormControl isInvalid={errors.password ? true : false}>
         <FormLabel htmlFor="sign-in-password" marginBottom="0.25rem">
-          Your password
+          Senha
         </FormLabel>
         <Input
           {...register('password')}
@@ -91,7 +91,7 @@ export default function SignInTab({ onClose }: SignInTabProps) {
       <Button
         type="submit"
         isLoading={loading}
-        loadingText="Confirming"
+        loadingText="Iniciando sessão"
         colorScheme="green"
         borderRadius="0"
         sx={{
@@ -100,7 +100,7 @@ export default function SignInTab({ onClose }: SignInTabProps) {
           }
         }}
       >
-        Confirm
+        Iniciar sessão
       </Button>
     </Flex>
   )

@@ -57,8 +57,8 @@ export function Sidebar({ tags }: SidebarProps) {
               value={deliveryOption}
             >
               <VStack spacing="1rem" display="flex" alignItems="flex-start">
-                <SidebarRadio value="delivery">Delivery</SidebarRadio>
-                <SidebarRadio value="pickup">Pickup</SidebarRadio>
+                <SidebarRadio value="delivery">Entrega</SidebarRadio>
+                <SidebarRadio value="pickup">Retirada</SidebarRadio>
               </VStack>
             </RadioGroup>
           </Box>
@@ -87,7 +87,7 @@ export function Sidebar({ tags }: SidebarProps) {
             }
           }}
         >
-          <SidebarCollapse categoryName="Sort">
+          <SidebarCollapse categoryName="Ordenar">
             <RadioGroup
               name="sort"
               sx={{
@@ -102,17 +102,19 @@ export function Sidebar({ tags }: SidebarProps) {
               value={sortOption}
             >
               <VStack spacing="1rem" display="flex" alignItems="flex-start">
-                <SidebarRadio value="rating">Rating</SidebarRadio>
-                <SidebarRadio value="delivery time">Delivery time</SidebarRadio>
+                <SidebarRadio value="rating">Avaliação</SidebarRadio>
+                <SidebarRadio value="delivery time">
+                  Tempo de entrega
+                </SidebarRadio>
               </VStack>
             </RadioGroup>
           </SidebarCollapse>
           {deliveryOption === 'delivery' && (
-            <SidebarCollapse categoryName="Delivery price">
+            <SidebarCollapse categoryName="Preço para entrega">
               <SidebarSlider values={[0, 3.75, 7.5]} />
             </SidebarCollapse>
           )}
-          <SidebarCollapse categoryName="Tags">
+          <SidebarCollapse categoryName="Categorias">
             <CheckboxGroup
               onChange={value => setTagOption(value)}
               value={tagOption}

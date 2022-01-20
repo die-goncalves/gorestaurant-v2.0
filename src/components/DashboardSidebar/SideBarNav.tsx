@@ -6,21 +6,21 @@ import NavSection from './NavSection'
 export default function SideBarNav() {
   return (
     <Stack spacing="12" alignItems="flex-start" w="100%">
-      <NavSection title="Settings">
+      <NavSection title="Configurações">
         <NavLink icon={BsPersonFill} href="/dashboard">
-          Account
+          Conta
         </NavLink>
       </NavSection>
 
-      <NavSection title="Actions">
+      <NavSection title="Ações">
         <NavLink icon={BsStarHalf} href="/dashboard/rating">
-          Rating
+          Avaliações
         </NavLink>
       </NavSection>
 
-      <NavSection title="Payments">
+      <NavSection title="Pagamentos">
         <NavLink icon={BsCart4} href="/dashboard/orders">
-          Orders
+          Pedidos
         </NavLink>
       </NavSection>
     </Stack>

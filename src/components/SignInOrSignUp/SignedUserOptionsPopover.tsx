@@ -31,7 +31,7 @@ export function SignedUserOptionsPopover() {
           colorScheme="orange"
           variant="solid"
           borderRadius="0px"
-          aria-label="User options"
+          aria-label="Opções"
           _focus={{ boxShadow: 'none' }}
           icon={<Hamburger size={20} label="Show menu" />}
         />
@@ -74,7 +74,7 @@ export function SignedUserOptionsPopover() {
             </Flex>
 
             <Text fontSize="1rem" lineHeight="1rem" fontWeight="500">
-              Sign Out
+              Sair
             </Text>
           </Button>
           {!asPath.includes('dashboard') && (
@@ -103,7 +103,7 @@ export function SignedUserOptionsPopover() {
               </Flex>
 
               <Text fontSize="1rem" lineHeight="1rem" fontWeight="500">
-                Dashboard
+                Painel de controle
               </Text>
             </Button>
           )}
