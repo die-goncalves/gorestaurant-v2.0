@@ -1,0 +1,11 @@
+Hambúrguer, R$18
+Batata doce frita, R$23
+Batata frita, R$23
+Coca cola, R$3
+Sanduíche Plus, R$35
+Cachorro-quente, R$18
+Açaí, R$39.90
+Donuts, R$11.90
+Pizza, R$80
+Lagostas grelhadas, R$115
+Água, R$2.50
